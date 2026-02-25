@@ -5,7 +5,7 @@ const { themes: prismThemes } = require('prism-react-renderer');
 const config = {
   title: 'PicoClaw',
   tagline: 'Ultra-Efficient AI Assistant in Go — $10 Hardware · 10MB RAM · 1s Boot',
-  favicon: 'img/logo.jpg',
+  favicon: 'favicon.ico',
 
   url: 'https://docs.picoclaw.io',
   baseUrl: '/',
