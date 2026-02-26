@@ -35,7 +35,7 @@ slug: /
 
 ## Architecture
 
-![PicoClaw architecture](/img/arch.jpg)
+![PicoClaw architecture](/img/arch.png)
 
 ## Security Notice
 

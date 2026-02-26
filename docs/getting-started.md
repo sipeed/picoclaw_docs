@@ -101,19 +101,28 @@ termux-chroot ./picoclaw-linux-arm64 onboard
 
 ## Troubleshooting
 
-### Web search says "API 配置问题"
+### Web search says "API key configuration issue"
 
-This is normal if you haven't configured a search API key. PicoClaw falls back to **DuckDuckGo** automatically (no key required).
+This is normal if you haven't configured a search API key yet. PicoClaw will provide helpful links for manual searching.
 
-To enable Brave Search (2000 free queries/month):
+To enable web search:
+
+1. **Option 1 (Recommended)**: Get a free API key at [https://brave.com/search/api](https://brave.com/search/api) (2000 free queries/month) for the best results.
+2. **Option 2 (No Credit Card)**: If you don't have a key, we automatically fall back to **DuckDuckGo** (no key required).
+
+Add the key to `~/.picoclaw/config.json` if using Brave:
 
 ```json
 {
   "tools": {
     "web": {
       "brave": {
-        "enabled": true,
+        "enabled": false,
         "api_key": "YOUR_BRAVE_API_KEY",
+        "max_results": 5
+      },
+      "duckduckgo": {
+        "enabled": true,
         "max_results": 5
       }
     }

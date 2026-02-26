@@ -59,44 +59,49 @@ The binary is placed in `build/picoclaw-{platform}-{arch}`.
 Run PicoClaw without installing anything locally.
 
 ```bash
-# 1. Clone the repo
+# 1. Clone this repo
 git clone https://github.com/sipeed/picoclaw.git
 cd picoclaw
 
-# 2. Set your API keys
-cp config/config.example.json config/config.json
-vim config/config.json
+# 2. First run — auto-generates docker/data/config.json then exits
+docker compose -f docker/docker-compose.yml --profile gateway up
+# The container prints "First-run setup complete." and stops.
 
-# 3. Build and start
-docker compose --profile gateway up -d
+# 3. Set your API keys
+vim docker/data/config.json   # Set provider API keys, bot tokens, etc.
 
-# 4. Check logs
-docker compose logs -f picoclaw-gateway
-
-# 5. Stop
-docker compose --profile gateway down
-```
-
-### Docker: Agent Mode
-
-```bash
-# One-shot chat
-docker compose run --rm picoclaw-agent -m "What is 2+2?"
-
-# Interactive mode
-docker compose run --rm picoclaw-agent
-```
-
-### Docker: Rebuild
-
-```bash
-docker compose --profile gateway build --no-cache
-docker compose --profile gateway up -d
+# 4. Start
+docker compose -f docker/docker-compose.yml --profile gateway up -d
 ```
 
 :::tip Docker Network
 By default, the Gateway listens on `127.0.0.1`. To expose it to the host, set `PICOCLAW_GATEWAY_HOST=0.0.0.0` in your environment or config.json.
 :::
+
+```bash
+# 5. Check logs
+docker compose -f docker/docker-compose.yml logs -f picoclaw-gateway
+
+# 6. Stop
+docker compose -f docker/docker-compose.yml --profile gateway down
+```
+
+### Docker: Agent Mode
+
+```bash
+# Ask a question
+docker compose -f docker/docker-compose.yml run --rm picoclaw-agent -m "What is 2+2?"
+
+# Interactive mode
+docker compose -f docker/docker-compose.yml run --rm picoclaw-agent
+```
+
+### Docker: Update
+
+```bash
+docker compose -f docker/docker-compose.yml pull
+docker compose -f docker/docker-compose.yml --profile gateway up -d
+```
 
 ## Innovative Low-Cost Hardware
 
