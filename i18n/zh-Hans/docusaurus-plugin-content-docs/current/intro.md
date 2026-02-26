@@ -37,7 +37,7 @@ slug: /
 
 ## 架构图
 
-![PicoClaw 架构](/img/arch.jpg)
+![PicoClaw 架构](/img/arch.png)
 
 ## 安全声明
 
