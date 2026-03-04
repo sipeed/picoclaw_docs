@@ -24,6 +24,7 @@ PicoClaw runs in a sandboxed environment by default. The agent can only access f
 | --- | --- | --- |
 | `workspace` | `~/.picoclaw/workspace` | Working directory for the agent |
 | `restrict_to_workspace` | `true` | Restrict file/command access to workspace |
+| `allow_read_outside_workspace` | `false` | Allow file reads outside workspace even when restricted |
 
 ## Protected Tools
 
@@ -45,7 +46,7 @@ Even with `restrict_to_workspace: false`, the `exec` tool blocks these dangerous
 - `rm -rf`, `del /f`, `rmdir /s` — Bulk deletion
 - `format`, `mkfs`, `diskpart` — Disk formatting
 - `dd if=` — Disk imaging
-- Writing to `/dev/sd[a-z]` — Direct disk writes
+- Writing to block devices (`/dev/sd*`, `/dev/hd*`, `/dev/nvme*`, `/dev/mmcblk*`, `/dev/loop*`, etc.) — Direct disk writes
 - `shutdown`, `reboot`, `poweroff` — System shutdown
 - Fork bomb `:(){ :|:& };:`
 
@@ -96,3 +97,10 @@ The `restrict_to_workspace` setting applies consistently across all execution pa
 | Heartbeat tasks | Inherits same restriction ✅ |
 
 All paths share the same workspace restriction — there's no way to bypass the security boundary through subagents or scheduled tasks.
+
+## Safe Paths
+
+The following paths are always accessible regardless of workspace restriction:
+
+- `/dev/null`, `/dev/zero`, `/dev/random`, `/dev/urandom`
+- `/dev/stdin`, `/dev/stdout`, `/dev/stderr`

@@ -6,7 +6,7 @@ sidebar_label: Overview
 
 # Providers
 
-PicoClaw supports 15+ LLM providers through its `model_list` configuration.
+PicoClaw supports 18+ LLM providers through its `model_list` configuration.
 
 ## Supported Providers
 
@@ -22,11 +22,14 @@ PicoClaw supports 15+ LLM providers through its `model_list` configuration.
 | **Moonshot** | Kimi models | [platform.moonshot.cn](https://platform.moonshot.cn) |
 | **Qwen** | Tongyi Qianwen | [dashscope.console.aliyun.com](https://dashscope.console.aliyun.com) |
 | **NVIDIA** | NVIDIA AI models | [build.nvidia.com](https://build.nvidia.com) |
+| **Mistral** | Mistral models | [console.mistral.ai](https://console.mistral.ai) |
 | **Ollama** | Local models | Local (no key needed) |
 | **vLLM** | Local OpenAI-compatible | Local |
+| **LiteLLM** | LiteLLM proxy | Local proxy |
 | **Cerebras** | Fast inference | [cerebras.ai](https://cerebras.ai) |
 | **VolcEngine** | ByteDance models (CN) | [console.volcengine.com](https://console.volcengine.com) |
 | **Antigravity** | Google Cloud Code Assist | OAuth only |
+| **GitHub Copilot** | Copilot models | — |
 
 ## Quick Setup
 
@@ -41,7 +44,7 @@ PicoClaw supports 15+ LLM providers through its `model_list` configuration.
   ],
   "agents": {
     "defaults": {
-      "model": "my-model"
+      "model_name": "my-model"
     }
   }
 }

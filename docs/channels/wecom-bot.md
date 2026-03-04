@@ -7,7 +7,7 @@ title: WeCom Bot (企业微信机器人)
 
 WeCom Bot (智能机器人) is the easier WeCom integration. It supports group chats via webhook.
 
-For the full-featured WeCom App integration (private chat, proactive messaging), see [WeCom App](./wecom-app).
+For the full-featured WeCom App integration (private chat, proactive messaging), see [WeCom App](./wecom-app). For the official AI Bot integration, see [WeCom AI Bot](./wecom-aibot).
 
 ## Setup
 
@@ -32,8 +32,6 @@ To receive messages from users:
       "token": "YOUR_TOKEN",
       "encoding_aes_key": "YOUR_43_CHAR_ENCODING_AES_KEY",
       "webhook_url": "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=YOUR_KEY",
-      "webhook_host": "0.0.0.0",
-      "webhook_port": 18793,
       "webhook_path": "/webhook/wecom",
       "allow_from": [],
       "reply_timeout": 5
@@ -42,13 +40,14 @@ To receive messages from users:
 }
 ```
 
+WeCom Bot uses the shared gateway HTTP server (default port `18790`).
+
 | Field | Type | Description |
 | --- | --- | --- |
 | `token` | string | Verification token |
 | `encoding_aes_key` | string | 43-character AES key for message encryption |
 | `webhook_url` | string | WeCom bot webhook URL for sending messages |
-| `webhook_host` | string | Local webhook listen host |
-| `webhook_port` | int | Local webhook listen port (default: 18793) |
+| `webhook_path` | string | Webhook receive path (default: `/webhook/wecom`) |
 | `allow_from` | array | List of allowed user IDs |
 | `reply_timeout` | int | Reply timeout in seconds |
 

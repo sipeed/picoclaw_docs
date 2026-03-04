@@ -17,16 +17,19 @@ picoclaw gateway
 | 通道 | 难度 | 说明 |
 | --- | --- | --- |
 | **Telegram** | 简单 | 推荐。支持 Groq 语音转文字。 |
-| **Discord** | 简单 | 机器人 token + 意图配置。支持仅@模式。 |
+| **Discord** | 简单 | 机器人 token + 意图配置。支持群聊触发。 |
 | **Slack** | 简单 | Socket 模式，无需公网 IP。 |
 | **QQ** | 简单 | 官方 QQ 机器人 API（AppID + AppSecret）。 |
 | **钉钉** | 中等 | Stream 模式，无需公网 IP。 |
 | **企业微信机器人** | 中等 | 群聊 Webhook。 |
-| **企业微信自建应用** | 困难 | 私聊，功能更多，需要 HTTPS。 |
+| **企业微信自建应用** | 困难 | 私聊、主动推送消息。 |
+| **企业微信智能机器人** | 中等 | 官方 AI Bot，流式拉取协议。 |
 | **飞书** | 困难 | 企业协作平台。 |
-| **LINE** | 困难 | 需要 HTTPS Webhook。 |
+| **LINE** | 困难 | 通过共享网关端口接收 Webhook。 |
 | **OneBot** | 中等 | 兼容 NapCat/Go-CQHTTP。 |
+| **WhatsApp** | 中等 | Bridge 模式或原生协议（whatsmeow）。 |
 | **MaixCam** | 简单 | 硬件集成 AI 摄像头。 |
+| **Pico** | 简单 | 原生 WebSocket 通道，适用于自定义客户端。 |
 
 ## 工作原理
 
@@ -52,3 +55,16 @@ picoclaw gateway
 ```
 
 将 `allow_from` 设置为空数组 `[]` 可允许所有用户访问。
+
+## 通用通道字段
+
+所有通道均支持以下可选字段：
+
+| 字段 | 说明 |
+| --- | --- |
+| `reasoning_channel_id` | 将推理/思考过程输出到单独的频道 |
+| `group_trigger` | 控制机器人在群聊中的触发行为（仅@、关键词前缀） |
+
+## 共享网关
+
+所有基于 Webhook 的通道（LINE、企业微信机器人、企业微信自建应用、企业微信智能机器人）共享同一个网关 HTTP 服务器，端口为 `18790`。不再需要每个通道单独配置 `webhook_host`/`webhook_port`——只需配置 `webhook_path` 即可区分各端点。

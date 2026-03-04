@@ -32,6 +32,8 @@ PicoClaw 采用**以模型为中心**的配置方式。只需指定 `vendor/mode
 | **vLLM（本地）** | `vllm/` | `http://localhost:8000/v1` | OpenAI | 无需 Key |
 | **Cerebras** | `cerebras/` | `https://api.cerebras.ai/v1` | OpenAI | [获取](https://cerebras.ai) |
 | **火山引擎** | `volcengine/` | `https://ark.cn-beijing.volces.com/api/v3` | OpenAI | [获取](https://console.volcengine.com) |
+| **Mistral** | `mistral/` | `https://api.mistral.ai/v1` | OpenAI | [获取](https://console.mistral.ai) |
+| **LiteLLM** | `litellm/` | `http://localhost:4000/v1` | OpenAI | 本地代理 |
 | **Antigravity** | `antigravity/` | Google Cloud | 自定义 | 仅 OAuth |
 | **GitHub Copilot** | `github-copilot/` | `localhost:4321` | gRPC | — |
 
@@ -41,7 +43,7 @@ PicoClaw 采用**以模型为中心**的配置方式。只需指定 `vendor/mode
 {
   "model_list": [
     {
-      "model_name": "gpt4",
+      "model_name": "gpt-5.2",
       "model": "openai/gpt-5.2",
       "api_key": "sk-your-openai-key"
     },
@@ -58,11 +60,24 @@ PicoClaw 采用**以模型为中心**的配置方式。只需指定 `vendor/mode
   ],
   "agents": {
     "defaults": {
-      "model": "gpt4"
+      "model_name": "gpt-5.2"
     }
   }
 }
 ```
+
+## 模型条目字段
+
+| 字段 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| `model_name` | string | 是 | 别名（在 `agents.defaults.model_name` 中引用） |
+| `model` | string | 是 | `vendor/model-id` 格式 |
+| `api_key` | string | 视情况 | 提供商 API Key |
+| `api_base` | string | 否 | 覆盖默认 API 地址 |
+| `auth_method` | string | 否 | 认证方式（如 `oauth`） |
+| `proxy` | string | 否 | 该模型 API 调用的 HTTP/SOCKS 代理 |
+| `request_timeout` | int | 否 | 请求超时时间（秒），默认 120 |
+| `rpm` | int | 否 | 速率限制 — 每分钟请求数 |
 
 ## 各提供商示例
 
@@ -70,7 +85,7 @@ PicoClaw 采用**以模型为中心**的配置方式。只需指定 `vendor/mode
 
 ```json
 {
-  "model_name": "gpt4",
+  "model_name": "gpt-5.2",
   "model": "openai/gpt-5.2",
   "api_key": "sk-..."
 }
@@ -88,21 +103,11 @@ PicoClaw 采用**以模型为中心**的配置方式。只需指定 `vendor/mode
 
 > 也可运行 `picoclaw auth login --provider anthropic` 粘贴 API Token。
 
-### 智谱 AI（GLM）
-
-```json
-{
-  "model_name": "glm",
-  "model": "zhipu/glm-4.7",
-  "api_key": "your-key"
-}
-```
-
 ### DeepSeek
 
 ```json
 {
-  "model_name": "deepseek",
+  "model_name": "deepseek-chat",
   "model": "deepseek/deepseek-chat",
   "api_key": "sk-..."
 }
@@ -117,14 +122,37 @@ PicoClaw 采用**以模型为中心**的配置方式。只需指定 `vendor/mode
 }
 ```
 
-### 自定义代理 / API
+### LiteLLM 代理
 
 ```json
 {
   "model_name": "my-model",
+  "model": "litellm/gpt-5.2",
+  "api_base": "http://localhost:4000/v1"
+}
+```
+
+PicoClaw 会去掉 `litellm/` 前缀，将裸模型名转发到你的 LiteLLM 代理。
+
+### 自定义代理 / API
+
+```json
+{
+  "model_name": "my-custom-model",
   "model": "openai/custom-model",
   "api_base": "https://my-proxy.com/v1",
   "api_key": "sk-..."
+}
+```
+
+### 模型级请求超时
+
+```json
+{
+  "model_name": "slow-model",
+  "model": "openai/o1-preview",
+  "api_key": "sk-...",
+  "request_timeout": 300
 }
 ```
 
@@ -136,13 +164,13 @@ PicoClaw 采用**以模型为中心**的配置方式。只需指定 `vendor/mode
 {
   "model_list": [
     {
-      "model_name": "gpt4",
+      "model_name": "gpt-5.2",
       "model": "openai/gpt-5.2",
       "api_base": "https://api1.example.com/v1",
       "api_key": "sk-key1"
     },
     {
-      "model_name": "gpt4",
+      "model_name": "gpt-5.2",
       "model": "openai/gpt-5.2",
       "api_base": "https://api2.example.com/v1",
       "api_key": "sk-key2"
@@ -168,7 +196,7 @@ PicoClaw 采用**以模型为中心**的配置方式。只需指定 `vendor/mode
   "agents": {
     "defaults": {
       "provider": "zhipu",
-      "model": "glm-4.7"
+      "model_name": "glm-4.7"
     }
   }
 }
@@ -187,13 +215,13 @@ PicoClaw 采用**以模型为中心**的配置方式。只需指定 `vendor/mode
   ],
   "agents": {
     "defaults": {
-      "model": "glm-4.7"
+      "model_name": "glm-4.7"
     }
   }
 }
 ```
 
-详细迁移步骤请参考[迁移指南](../migration/model-list-migration.md)。
+详细迁移步骤请参考[迁移指南](../migration/model-list-migration)。
 
 ## 语音转文字
 

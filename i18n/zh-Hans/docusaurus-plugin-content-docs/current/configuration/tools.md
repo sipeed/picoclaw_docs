@@ -11,6 +11,7 @@ title: 工具配置
 {
   "tools": {
     "web": { ... },
+    "mcp": { ... },
     "exec": { ... },
     "cron": { ... },
     "skills": { ... }
@@ -19,6 +20,8 @@ title: 工具配置
 ```
 
 ## 网络搜索工具
+
+网络搜索工具用于网页搜索和抓取。
 
 ### Brave Search
 
@@ -47,6 +50,24 @@ DuckDuckGo 默认启用，无需 API Key。
 | `api_key` | string | — | Perplexity API Key |
 | `max_results` | int | 5 | 最大返回结果数 |
 
+### Tavily
+
+| 配置项 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `enabled` | bool | false | 启用 Tavily 搜索 |
+| `api_key` | string | — | Tavily API Key |
+| `base_url` | string | — | 自定义 Tavily API 地址 |
+| `max_results` | int | 5 | 最大返回结果数 |
+
+### 网络代理
+
+所有网络工具（搜索和抓取）可共享同一个代理：
+
+| 配置项 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `proxy` | string | — | 所有网络工具的代理地址（支持 http、https、socks5） |
+| `fetch_limit_bytes` | int64 | 10485760 | 每次 URL 抓取的最大字节数（默认 10MB） |
+
 ### 网络搜索配置示例
 
 ```json
@@ -66,11 +87,74 @@ DuckDuckGo 默认启用，无需 API Key。
         "enabled": false,
         "api_key": "pplx-xxx",
         "max_results": 5
+      },
+      "proxy": "socks5://127.0.0.1:1080"
+    }
+  }
+}
+```
+
+## MCP（Model Context Protocol）
+
+PicoClaw 支持 MCP 服务器，通过外部工具扩展 Agent 能力。
+
+| 配置项 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `enabled` | bool | false | 启用 MCP 集成 |
+| `servers` | object | {} | 命名的 MCP 服务器配置 |
+
+每个 MCP 服务器支持两种连接模式：
+
+**stdio 模式**（本地进程）：
+
+| 配置项 | 类型 | 说明 |
+| --- | --- | --- |
+| `enabled` | bool | 启用此服务器 |
+| `command` | string | 要运行的命令（如 `npx`） |
+| `args` | array | 命令参数 |
+| `env` | object | 环境变量 |
+| `env_file` | string | 环境变量文件路径 |
+
+**HTTP/SSE 模式**（远程服务器）：
+
+| 配置项 | 类型 | 说明 |
+| --- | --- | --- |
+| `enabled` | bool | 启用此服务器 |
+| `type` | string | `"http"` 或 `"sse"` |
+| `url` | string | 服务器 URL |
+| `headers` | object | HTTP 头（如 API Key） |
+
+### MCP 配置示例
+
+```json
+{
+  "tools": {
+    "mcp": {
+      "enabled": true,
+      "servers": {
+        "github": {
+          "enabled": true,
+          "command": "npx",
+          "args": ["-y", "@modelcontextprotocol/server-github"],
+          "env": {
+            "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_xxx"
+          }
+        },
+        "context7": {
+          "enabled": true,
+          "type": "http",
+          "url": "https://mcp.context7.com/mcp",
+          "headers": {
+            "CONTEXT7_API_KEY": "ctx7sk-xx"
+          }
+        }
       }
     }
   }
 }
 ```
+
+MCP 工具以 `mcp_<服务器名>_<工具名>` 的命名格式注册，与内置工具并列显示。
 
 ## Exec 工具（命令执行）
 
@@ -80,13 +164,14 @@ Exec 工具代替 Agent 在系统上执行 Shell 命令。
 | --- | --- | --- | --- |
 | `enable_deny_patterns` | bool | true | 启用默认危险命令拦截 |
 | `custom_deny_patterns` | array | [] | 自定义拦截正则表达式 |
+| `custom_allow_patterns` | array | [] | 自定义允许规则 — 匹配的命令可绕过拦截检查 |
 
 ### 默认拦截的危险命令
 
 PicoClaw 默认拦截以下命令：
 
 - 删除类：`rm -rf`、`del /f/q`、`rmdir /s`
-- 磁盘操作：`format`、`mkfs`、`diskpart`、`dd if=`、写入 `/dev/sd*`
+- 磁盘操作：`format`、`mkfs`、`diskpart`、`dd if=`、写入块设备（`/dev/sd*`、`/dev/nvme*`、`/dev/mmcblk*` 等）
 - 系统操作：`shutdown`、`reboot`、`poweroff`
 - 命令替换：`$()`、`${}`、反引号
 - 管道执行：`| sh`、`| bash`
@@ -98,6 +183,23 @@ PicoClaw 默认拦截以下命令：
 - Git：`git push`、`git force`
 - 其他：`eval`、`source *.sh`
 
+### 自定义允许规则
+
+使用 `custom_allow_patterns` 可以显式放行被拦截规则阻止的命令：
+
+```json
+{
+  "tools": {
+    "exec": {
+      "enable_deny_patterns": true,
+      "custom_allow_patterns": [
+        "^git push origin main$"
+      ]
+    }
+  }
+}
+```
+
 ### Exec 配置示例
 
 ```json
@@ -108,7 +210,8 @@ PicoClaw 默认拦截以下命令：
       "custom_deny_patterns": [
         "\\brm\\s+-r\\b",
         "\\bkillall\\s+python"
-      ]
+      ],
+      "custom_allow_patterns": []
     }
   }
 }

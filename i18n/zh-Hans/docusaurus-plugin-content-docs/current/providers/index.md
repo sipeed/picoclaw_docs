@@ -6,7 +6,7 @@ sidebar_label: 概览
 
 # 提供商
 
-PicoClaw 通过 `model_list` 配置支持 15+ 个 LLM 提供商。
+PicoClaw 通过 `model_list` 配置支持 18+ 个 LLM 提供商。
 
 ## 支持的提供商
 
@@ -22,11 +22,14 @@ PicoClaw 通过 `model_list` 配置支持 15+ 个 LLM 提供商。
 | **Moonshot（Kimi）** | Kimi 系列模型 | [platform.moonshot.cn](https://platform.moonshot.cn) |
 | **通义千问（Qwen）** | 阿里云 Qwen 系列 | [dashscope.console.aliyun.com](https://dashscope.console.aliyun.com) |
 | **NVIDIA** | NVIDIA AI 模型 | [build.nvidia.com](https://build.nvidia.com) |
+| **Mistral** | Mistral 系列模型 | [console.mistral.ai](https://console.mistral.ai) |
 | **Ollama** | 本地模型 | 本地部署，无需 Key |
 | **vLLM** | 本地 OpenAI 兼容服务 | 本地部署 |
+| **LiteLLM** | LiteLLM 代理 | 本地代理 |
 | **Cerebras** | 高速推理 | [cerebras.ai](https://cerebras.ai) |
 | **火山引擎** | 字节跳动模型 | [console.volcengine.com](https://console.volcengine.com) |
 | **Antigravity** | Google Cloud Code Assist | 仅 OAuth |
+| **GitHub Copilot** | Copilot 模型 | — |
 
 ## 快速配置
 
@@ -41,7 +44,7 @@ PicoClaw 通过 `model_list` 配置支持 15+ 个 LLM 提供商。
   ],
   "agents": {
     "defaults": {
-      "model": "my-model"
+      "model_name": "my-model"
     }
   }
 }

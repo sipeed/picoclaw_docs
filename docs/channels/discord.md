@@ -16,7 +16,6 @@ title: Discord
 ### 2. Enable Intents
 
 - In Bot settings, enable **MESSAGE CONTENT INTENT**
-- (Optional) Enable **SERVER MEMBERS INTENT** for member-based allow lists
 
 ### 3. Get Your User ID
 
@@ -32,7 +31,9 @@ title: Discord
       "enabled": true,
       "token": "YOUR_BOT_TOKEN",
       "allow_from": ["YOUR_USER_ID"],
-      "mention_only": false
+      "group_trigger": {
+        "mention_only": false
+      }
     }
   }
 }
@@ -42,8 +43,10 @@ title: Discord
 | --- | --- | --- |
 | `enabled` | bool | Enable/disable the channel |
 | `token` | string | Bot token from Discord Developer Portal |
+| `proxy` | string | HTTP/SOCKS proxy URL (optional) |
 | `allow_from` | array | List of allowed user IDs (empty = allow all) |
-| `mention_only` | bool | Only respond when @-mentioned |
+| `group_trigger` | object | Group chat trigger settings (see below) |
+| `reasoning_channel_id` | string | Route reasoning output to a separate channel |
 
 ### 5. Invite the Bot
 
@@ -58,6 +61,28 @@ title: Discord
 picoclaw gateway
 ```
 
-## Mention-Only Mode
+## Group Trigger
 
-Set `"mention_only": true` to make the bot respond only when @-mentioned. Useful for shared servers where you want the bot to be less intrusive.
+Control how the bot responds in server channels (does not affect DMs — the bot always responds in DMs):
+
+```json
+{
+  "group_trigger": {
+    "mention_only": true,
+    "prefixes": ["/ask", "!bot"]
+  }
+}
+```
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `mention_only` | bool | Only respond when @-mentioned in groups |
+| `prefixes` | array | Keyword prefixes that trigger the bot in groups |
+
+:::note Migration
+The old top-level `"mention_only": true` field is automatically migrated to `"group_trigger": {"mention_only": true}`.
+:::
+
+## Media Support
+
+Discord audio attachments are automatically transcribed if a Whisper model is configured. Other attachments (images, files) are downloaded and included as context.

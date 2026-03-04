@@ -11,6 +11,7 @@ PicoClaw's tools configuration is located in the `tools` field of `config.json`.
 {
   "tools": {
     "web": { ... },
+    "mcp": { ... },
     "exec": { ... },
     "cron": { ... },
     "skills": { ... }
@@ -49,6 +50,24 @@ DuckDuckGo is enabled by default and requires no API key.
 | `api_key` | string | — | Perplexity API key |
 | `max_results` | int | 5 | Maximum number of results |
 
+### Tavily
+
+| Config | Type | Default | Description |
+| --- | --- | --- | --- |
+| `enabled` | bool | false | Enable Tavily search |
+| `api_key` | string | — | Tavily API key |
+| `base_url` | string | — | Custom Tavily API base URL |
+| `max_results` | int | 5 | Maximum number of results |
+
+### Web Proxy
+
+All web tools (search and fetch) can use a shared proxy:
+
+| Config | Type | Default | Description |
+| --- | --- | --- | --- |
+| `proxy` | string | — | Proxy URL for all web tools (http, https, socks5) |
+| `fetch_limit_bytes` | int64 | 10485760 | Maximum bytes to fetch per URL (default 10MB) |
+
 ### Web Tools Configuration Example
 
 ```json
@@ -68,11 +87,74 @@ DuckDuckGo is enabled by default and requires no API key.
         "enabled": false,
         "api_key": "pplx-xxx",
         "max_results": 5
+      },
+      "proxy": "socks5://127.0.0.1:1080"
+    }
+  }
+}
+```
+
+## MCP (Model Context Protocol)
+
+PicoClaw supports MCP servers for extending agent capabilities with external tools.
+
+| Config | Type | Default | Description |
+| --- | --- | --- | --- |
+| `enabled` | bool | false | Enable MCP integration |
+| `servers` | object | {} | Named MCP server configurations |
+
+Each MCP server supports two connection modes:
+
+**stdio mode** (local process):
+
+| Config | Type | Description |
+| --- | --- | --- |
+| `enabled` | bool | Enable this server |
+| `command` | string | Command to run (e.g., `npx`) |
+| `args` | array | Command arguments |
+| `env` | object | Environment variables |
+| `env_file` | string | Path to env file |
+
+**HTTP/SSE mode** (remote server):
+
+| Config | Type | Description |
+| --- | --- | --- |
+| `enabled` | bool | Enable this server |
+| `type` | string | `"http"` or `"sse"` |
+| `url` | string | Server URL |
+| `headers` | object | HTTP headers (e.g., API keys) |
+
+### MCP Configuration Example
+
+```json
+{
+  "tools": {
+    "mcp": {
+      "enabled": true,
+      "servers": {
+        "github": {
+          "enabled": true,
+          "command": "npx",
+          "args": ["-y", "@modelcontextprotocol/server-github"],
+          "env": {
+            "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_xxx"
+          }
+        },
+        "context7": {
+          "enabled": true,
+          "type": "http",
+          "url": "https://mcp.context7.com/mcp",
+          "headers": {
+            "CONTEXT7_API_KEY": "ctx7sk-xx"
+          }
+        }
       }
     }
   }
 }
 ```
+
+MCP tools are registered with the naming convention `mcp_<server>_<tool>` and appear alongside built-in tools.
 
 ## Exec Tool
 
@@ -82,13 +164,14 @@ The exec tool executes shell commands on behalf of the agent.
 | --- | --- | --- | --- |
 | `enable_deny_patterns` | bool | true | Enable default dangerous command blocking |
 | `custom_deny_patterns` | array | [] | Custom deny patterns (regular expressions) |
+| `custom_allow_patterns` | array | [] | Custom allow patterns — matching commands bypass deny checks |
 
 ### Default Blocked Command Patterns
 
 By default, PicoClaw blocks these dangerous commands:
 
 - Delete commands: `rm -rf`, `del /f/q`, `rmdir /s`
-- Disk operations: `format`, `mkfs`, `diskpart`, `dd if=`, writing to `/dev/sd*`
+- Disk operations: `format`, `mkfs`, `diskpart`, `dd if=`, writing to block devices (`/dev/sd*`, `/dev/nvme*`, `/dev/mmcblk*`, etc.)
 - System operations: `shutdown`, `reboot`, `poweroff`
 - Command substitution: `$()`, `${}`, backticks
 - Pipe to shell: `| sh`, `| bash`
@@ -100,6 +183,23 @@ By default, PicoClaw blocks these dangerous commands:
 - Git: `git push`, `git force`
 - Other: `eval`, `source *.sh`
 
+### Custom Allow Patterns
+
+Use `custom_allow_patterns` to explicitly permit commands that would otherwise be blocked by deny patterns:
+
+```json
+{
+  "tools": {
+    "exec": {
+      "enable_deny_patterns": true,
+      "custom_allow_patterns": [
+        "^git push origin main$"
+      ]
+    }
+  }
+}
+```
+
 ### Exec Configuration Example
 
 ```json
@@ -110,7 +210,8 @@ By default, PicoClaw blocks these dangerous commands:
       "custom_deny_patterns": [
         "\\brm\\s+-r\\b",
         "\\bkillall\\s+python"
-      ]
+      ],
+      "custom_allow_patterns": []
     }
   }
 }

@@ -44,6 +44,7 @@ const sidebars = {
         'channels/dingtalk',
         'channels/wecom-bot',
         'channels/wecom-app',
+        'channels/wecom-aibot',
         'channels/feishu',
         'channels/line',
         'channels/onebot',

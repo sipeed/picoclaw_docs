@@ -28,10 +28,9 @@ Edit `~/.picoclaw/config.json`:
   "agents": {
     "defaults": {
       "workspace": "~/.picoclaw/workspace",
-      "model": "gpt4",
-      "max_tokens": 8192,
-      "temperature": 0.7,
-      "max_tool_iterations": 20
+      "model_name": "gpt4",
+      "max_tokens": 32768,
+      "max_tool_iterations": 50
     }
   },
   "model_list": [
@@ -74,6 +73,30 @@ That's it! You have a working AI assistant.
 | `picoclaw status` | Show status |
 | `picoclaw cron list` | List all scheduled jobs |
 | `picoclaw cron add ...` | Add a scheduled job |
+
+## Launcher (Visual Setup)
+
+Don't want to edit JSON by hand? The release package includes two launchers — just double-click to run:
+
+### Web Launcher (`picoclaw-launcher`)
+
+Double-click `picoclaw-launcher` (or `picoclaw-launcher.exe` on Windows), it opens a browser-based setup UI at `http://localhost:18800`.
+
+From the UI you can:
+- **Add models** — card-style model management, set primary model, no API key = grayed out
+- **Configure channels** — form-based setup for Telegram, Discord, Slack, WeCom, etc.
+- **OAuth login** — one-click login for OpenAI, Anthropic, Google Antigravity
+- **Start/stop gateway** — manage the `picoclaw gateway` process directly
+
+To allow access from other devices on the LAN (e.g., configure from your phone):
+
+```bash
+./picoclaw-launcher -public
+```
+
+### TUI Launcher (`picoclaw-launcher-tui`)
+
+For headless environments (SSH, embedded devices), run `picoclaw-launcher-tui` in your terminal. It provides a menu-driven interface for model selection, channel setup, starting agent/gateway, and viewing logs.
 
 ## Scheduled Tasks
 
