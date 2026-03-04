@@ -5,32 +5,51 @@ title: OneBot
 
 # OneBot
 
-OneBot 是一个面向 QQ 机器人的开放协议标准，为多种 QQ 机器人实现（例如 go-cqhttp、Mirai）提供了统一的接口。它使用 WebSocket 进行通信。
+OneBot 是兼容多种 QQ 机器人（NapCat、Go-CQHTTP 等）的协议。
 
-## 配置
+## 设置流程
+
+### 1. 启动 OneBot 兼容客户端
+
+示例：
+- [NapCat](https://napcat.napneko.icu/) — 现代 QQ 协议实现
+- [Go-CQHTTP](https://github.com/Mrs4s/go-cqhttp) — 经典实现
+
+将其配置为提供 WebSocket 反向服务器。
+
+### 2. 配置 PicoClaw
 
 ```json
 {
   "channels": {
     "onebot": {
       "enabled": true,
-      "ws_url": "ws://localhost:8080",
+      "ws_url": "ws://127.0.0.1:3001",
       "access_token": "",
+      "reconnect_interval": 5,
+      "group_trigger_prefix": [],
       "allow_from": []
     }
   }
 }
 ```
 
-| 字段         | 类型   | 必填 | 描述                             |
-| ------------ | ------ | ---- | -------------------------------- |
-| enabled      | bool   | 是   | 是否启用 OneBot 频道             |
-| ws_url       | string | 是   | OneBot 服务器的 WebSocket URL    |
-| access_token | string | 否   | 连接 OneBot 服务器的访问令牌     |
-| allow_from   | array  | 否   | 用户ID白名单，空表示允许所有用户 |
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| `ws_url` | string | OneBot 客户端的 WebSocket URL |
+| `access_token` | string | 访问令牌（如已配置） |
+| `reconnect_interval` | int | 重连间隔（秒） |
+| `group_trigger_prefix` | array | 群聊中触发机器人的前缀（旧字段，已迁移至 `group_trigger.prefixes`） |
+| `group_trigger` | object | 群聊触发设置（`mention_only`、`prefixes`） |
+| `allow_from` | array | 允许的 QQ 用户 ID |
+| `reasoning_channel_id` | string | 将推理过程输出到单独的通道 |
 
-## 设置流程
+### 3. 运行
 
-1. 部署一个 OneBot 兼容的实现(例如napcat)
-2. 配置 OneBot 实现以启用 WebSocket 服务并设置访问令牌(如果需要)
-3. 将 WebSocket URL 和访问令牌填入配置文件中
+```bash
+picoclaw gateway
+```
+
+:::note
+完整的 OneBot 文档（中文）在仓库中的 `docs/channels/onebot/README.zh.md`。
+:::

@@ -7,7 +7,7 @@ title: WeCom App (企业微信自建应用)
 
 WeCom App (自建应用) offers more features than WeCom Bot: private chat, proactive messaging, and more.
 
-For the simpler group chat bot, see [WeCom Bot](./wecom-bot).
+For the simpler group chat bot, see [WeCom Bot](./wecom-bot). For the official AI Bot integration, see [WeCom AI Bot](./wecom-aibot).
 
 ## Features
 
@@ -33,7 +33,7 @@ For the simpler group chat bot, see [WeCom Bot](./wecom-bot).
 
 1. In the app details page, click "Receive Message" → "Set API"
 2. Fill in:
-   - **URL**: `http://your-server:18792/webhook/wecom-app`
+   - **URL**: `http://your-server:18790/webhook/wecom-app`
    - **Token**: Generate or set a custom value
    - **EncodingAESKey**: Click "Random Generate" to get a 43-character key
 3. Click "Save" — WeCom will send a verification request to your server
@@ -50,8 +50,6 @@ For the simpler group chat bot, see [WeCom Bot](./wecom-bot).
       "agent_id": 1000002,
       "token": "YOUR_TOKEN",
       "encoding_aes_key": "YOUR_43_CHAR_ENCODING_AES_KEY",
-      "webhook_host": "0.0.0.0",
-      "webhook_port": 18792,
       "webhook_path": "/webhook/wecom-app",
       "allow_from": [],
       "reply_timeout": 5
@@ -67,14 +65,14 @@ picoclaw gateway
 ```
 
 :::warning Port Requirement
-WeCom App requires port 18792 to be accessible from the internet. Use a reverse proxy for HTTPS if required.
+WeCom App uses the shared gateway port (default `18790`). This port must be accessible from the internet. Use a reverse proxy for HTTPS if required.
 :::
 
 ## Troubleshooting
 
 ### Callback URL Verification Failed
 
-- Confirm port 18792 is open in your firewall
+- Confirm the gateway port (default 18790) is open in your firewall
 - Verify `corp_id`, `token`, and `encoding_aes_key` are correct
 - Check PicoClaw logs to confirm requests are reaching the server
 
@@ -84,7 +82,7 @@ WeCom uses non-standard PKCS7 padding (32-byte block size instead of 16-byte). T
 
 ### Port Conflict
 
-Change `webhook_port` to another port (e.g., 18794).
+Change the gateway port in the `gateway` config section if needed.
 
 ## Technical Details
 

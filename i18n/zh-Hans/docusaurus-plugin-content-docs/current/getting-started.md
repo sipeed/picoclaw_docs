@@ -28,10 +28,9 @@ picoclaw onboard
   "agents": {
     "defaults": {
       "workspace": "~/.picoclaw/workspace",
-      "model": "gpt4",
-      "max_tokens": 8192,
-      "temperature": 0.7,
-      "max_tool_iterations": 20
+      "model_name": "gpt4",
+      "max_tokens": 32768,
+      "max_tool_iterations": 50
     }
   },
   "model_list": [
@@ -75,6 +74,30 @@ picoclaw agent
 | `picoclaw cron list` | 列出所有定时任务 |
 | `picoclaw cron add ...` | 添加定时任务 |
 
+## 可视化启动器（Launcher）
+
+不想手动编辑 JSON？发布包中自带两个启动器，双击即可运行：
+
+### Web 启动器（`picoclaw-launcher`）
+
+双击 `picoclaw-launcher`（Windows 上为 `picoclaw-launcher.exe`），会在浏览器中打开配置界面 `http://localhost:18800`。
+
+在界面中你可以：
+- **添加模型** — 卡片式模型管理，设置主力模型，未配置 API Key 则显示为灰色
+- **配置渠道** — 表单式配置 Telegram、Discord、Slack、企业微信等
+- **OAuth 登录** — 一键登录 OpenAI、Anthropic、Google Antigravity
+- **启停网关** — 直接管理 `picoclaw gateway` 进程
+
+如需从局域网中的其他设备访问（例如用手机配置）：
+
+```bash
+./picoclaw-launcher -public
+```
+
+### TUI 启动器（`picoclaw-launcher-tui`）
+
+适用于无图形界面的环境（SSH、嵌入式设备），在终端中运行 `picoclaw-launcher-tui`，提供菜单式操作界面，支持模型选择、渠道配置、启动 Agent/网关、查看日志等。
+
 ## 定时任务
 
 PicoClaw 通过 `cron` 工具支持提醒和周期性任务：
@@ -82,6 +105,8 @@ PicoClaw 通过 `cron` 工具支持提醒和周期性任务：
 - **一次性提醒**："10 分钟后提醒我"
 - **周期性任务**："每 2 小时提醒我"
 - **Cron 表达式**："每天早上 9 点提醒我"
+
+任务存储在 `~/.picoclaw/workspace/cron/` 目录下，自动处理。
 
 ## 在 Android 上运行（Termux）
 
@@ -101,17 +126,27 @@ termux-chroot ./picoclaw-linux-arm64 onboard
 
 ### 网络搜索显示"API 配置问题"
 
-未配置搜索 API Key 时属于正常情况，PicoClaw 会自动回退到 **DuckDuckGo**（无需 Key）。
+未配置搜索 API Key 时属于正常情况。PicoClaw 会提供链接供你手动搜索。
 
-启用 Brave Search（每月 2000 次免费查询）：
+启用网络搜索：
+
+1. **方式一（推荐）**：在 [https://brave.com/search/api](https://brave.com/search/api) 免费获取 API Key（每月 2000 次查询），搜索效果最佳。
+2. **方式二（无需信用卡）**：如果没有 Key，系统会自动回退到 **DuckDuckGo**（无需 Key）。
+
+使用 Brave 时，将 Key 添加到 `~/.picoclaw/config.json`：
 
 ```json
 {
   "tools": {
     "web": {
       "brave": {
+        "enabled": false,
+        "api_key": "YOUR_BRAVE_API_KEY",
+        "max_results": 5
+      },
+      "duckduckgo": {
         "enabled": true,
-        "api_key": "YOUR_BRAVE_API_KEY"
+        "max_results": 5
       }
     }
   }

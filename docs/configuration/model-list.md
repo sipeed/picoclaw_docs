@@ -32,6 +32,8 @@ This enables **multi-agent support** with flexible provider selection:
 | **VLLM** | `vllm/` | `http://localhost:8000/v1` | OpenAI | Local |
 | **Cerebras** | `cerebras/` | `https://api.cerebras.ai/v1` | OpenAI | [Get Key](https://cerebras.ai) |
 | **VolcEngine** | `volcengine/` | `https://ark.cn-beijing.volces.com/api/v3` | OpenAI | [Get Key](https://console.volcengine.com) |
+| **Mistral** | `mistral/` | `https://api.mistral.ai/v1` | OpenAI | [Get Key](https://console.mistral.ai) |
+| **LiteLLM** | `litellm/` | `http://localhost:4000/v1` | OpenAI | Local proxy |
 | **Antigravity** | `antigravity/` | Google Cloud | Custom | OAuth only |
 | **GitHub Copilot** | `github-copilot/` | `localhost:4321` | gRPC | — |
 
@@ -58,11 +60,24 @@ This enables **multi-agent support** with flexible provider selection:
   ],
   "agents": {
     "defaults": {
-      "model": "gpt-5.2"
+      "model_name": "gpt-5.2"
     }
   }
 }
 ```
+
+## Model Entry Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `model_name` | string | Yes | Alias used in `agents.defaults.model_name` |
+| `model` | string | Yes | `vendor/model-id` format |
+| `api_key` | string | Depends | API key for the provider |
+| `api_base` | string | No | Override default API base URL |
+| `auth_method` | string | No | Authentication method (e.g., `oauth`) |
+| `proxy` | string | No | HTTP/SOCKS proxy for this model's API calls |
+| `request_timeout` | int | No | Request timeout in seconds (default: 120) |
+| `rpm` | int | No | Rate limit — requests per minute |
 
 ## Vendor Examples
 
@@ -107,6 +122,18 @@ This enables **multi-agent support** with flexible provider selection:
 }
 ```
 
+### LiteLLM Proxy
+
+```json
+{
+  "model_name": "my-model",
+  "model": "litellm/gpt-5.2",
+  "api_base": "http://localhost:4000/v1"
+}
+```
+
+PicoClaw strips the `litellm/` prefix and forwards the bare model name to your LiteLLM proxy.
+
 ### Custom Proxy/API
 
 ```json
@@ -115,6 +142,17 @@ This enables **multi-agent support** with flexible provider selection:
   "model": "openai/custom-model",
   "api_base": "https://my-proxy.com/v1",
   "api_key": "sk-..."
+}
+```
+
+### Per-Model Request Timeout
+
+```json
+{
+  "model_name": "slow-model",
+  "model": "openai/o1-preview",
+  "api_key": "sk-...",
+  "request_timeout": 300
 }
 ```
 
@@ -158,7 +196,7 @@ The old `providers` configuration is **deprecated** but still supported.
   "agents": {
     "defaults": {
       "provider": "zhipu",
-      "model": "glm-4.7"
+      "model_name": "glm-4.7"
     }
   }
 }
@@ -177,7 +215,7 @@ The old `providers` configuration is **deprecated** but still supported.
   ],
   "agents": {
     "defaults": {
-      "model": "glm-4.7"
+      "model_name": "glm-4.7"
     }
   }
 }

@@ -13,10 +13,9 @@ Complete annotated `config.json` example. Copy from `config/config.example.json`
     "defaults": {
       "workspace": "~/.picoclaw/workspace",
       "restrict_to_workspace": true,
-      "model": "gpt4",
-      "max_tokens": 8192,
-      "temperature": 0.7,
-      "max_tool_iterations": 20
+      "model_name": "gpt4",
+      "max_tokens": 32768,
+      "max_tool_iterations": 50
     }
   },
 
@@ -61,31 +60,42 @@ Complete annotated `config.json` example. Copy from `config/config.example.json`
     "telegram": {
       "enabled": false,
       "token": "YOUR_TELEGRAM_BOT_TOKEN",
+      "base_url": "",
       "proxy": "",
-      "allow_from": ["YOUR_USER_ID"]
+      "allow_from": ["YOUR_USER_ID"],
+      "reasoning_channel_id": ""
     },
     "discord": {
       "enabled": false,
       "token": "YOUR_DISCORD_BOT_TOKEN",
+      "proxy": "",
       "allow_from": [],
-      "mention_only": false
+      "group_trigger": {
+        "mention_only": false
+      },
+      "reasoning_channel_id": ""
     },
     "qq": {
       "enabled": false,
       "app_id": "YOUR_QQ_APP_ID",
       "app_secret": "YOUR_QQ_APP_SECRET",
-      "allow_from": []
+      "allow_from": [],
+      "reasoning_channel_id": ""
     },
     "maixcam": {
       "enabled": false,
       "host": "0.0.0.0",
       "port": 18790,
-      "allow_from": []
+      "allow_from": [],
+      "reasoning_channel_id": ""
     },
     "whatsapp": {
       "enabled": false,
       "bridge_url": "ws://localhost:3001",
-      "allow_from": []
+      "use_native": false,
+      "session_store_path": "",
+      "allow_from": [],
+      "reasoning_channel_id": ""
     },
     "feishu": {
       "enabled": false,
@@ -93,28 +103,30 @@ Complete annotated `config.json` example. Copy from `config/config.example.json`
       "app_secret": "",
       "encrypt_key": "",
       "verification_token": "",
-      "allow_from": []
+      "allow_from": [],
+      "reasoning_channel_id": ""
     },
     "dingtalk": {
       "enabled": false,
       "client_id": "YOUR_CLIENT_ID",
       "client_secret": "YOUR_CLIENT_SECRET",
-      "allow_from": []
+      "allow_from": [],
+      "reasoning_channel_id": ""
     },
     "slack": {
       "enabled": false,
       "bot_token": "xoxb-YOUR-BOT-TOKEN",
       "app_token": "xapp-YOUR-APP-TOKEN",
-      "allow_from": []
+      "allow_from": [],
+      "reasoning_channel_id": ""
     },
     "line": {
       "enabled": false,
       "channel_secret": "YOUR_LINE_CHANNEL_SECRET",
       "channel_access_token": "YOUR_LINE_CHANNEL_ACCESS_TOKEN",
-      "webhook_host": "0.0.0.0",
-      "webhook_port": 18791,
       "webhook_path": "/webhook/line",
-      "allow_from": []
+      "allow_from": [],
+      "reasoning_channel_id": ""
     },
     "onebot": {
       "enabled": false,
@@ -122,18 +134,18 @@ Complete annotated `config.json` example. Copy from `config/config.example.json`
       "access_token": "",
       "reconnect_interval": 5,
       "group_trigger_prefix": [],
-      "allow_from": []
+      "allow_from": [],
+      "reasoning_channel_id": ""
     },
     "wecom": {
       "enabled": false,
       "token": "YOUR_TOKEN",
       "encoding_aes_key": "YOUR_43_CHAR_ENCODING_AES_KEY",
       "webhook_url": "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=YOUR_KEY",
-      "webhook_host": "0.0.0.0",
-      "webhook_port": 18793,
       "webhook_path": "/webhook/wecom",
       "allow_from": [],
-      "reply_timeout": 5
+      "reply_timeout": 5,
+      "reasoning_channel_id": ""
     },
     "wecom_app": {
       "enabled": false,
@@ -142,11 +154,19 @@ Complete annotated `config.json` example. Copy from `config/config.example.json`
       "agent_id": 1000002,
       "token": "YOUR_TOKEN",
       "encoding_aes_key": "YOUR_43_CHAR_ENCODING_AES_KEY",
-      "webhook_host": "0.0.0.0",
-      "webhook_port": 18792,
       "webhook_path": "/webhook/wecom-app",
       "allow_from": [],
-      "reply_timeout": 5
+      "reply_timeout": 5,
+      "reasoning_channel_id": ""
+    },
+    "wecom_aibot": {
+      "enabled": false,
+      "token": "YOUR_TOKEN",
+      "encoding_aes_key": "YOUR_43_CHAR_ENCODING_AES_KEY",
+      "webhook_path": "/webhook/wecom-aibot",
+      "max_steps": 10,
+      "welcome_message": "Hello! I'm your AI assistant. How can I help you today?",
+      "reasoning_channel_id": ""
     }
   },
 
@@ -165,14 +185,37 @@ Complete annotated `config.json` example. Copy from `config/config.example.json`
         "enabled": false,
         "api_key": "pplx-xxx",
         "max_results": 5
+      },
+      "proxy": ""
+    },
+    "mcp": {
+      "enabled": false,
+      "servers": {
+        "context7": {
+          "enabled": false,
+          "type": "http",
+          "url": "https://mcp.context7.com/mcp"
+        },
+        "filesystem": {
+          "enabled": false,
+          "command": "npx",
+          "args": ["-y", "@modelcontextprotocol/server-filesystem", "/tmp"]
+        },
+        "github": {
+          "enabled": false,
+          "command": "npx",
+          "args": ["-y", "@modelcontextprotocol/server-github"],
+          "env": { "GITHUB_PERSONAL_ACCESS_TOKEN": "YOUR_TOKEN" }
+        }
       }
     },
     "cron": {
       "exec_timeout_minutes": 5
     },
     "exec": {
-      "enable_deny_patterns": false,
-      "custom_deny_patterns": []
+      "enable_deny_patterns": true,
+      "custom_deny_patterns": [],
+      "custom_allow_patterns": []
     },
     "skills": {
       "registries": {
@@ -210,22 +253,34 @@ Complete annotated `config.json` example. Copy from `config/config.example.json`
 
 | Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `workspace` | string | `~/.picoclaw/workspace` | Working directory for the agent |
+| `workspace` | string | `~/.picoclaw/workspace` | Working directory for the agent (respects `PICOCLAW_HOME`) |
 | `restrict_to_workspace` | bool | `true` | Restrict file/command access to workspace |
-| `model` | string | — | Default model name (must match a `model_list` entry) |
-| `max_tokens` | int | 8192 | Maximum tokens per response |
-| `temperature` | float | 0.7 | LLM temperature (0.0–1.0) |
-| `max_tool_iterations` | int | 20 | Maximum tool call iterations per request |
+| `allow_read_outside_workspace` | bool | `false` | Allow file reads outside workspace (when `restrict_to_workspace` is true) |
+| `model_name` | string | — | Default model name (must match a `model_list` entry) |
+| `model` | string | — | **Deprecated**: use `model_name` instead |
+| `model_fallbacks` | array | [] | Fallback model names tried in order if primary fails |
+| `max_tokens` | int | 32768 | Maximum tokens per response |
+| `temperature` | float | — | LLM temperature (omit to use provider default) |
+| `max_tool_iterations` | int | 50 | Maximum tool call iterations per request |
+| `max_media_size` | int | 20971520 | Maximum media file size in bytes (default 20MB) |
+| `image_model` | string | — | Model name for image generation |
+| `image_model_fallbacks` | array | [] | Fallback image models |
 
 ### `model_list[]`
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `model_name` | string | Yes | Alias used in `agents.defaults.model` |
+| `model_name` | string | Yes | Alias used in `agents.defaults.model_name` |
 | `model` | string | Yes | `vendor/model-id` format |
 | `api_key` | string | Depends | API key for the provider |
 | `api_base` | string | No | Override default API base URL |
 | `auth_method` | string | No | Authentication method (e.g., `oauth`) |
+| `proxy` | string | No | HTTP/SOCKS proxy for this model |
+| `request_timeout` | int | No | Request timeout in seconds (default: 120) |
+| `rpm` | int | No | Rate limit (requests per minute) |
+| `max_tokens_field` | string | No | Override the max tokens field name in API requests |
+| `connect_mode` | string | No | Connection mode override |
+| `workspace` | string | No | Per-model workspace override |
 
 ### `gateway`
 
@@ -235,3 +290,21 @@ Complete annotated `config.json` example. Copy from `config/config.example.json`
 | `port` | int | 18790 | Gateway listen port |
 
 Set `host: "0.0.0.0"` to make the gateway accessible from other devices.
+
+### Common Channel Fields
+
+All channels support these fields:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `enabled` | bool | Enable/disable the channel |
+| `allow_from` | array | User IDs allowed to use the bot (empty = allow all) |
+| `reasoning_channel_id` | string | Dedicated channel/chat ID for routing reasoning output |
+| `group_trigger` | object | Group chat trigger settings (see below) |
+
+#### `group_trigger`
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `mention_only` | bool | Only respond when @-mentioned in groups |
+| `prefixes` | array | Keyword prefixes that trigger the bot in groups |

@@ -5,9 +5,24 @@ title: Discord
 
 # Discord
 
-Discord 是一个专为社区设计的免费语音、视频和文本聊天应用。PicoClaw 通过 Discord Bot API 连接到 Discord 服务器，支持接收和发送消息。
+## 设置流程
 
-## 配置
+### 1. 创建机器人
+
+- 前往 [discord.com/developers/applications](https://discord.com/developers/applications)
+- 创建应用 → Bot → 添加机器人
+- 复制机器人 token
+
+### 2. 启用 Intents
+
+- 在 Bot 设置中，启用 **MESSAGE CONTENT INTENT**
+
+### 3. 获取你的用户 ID
+
+- Discord 设置 → 高级 → 启用**开发者模式**
+- 右键点击你的头像 → **复制用户 ID**
+
+### 4. 配置
 
 ```json
 {
@@ -16,25 +31,58 @@ Discord 是一个专为社区设计的免费语音、视频和文本聊天应用
       "enabled": true,
       "token": "YOUR_BOT_TOKEN",
       "allow_from": ["YOUR_USER_ID"],
-      "mention_only": false
+      "group_trigger": {
+        "mention_only": false
+      }
     }
   }
 }
 ```
 
-| 字段         | 类型   | 必填 | 描述                             |
-| ------------ | ------ | ---- | -------------------------------- |
-| enabled      | bool   | 是   | 是否启用 Discord 频道            |
-| token        | string | 是   | Discord 机器人 Token             |
-| allow_from   | array  | 否   | 用户ID白名单，空表示允许所有用户 |
-| mention_only | bool   | 否   | 是否仅响应提及机器人的消息       |
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| `enabled` | bool | 启用/禁用该通道 |
+| `token` | string | Discord 开发者门户获取的机器人 token |
+| `proxy` | string | HTTP/SOCKS 代理地址（可选） |
+| `allow_from` | array | 允许的用户 ID 列表（空数组 = 允许所有人） |
+| `group_trigger` | object | 群聊触发设置（见下方） |
+| `reasoning_channel_id` | string | 将推理过程输出到单独的频道 |
 
-## 设置流程
+### 5. 邀请机器人
 
-1. 前往 [Discord 开发者门户](https://discord.com/developers/applications) 创建一个新的应用
-2. 启用 Intents:
-   - Message Content Intent
-   - Server Members Intent
-3. 获取 Bot Token
-4. 将 Bot Token 填入配置文件中
-5. 邀请机器人加入服务器并授予必要权限(例如发送消息、读取消息历史等)
+- OAuth2 → URL Generator
+- Scopes: `bot`
+- Bot Permissions: `Send Messages`、`Read Message History`
+- 打开生成的邀请链接，将机器人添加到你的服务器
+
+### 6. 运行
+
+```bash
+picoclaw gateway
+```
+
+## 群聊触发
+
+控制机器人在服务器频道中的响应方式（不影响私聊——机器人在私聊中始终响应）：
+
+```json
+{
+  "group_trigger": {
+    "mention_only": true,
+    "prefixes": ["/ask", "!bot"]
+  }
+}
+```
+
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| `mention_only` | bool | 仅在群聊中被 @ 时响应 |
+| `prefixes` | array | 群聊中触发机器人的关键词前缀 |
+
+:::note 迁移说明
+旧的顶层 `"mention_only": true` 字段会自动迁移为 `"group_trigger": {"mention_only": true}`。
+:::
+
+## 媒体支持
+
+如果配置了 Whisper 模型，Discord 的音频附件会自动转写。其他附件（图片、文件）会被下载并作为上下文。

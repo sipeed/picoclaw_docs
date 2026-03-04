@@ -15,9 +15,10 @@ Config file: `~/.picoclaw/config.json`
 | `agents.defaults` | Default agent settings (model, workspace, limits) |
 | `model_list` | LLM provider definitions |
 | `channels` | Chat app integrations |
-| `tools` | Web search, exec, cron, skills |
+| `tools` | Web search, exec, cron, skills, MCP |
 | `heartbeat` | Periodic task settings |
 | `gateway` | HTTP gateway host/port |
+| `devices` | USB device monitoring |
 
 ## Workspace Layout
 
@@ -43,11 +44,18 @@ PicoClaw stores data in your configured workspace (default: `~/.picoclaw/workspa
 Most config values can be set via environment variables using the pattern `PICOCLAW_<SECTION>_<KEY>` in UPPER_SNAKE_CASE:
 
 ```bash
-export PICOCLAW_AGENTS_DEFAULTS_MODEL=my-model
+export PICOCLAW_AGENTS_DEFAULTS_MODEL_NAME=my-model
 export PICOCLAW_HEARTBEAT_ENABLED=false
 export PICOCLAW_HEARTBEAT_INTERVAL=60
 export PICOCLAW_AGENTS_DEFAULTS_RESTRICT_TO_WORKSPACE=false
 ```
+
+### Special Environment Variables
+
+| Variable | Description |
+| --- | --- |
+| `PICOCLAW_HOME` | Override PicoClaw home directory (default: `~/.picoclaw`) |
+| `PICOCLAW_CONFIG` | Override config file path |
 
 ## Quick Links
 

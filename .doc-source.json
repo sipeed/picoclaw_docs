@@ -1,0 +1,94 @@
+{
+  "source_repo": "https://github.com/sipeed/picoclaw",
+  "source_commit": "bea238c3378aeea7e6f4fcad57713a5bb94cf60a",
+  "generated_at": "2026-03-03T00:00:00+08:00",
+  "docs": {
+    "docs/intro.md": {
+      "source_files": ["README.md", "assets/arch.jpg"]
+    },
+    "docs/getting-started.md": {
+      "source_files": ["README.md", "cmd/picoclaw/internal/onboard/command.go", "pkg/config/defaults.go", "config/config.example.json"]
+    },
+    "docs/installation.md": {
+      "source_files": ["README.md", "Makefile", "docker/Dockerfile", "docker/docker-compose.yml", ".goreleaser.yaml"]
+    },
+    "docs/configuration/index.md": {
+      "source_files": ["pkg/config/config.go", "pkg/config/defaults.go", "config/config.example.json"]
+    },
+    "docs/configuration/config-reference.md": {
+      "source_files": ["pkg/config/config.go", "pkg/config/defaults.go", "config/config.example.json"]
+    },
+    "docs/configuration/model-list.md": {
+      "source_files": ["pkg/config/config.go", "pkg/providers/factory.go", "pkg/providers/factory_provider.go", "config/config.example.json"]
+    },
+    "docs/configuration/tools.md": {
+      "source_files": ["pkg/config/config.go", "pkg/tools/registry.go", "pkg/tools/types.go", "pkg/tools/web.go", "pkg/tools/shell.go", "pkg/tools/filesystem.go", "pkg/tools/mcp_tool.go", "pkg/tools/cron.go", "pkg/tools/spawn.go", "pkg/mcp/manager.go"]
+    },
+    "docs/configuration/heartbeat.md": {
+      "source_files": ["pkg/heartbeat/service.go", "pkg/config/config.go"]
+    },
+    "docs/configuration/security-sandbox.md": {
+      "source_files": ["pkg/tools/shell.go", "pkg/tools/filesystem.go", "pkg/config/config.go"]
+    },
+    "docs/channels/index.md": {
+      "source_files": ["pkg/channels/manager.go", "pkg/channels/base.go", "pkg/channels/registry.go", "pkg/channels/interfaces.go"]
+    },
+    "docs/channels/telegram.md": {
+      "source_files": ["pkg/channels/telegram/telegram.go", "pkg/channels/telegram/telegram_commands.go", "pkg/channels/telegram/init.go"]
+    },
+    "docs/channels/discord.md": {
+      "source_files": ["pkg/channels/discord/discord.go", "pkg/channels/discord/init.go"]
+    },
+    "docs/channels/slack.md": {
+      "source_files": ["pkg/channels/slack/slack.go", "pkg/channels/slack/init.go"]
+    },
+    "docs/channels/dingtalk.md": {
+      "source_files": ["pkg/channels/dingtalk/dingtalk.go", "pkg/channels/dingtalk/init.go"]
+    },
+    "docs/channels/feishu.md": {
+      "source_files": ["pkg/channels/feishu/feishu_64.go", "pkg/channels/feishu/feishu_32.go", "pkg/channels/feishu/common.go", "pkg/channels/feishu/init.go"]
+    },
+    "docs/channels/wecom-bot.md": {
+      "source_files": ["pkg/channels/wecom/bot.go", "pkg/channels/wecom/common.go", "pkg/channels/wecom/init.go"]
+    },
+    "docs/channels/wecom-app.md": {
+      "source_files": ["pkg/channels/wecom/app.go", "pkg/channels/wecom/common.go", "pkg/channels/wecom/init.go"]
+    },
+    "docs/channels/wecom-aibot.md": {
+      "source_files": ["pkg/channels/wecom/aibot.go", "pkg/channels/wecom/common.go", "pkg/channels/wecom/init.go"]
+    },
+    "docs/channels/qq.md": {
+      "source_files": ["pkg/channels/qq/qq.go", "pkg/channels/qq/init.go"]
+    },
+    "docs/channels/onebot.md": {
+      "source_files": ["pkg/channels/onebot/onebot.go", "pkg/channels/onebot/init.go"]
+    },
+    "docs/channels/line.md": {
+      "source_files": ["pkg/channels/line/line.go", "pkg/channels/line/init.go"]
+    },
+    "docs/channels/maixcam.md": {
+      "source_files": ["pkg/channels/maixcam/maixcam.go", "pkg/channels/maixcam/init.go"]
+    },
+    "docs/providers/index.md": {
+      "source_files": ["pkg/providers/factory.go", "pkg/providers/factory_provider.go", "pkg/providers/http_provider.go", "pkg/providers/openai_compat/provider.go", "pkg/providers/anthropic/provider.go"]
+    },
+    "docs/providers/antigravity.md": {
+      "source_files": ["pkg/providers/antigravity_provider.go", "docs/ANTIGRAVITY_AUTH.md"]
+    },
+    "docs/providers/antigravity-usage.md": {
+      "source_files": ["pkg/providers/antigravity_provider.go", "docs/ANTIGRAVITY_USAGE.md"]
+    },
+    "docs/design/provider-refactoring.md": {
+      "source_files": ["docs/design/provider-refactoring.md", "pkg/providers/factory.go", "pkg/providers/fallback.go"]
+    },
+    "docs/migration/model-list-migration.md": {
+      "source_files": ["docs/migration/model-list-migration.md", "pkg/migrate/config.go", "pkg/migrate/migrate.go"]
+    },
+    "docs/contributing.md": {
+      "source_files": ["CONTRIBUTING.md", "CONTRIBUTING.zh.md", "Makefile"]
+    },
+    "docs/roadmap.md": {
+      "source_files": ["ROADMAP.md"]
+    }
+  }
+}

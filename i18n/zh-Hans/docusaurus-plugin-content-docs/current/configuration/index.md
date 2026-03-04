@@ -15,9 +15,10 @@ sidebar_label: 概览
 | `agents.defaults` | Agent 默认设置（模型、工作目录、限制） |
 | `model_list` | LLM 提供商定义 |
 | `channels` | 聊天应用接入 |
-| `tools` | 网络搜索、命令执行、定时任务、技能 |
+| `tools` | 网络搜索、命令执行、定时任务、技能、MCP |
 | `heartbeat` | 周期任务设置 |
 | `gateway` | HTTP 网关地址/端口 |
+| `devices` | USB 设备监控 |
 
 ## 工作目录结构
 
@@ -43,11 +44,18 @@ PicoClaw 将数据存储在配置的工作目录中（默认：`~/.picoclaw/work
 大多数配置项可通过环境变量设置，格式为 `PICOCLAW_<区域>_<键>`（大写下划线）：
 
 ```bash
-export PICOCLAW_AGENTS_DEFAULTS_MODEL=my-model
+export PICOCLAW_AGENTS_DEFAULTS_MODEL_NAME=my-model
 export PICOCLAW_HEARTBEAT_ENABLED=false
 export PICOCLAW_HEARTBEAT_INTERVAL=60
 export PICOCLAW_AGENTS_DEFAULTS_RESTRICT_TO_WORKSPACE=false
 ```
+
+### 特殊环境变量
+
+| 变量 | 说明 |
+| --- | --- |
+| `PICOCLAW_HOME` | 覆盖 PicoClaw 主目录（默认：`~/.picoclaw`） |
+| `PICOCLAW_CONFIG` | 覆盖配置文件路径 |
 
 ## 快速链接
 

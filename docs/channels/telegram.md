@@ -38,8 +38,11 @@ Telegram is the **recommended** channel. It's easy to set up and supports voice 
 | --- | --- | --- |
 | `enabled` | bool | Enable/disable the channel |
 | `token` | string | Bot token from @BotFather |
-| `proxy` | string | HTTP proxy URL (optional) |
+| `base_url` | string | Custom Telegram Bot API server URL (optional) |
+| `proxy` | string | HTTP/SOCKS proxy URL (optional, also reads `HTTP_PROXY` env) |
 | `allow_from` | array | List of allowed user IDs (empty = allow all) |
+| `reasoning_channel_id` | string | Route reasoning output to a separate chat |
+| `group_trigger` | object | Group chat trigger settings (`mention_only`, `prefixes`) |
 
 ### 4. Run
 
@@ -75,8 +78,23 @@ Get a free Groq API key at [console.groq.com](https://console.groq.com).
 {
   "channels": {
     "telegram": {
-      "proxy": "http://127.0.0.1:7890"
+      "proxy": "socks5://127.0.0.1:1080"
     }
   }
 }
 ```
+
+## Bot Commands
+
+The Telegram channel registers these built-in bot commands:
+
+| Command | Description |
+| --- | --- |
+| `/start` | Greeting message |
+| `/help` | Show help text |
+| `/show [model\|channel]` | Show current configuration |
+| `/list [models\|channels]` | List available options |
+
+## Media Support
+
+The bot handles photos, audio files, documents, and voice messages. Voice messages are transcribed if a Whisper model is configured (see [Voice Transcription](#voice-transcription)).

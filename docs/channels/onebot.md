@@ -39,8 +39,10 @@ Configure it to expose a WebSocket reverse server.
 | `ws_url` | string | WebSocket URL of the OneBot client |
 | `access_token` | string | Access token (if configured) |
 | `reconnect_interval` | int | Reconnect interval in seconds |
-| `group_trigger_prefix` | array | Prefixes that trigger bot response in groups |
+| `group_trigger_prefix` | array | Prefixes that trigger bot response in groups (legacy, migrated to `group_trigger.prefixes`) |
+| `group_trigger` | object | Group chat trigger settings (`mention_only`, `prefixes`) |
 | `allow_from` | array | Allowed QQ user IDs |
+| `reasoning_channel_id` | string | Route reasoning output to a separate channel |
 
 ### 3. Run
 
