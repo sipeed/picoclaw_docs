@@ -61,23 +61,45 @@ make install
 git clone https://github.com/sipeed/picoclaw.git
 cd picoclaw
 
-# 2. 配置 API Key
-cp config/config.example.json config/config.json
-vim config/config.json
+# 2. 首次运行 — 自动生成 docker/data/config.json 后退出
+docker compose -f docker/docker-compose.yml --profile gateway up
+# 容器打印 "First-run setup complete." 后停止
 
-# 3. 构建并启动
-docker compose --profile gateway up -d
+# 3. 设置 API Key
+vim docker/data/config.json   # 设置提供商 API Key、机器人令牌等
 
-# 4. 查看日志
-docker compose logs -f picoclaw-gateway
-
-# 5. 停止
-docker compose --profile gateway down
+# 4. 启动
+docker compose -f docker/docker-compose.yml --profile gateway up -d
 ```
 
 :::tip Docker 网络配置
 默认情况下，Gateway 监听 `127.0.0.1`。如需从外部访问，请在环境变量或 config.json 中设置 `PICOCLAW_GATEWAY_HOST=0.0.0.0`。
 :::
+
+```bash
+# 5. 查看日志
+docker compose -f docker/docker-compose.yml logs -f picoclaw-gateway
+
+# 6. 停止
+docker compose -f docker/docker-compose.yml --profile gateway down
+```
+
+### Docker: Agent 模式
+
+```bash
+# 提问
+docker compose -f docker/docker-compose.yml run --rm picoclaw-agent -m "2+2=?"
+
+# 交互模式
+docker compose -f docker/docker-compose.yml run --rm picoclaw-agent
+```
+
+### Docker: 更新
+
+```bash
+docker compose -f docker/docker-compose.yml pull
+docker compose -f docker/docker-compose.yml --profile gateway up -d
+```
 
 ## 低成本硬件部署
 
