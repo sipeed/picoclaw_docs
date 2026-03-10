@@ -1,6 +1,6 @@
 {
   "source_repo": "https://github.com/sipeed/picoclaw",
-  "source_commit": "bea238c3378aeea7e6f4fcad57713a5bb94cf60a",
+  "source_commit": "b89f6445d10545717e5526064472fecbc6340b07",
   "generated_at": "2026-03-03T00:00:00+08:00",
   "docs": {
     "docs/intro.md": {
@@ -68,6 +68,9 @@
     },
     "docs/channels/maixcam.md": {
       "source_files": ["pkg/channels/maixcam/maixcam.go", "pkg/channels/maixcam/init.go"]
+    },
+    "docs/channels/matrix.md": {
+      "source_files": ["pkg/channels/matrix/matrix.go", "pkg/channels/matrix/init.go", "docs/channels/matrix/README.md", "docs/channels/matrix/README.zh.md"]
     },
     "docs/providers/index.md": {
       "source_files": ["pkg/providers/factory.go", "pkg/providers/factory_provider.go", "pkg/providers/http_provider.go", "pkg/providers/openai_compat/provider.go", "pkg/providers/anthropic/provider.go"]

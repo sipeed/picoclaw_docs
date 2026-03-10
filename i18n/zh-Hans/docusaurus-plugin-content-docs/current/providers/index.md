@@ -6,7 +6,7 @@ sidebar_label: 概览
 
 # 提供商
 
-PicoClaw 通过 `model_list` 配置支持 18+ 个 LLM 提供商。
+PicoClaw 通过 `model_list` 配置支持 19+ 个 LLM 提供商。
 
 ## 支持的提供商
 
@@ -29,6 +29,7 @@ PicoClaw 通过 `model_list` 配置支持 18+ 个 LLM 提供商。
 | **Cerebras** | 高速推理 | [cerebras.ai](https://cerebras.ai) |
 | **火山引擎** | 字节跳动模型 | [console.volcengine.com](https://console.volcengine.com) |
 | **Antigravity** | Google Cloud Code Assist | 仅 OAuth |
+| **Minimax** | MiniMax 系列模型 | [platform.minimaxi.com](https://platform.minimaxi.com) |
 | **GitHub Copilot** | Copilot 模型 | — |
 
 ## 快速配置

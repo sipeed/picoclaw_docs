@@ -27,6 +27,7 @@ picoclaw gateway
 | **Feishu** | Hard | Enterprise collaboration platform. |
 | **LINE** | Hard | Webhook via shared gateway port. |
 | **OneBot** | Medium | Compatible with NapCat/Go-CQHTTP. |
+| **Matrix** | Easy | Open, decentralized protocol. Supports typing, placeholder, media. |
 | **WhatsApp** | Medium | Bridge mode or native (whatsmeow). |
 | **MaixCam** | Easy | Hardware-integrated AI camera. |
 | **Pico** | Easy | Native WebSocket channel for custom clients. |

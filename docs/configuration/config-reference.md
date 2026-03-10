@@ -167,6 +167,23 @@ Complete annotated `config.json` example. Copy from `config/config.example.json`
       "max_steps": 10,
       "welcome_message": "Hello! I'm your AI assistant. How can I help you today?",
       "reasoning_channel_id": ""
+    },
+    "matrix": {
+      "enabled": false,
+      "homeserver": "https://matrix.org",
+      "user_id": "@your-bot:matrix.org",
+      "access_token": "YOUR_MATRIX_ACCESS_TOKEN",
+      "device_id": "",
+      "join_on_invite": true,
+      "allow_from": [],
+      "group_trigger": {
+        "mention_only": true
+      },
+      "placeholder": {
+        "enabled": true,
+        "text": "Thinking..."
+      },
+      "reasoning_channel_id": ""
     }
   },
 
@@ -265,6 +282,17 @@ Complete annotated `config.json` example. Copy from `config/config.example.json`
 | `max_media_size` | int | 20971520 | Maximum media file size in bytes (default 20MB) |
 | `image_model` | string | — | Model name for image generation |
 | `image_model_fallbacks` | array | [] | Fallback image models |
+| `routing` | object | — | Intelligent model routing settings (see below) |
+
+#### `routing`
+
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `enabled` | bool | `false` | Enable intelligent model routing |
+| `light_model` | string | — | Model name (from `model_list`) to use for simple tasks |
+| `threshold` | float | — | Complexity score in [0,1]; messages scoring >= threshold use the primary model, below use `light_model` |
+
+When enabled, PicoClaw scores each incoming message against structural features (length, code blocks, tool call history, conversation depth, attachments) and routes simple messages to a lighter/cheaper model.
 
 ### `model_list[]`
 
@@ -281,6 +309,7 @@ Complete annotated `config.json` example. Copy from `config/config.example.json`
 | `max_tokens_field` | string | No | Override the max tokens field name in API requests |
 | `connect_mode` | string | No | Connection mode override |
 | `workspace` | string | No | Per-model workspace override |
+| `thinking_level` | string | No | Extended thinking level: `off`, `low`, `medium`, `high`, `xhigh`, or `adaptive` |
 
 ### `gateway`
 
@@ -301,6 +330,8 @@ All channels support these fields:
 | `allow_from` | array | User IDs allowed to use the bot (empty = allow all) |
 | `reasoning_channel_id` | string | Dedicated channel/chat ID for routing reasoning output |
 | `group_trigger` | object | Group chat trigger settings (see below) |
+| `placeholder` | object | Placeholder message settings (see below) |
+| `typing` | object | Typing indicator settings (see below) |
 
 #### `group_trigger`
 
@@ -308,3 +339,20 @@ All channels support these fields:
 | --- | --- | --- |
 | `mention_only` | bool | Only respond when @-mentioned in groups |
 | `prefixes` | array | Keyword prefixes that trigger the bot in groups |
+
+#### `placeholder`
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `enabled` | bool | Enable placeholder messages |
+| `text` | string | Placeholder text shown while processing (e.g., "Thinking...") |
+
+Supported by: Feishu, Slack, Matrix.
+
+#### `typing`
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `enabled` | bool | Show typing indicator while processing |
+
+Supported by: Slack, Matrix.

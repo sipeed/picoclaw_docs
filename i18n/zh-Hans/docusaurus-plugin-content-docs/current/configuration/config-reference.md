@@ -167,6 +167,23 @@ title: 完整配置参考
       "max_steps": 10,
       "welcome_message": "你好！我是你的 AI 助手，有什么可以帮你的吗？",
       "reasoning_channel_id": ""
+    },
+    "matrix": {
+      "enabled": false,
+      "homeserver": "https://matrix.org",
+      "user_id": "@your-bot:matrix.org",
+      "access_token": "YOUR_MATRIX_ACCESS_TOKEN",
+      "device_id": "",
+      "join_on_invite": true,
+      "allow_from": [],
+      "group_trigger": {
+        "mention_only": true
+      },
+      "placeholder": {
+        "enabled": true,
+        "text": "正在思考..."
+      },
+      "reasoning_channel_id": ""
     }
   },
 
@@ -265,6 +282,17 @@ title: 完整配置参考
 | `max_media_size` | int | 20971520 | 最大媒体文件大小（字节），默认 20MB |
 | `image_model` | string | — | 图片生成使用的模型名 |
 | `image_model_fallbacks` | array | [] | 图片生成备用模型 |
+| `routing` | object | — | 智能模型路由设置（见下方） |
+
+#### `routing`
+
+| 字段 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `enabled` | bool | `false` | 启用智能模型路由 |
+| `light_model` | string | — | 用于简单任务的模型名（需在 `model_list` 中存在） |
+| `threshold` | float | — | 复杂度评分阈值 [0,1]；评分 >= 阈值使用主模型，低于阈值使用 `light_model` |
+
+启用后，PicoClaw 会根据消息的结构特征（长度、代码块、工具调用历史、对话深度、附件）对每条消息评分，将简单消息路由到更轻量/低成本的模型。
 
 ### `model_list[]`
 
@@ -281,6 +309,7 @@ title: 完整配置参考
 | `max_tokens_field` | string | 否 | 覆盖 API 请求中的 max tokens 字段名 |
 | `connect_mode` | string | 否 | 连接模式覆盖 |
 | `workspace` | string | 否 | 模型级工作目录覆盖 |
+| `thinking_level` | string | 否 | 扩展思考级别：`off`、`low`、`medium`、`high`、`xhigh` 或 `adaptive` |
 
 ### `gateway`
 
@@ -301,6 +330,8 @@ title: 完整配置参考
 | `allow_from` | array | 允许使用机器人的用户 ID（空数组 = 允许所有人） |
 | `reasoning_channel_id` | string | 专用于输出推理过程的频道/群组 ID |
 | `group_trigger` | object | 群聊触发设置（见下方） |
+| `placeholder` | object | 占位消息设置（见下方） |
+| `typing` | object | 输入状态指示器设置（见下方） |
 
 #### `group_trigger`
 
@@ -308,3 +339,20 @@ title: 完整配置参考
 | --- | --- | --- |
 | `mention_only` | bool | 仅在群聊中被 @ 时响应 |
 | `prefixes` | array | 群聊中触发机器人的关键词前缀 |
+
+#### `placeholder`
+
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| `enabled` | bool | 启用占位消息 |
+| `text` | string | 处理期间显示的占位文本（如"正在思考..."） |
+
+支持的通道：飞书、Slack、Matrix。
+
+#### `typing`
+
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| `enabled` | bool | 处理期间显示"正在输入"状态 |
+
+支持的通道：Slack、Matrix。

@@ -6,7 +6,7 @@ sidebar_label: Overview
 
 # Providers
 
-PicoClaw supports 18+ LLM providers through its `model_list` configuration.
+PicoClaw supports 19+ LLM providers through its `model_list` configuration.
 
 ## Supported Providers
 
@@ -29,6 +29,7 @@ PicoClaw supports 18+ LLM providers through its `model_list` configuration.
 | **Cerebras** | Fast inference | [cerebras.ai](https://cerebras.ai) |
 | **VolcEngine** | ByteDance models (CN) | [console.volcengine.com](https://console.volcengine.com) |
 | **Antigravity** | Google Cloud Code Assist | OAuth only |
+| **Minimax** | MiniMax models | [platform.minimaxi.com](https://platform.minimaxi.com) |
 | **GitHub Copilot** | Copilot models | — |
 
 ## Quick Setup

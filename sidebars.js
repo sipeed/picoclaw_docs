@@ -48,6 +48,7 @@ const sidebars = {
         'channels/feishu',
         'channels/line',
         'channels/onebot',
+        'channels/matrix',
         'channels/maixcam',
       ],
     },
