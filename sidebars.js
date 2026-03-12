@@ -12,9 +12,14 @@ const sidebars = {
       label: 'Getting Started',
     },
     {
-      type: 'doc',
-      id: 'installation',
+      type: 'category',
       label: 'Installation',
+      collapsible: true,
+      collapsed: false,
+      link: { type: 'doc', id: 'installation' },
+      items: [
+        'installation/maixcam'
+      ],
     },
     {
       type: 'category',

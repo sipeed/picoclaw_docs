@@ -11,9 +11,9 @@
     "message": "快速开始",
     "description": "The label for the doc item Getting Started in sidebar mainSidebar, linking to the doc getting-started"
   },
-  "sidebar.mainSidebar.doc.Installation": {
+  "sidebar.mainSidebar.category.Installation": {
     "message": "安装",
-    "description": "The label for the doc item Installation in sidebar mainSidebar, linking to the doc installation"
+    "description": "The label for the category Installation in sidebar mainSidebar"
   },
   "sidebar.mainSidebar.category.Configuration": {
     "message": "配置",
