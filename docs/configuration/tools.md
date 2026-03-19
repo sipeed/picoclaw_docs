@@ -25,48 +25,58 @@ Web tools are used for web search and fetching.
 
 ### Brave Search
 
-| Config | Type | Default | Description |
-| --- | --- | --- | --- |
-| `enabled` | bool | false | Enable Brave search |
-| `api_key` | string | — | Brave Search API key |
-| `max_results` | int | 5 | Maximum number of results |
+| Config        | Type   | Default | Description               |
+| ------------- | ------ | ------- | ------------------------- |
+| `enabled`     | bool   | false   | Enable Brave search       |
+| `api_key`     | string | —       | Brave Search API key      |
+| `max_results` | int    | 5       | Maximum number of results |
 
 Get a free API key at [brave.com/search/api](https://brave.com/search/api) (2000 free queries/month).
 
 ### DuckDuckGo
 
-| Config | Type | Default | Description |
-| --- | --- | --- | --- |
-| `enabled` | bool | true | Enable DuckDuckGo search |
-| `max_results` | int | 5 | Maximum number of results |
+| Config        | Type | Default | Description               |
+| ------------- | ---- | ------- | ------------------------- |
+| `enabled`     | bool | true    | Enable DuckDuckGo search  |
+| `max_results` | int  | 5       | Maximum number of results |
 
 DuckDuckGo is enabled by default and requires no API key.
 
 ### Perplexity
 
-| Config | Type | Default | Description |
-| --- | --- | --- | --- |
-| `enabled` | bool | false | Enable Perplexity search |
-| `api_key` | string | — | Perplexity API key |
-| `max_results` | int | 5 | Maximum number of results |
+| Config        | Type   | Default | Description               |
+| ------------- | ------ | ------- | ------------------------- |
+| `enabled`     | bool   | false   | Enable Perplexity search  |
+| `api_key`     | string | —       | Perplexity API key        |
+| `max_results` | int    | 5       | Maximum number of results |
 
 ### Tavily
 
-| Config | Type | Default | Description |
-| --- | --- | --- | --- |
-| `enabled` | bool | false | Enable Tavily search |
-| `api_key` | string | — | Tavily API key |
-| `base_url` | string | — | Custom Tavily API base URL |
-| `max_results` | int | 5 | Maximum number of results |
+| Config        | Type   | Default | Description                |
+| ------------- | ------ | ------- | -------------------------- |
+| `enabled`     | bool   | false   | Enable Tavily search       |
+| `api_key`     | string | —       | Tavily API key             |
+| `base_url`    | string | —       | Custom Tavily API base URL |
+| `max_results` | int    | 5       | Maximum number of results  |
+
+### GLM (智谱)
+
+| Config          | Type   | Default      | Description                                                                   |
+| --------------- | ------ | ------------ | ----------------------------------------------------------------------------- |
+| `enabled`       | bool   | false        | Enable GLM search                                                             |
+| `api_key`       | string | —            | GLM API key                                                                   |
+| `base_url`      | string | —            | Custom GLM API base URL                                                       |
+| `search_engine` | string | search_std | Search backend type (search_pro, search_pro_sogou, or search_pro_quark) |
+| `max_results`   | int    | 5            | Maximum number of results                                                     |
 
 ### Web Proxy
 
 All web tools (search and fetch) can use a shared proxy:
 
-| Config | Type | Default | Description |
-| --- | --- | --- | --- |
-| `proxy` | string | — | Proxy URL for all web tools (http, https, socks5) |
-| `fetch_limit_bytes` | int64 | 10485760 | Maximum bytes to fetch per URL (default 10MB) |
+| Config              | Type   | Default  | Description                                       |
+| ------------------- | ------ | -------- | ------------------------------------------------- |
+| `proxy`             | string | —        | Proxy URL for all web tools (http, https, socks5) |
+| `fetch_limit_bytes` | int64  | 10485760 | Maximum bytes to fetch per URL (default 10MB)     |
 
 ### Web Tools Configuration Example
 
@@ -98,30 +108,30 @@ All web tools (search and fetch) can use a shared proxy:
 
 PicoClaw supports MCP servers for extending agent capabilities with external tools.
 
-| Config | Type | Default | Description |
-| --- | --- | --- | --- |
-| `enabled` | bool | false | Enable MCP integration |
-| `servers` | object | {} | Named MCP server configurations |
+| Config    | Type   | Default | Description                     |
+| --------- | ------ | ------- | ------------------------------- |
+| `enabled` | bool   | false   | Enable MCP integration          |
+| `servers` | object | {}      | Named MCP server configurations |
 
 Each MCP server supports two connection modes:
 
 **stdio mode** (local process):
 
-| Config | Type | Description |
-| --- | --- | --- |
-| `enabled` | bool | Enable this server |
-| `command` | string | Command to run (e.g., `npx`) |
-| `args` | array | Command arguments |
-| `env` | object | Environment variables |
-| `env_file` | string | Path to env file |
+| Config     | Type   | Description                  |
+| ---------- | ------ | ---------------------------- |
+| `enabled`  | bool   | Enable this server           |
+| `command`  | string | Command to run (e.g., `npx`) |
+| `args`     | array  | Command arguments            |
+| `env`      | object | Environment variables        |
+| `env_file` | string | Path to env file             |
 
 **HTTP/SSE mode** (remote server):
 
-| Config | Type | Description |
-| --- | --- | --- |
-| `enabled` | bool | Enable this server |
-| `type` | string | `"http"` or `"sse"` |
-| `url` | string | Server URL |
+| Config    | Type   | Description                   |
+| --------- | ------ | ----------------------------- |
+| `enabled` | bool   | Enable this server            |
+| `type`    | string | `"http"` or `"sse"`           |
+| `url`     | string | Server URL                    |
 | `headers` | object | HTTP headers (e.g., API keys) |
 
 ### MCP Configuration Example
@@ -160,11 +170,11 @@ MCP tools are registered with the naming convention `mcp_<server>_<tool>` and ap
 
 The exec tool executes shell commands on behalf of the agent.
 
-| Config | Type | Default | Description |
-| --- | --- | --- | --- |
-| `enable_deny_patterns` | bool | true | Enable default dangerous command blocking |
-| `custom_deny_patterns` | array | [] | Custom deny patterns (regular expressions) |
-| `custom_allow_patterns` | array | [] | Custom allow patterns — matching commands bypass deny checks |
+| Config                  | Type  | Default | Description                                                  |
+| ----------------------- | ----- | ------- | ------------------------------------------------------------ |
+| `enable_deny_patterns`  | bool  | true    | Enable default dangerous command blocking                    |
+| `custom_deny_patterns`  | array | []      | Custom deny patterns (regular expressions)                   |
+| `custom_allow_patterns` | array | []      | Custom allow patterns — matching commands bypass deny checks |
 
 ### Default Blocked Command Patterns
 
@@ -192,9 +202,7 @@ Use `custom_allow_patterns` to explicitly permit commands that would otherwise b
   "tools": {
     "exec": {
       "enable_deny_patterns": true,
-      "custom_allow_patterns": [
-        "^git push origin main$"
-      ]
+      "custom_allow_patterns": ["^git push origin main$"]
     }
   }
 }
@@ -207,10 +215,7 @@ Use `custom_allow_patterns` to explicitly permit commands that would otherwise b
   "tools": {
     "exec": {
       "enable_deny_patterns": true,
-      "custom_deny_patterns": [
-        "\\brm\\s+-r\\b",
-        "\\bkillall\\s+python"
-      ],
+      "custom_deny_patterns": ["\\brm\\s+-r\\b", "\\bkillall\\s+python"],
       "custom_allow_patterns": []
     }
   }
@@ -221,21 +226,21 @@ Use `custom_allow_patterns` to explicitly permit commands that would otherwise b
 
 The cron tool schedules periodic tasks.
 
-| Config | Type | Default | Description |
-| --- | --- | --- | --- |
-| `exec_timeout_minutes` | int | 5 | Execution timeout in minutes (0 = no limit) |
+| Config                 | Type | Default | Description                                 |
+| ---------------------- | ---- | ------- | ------------------------------------------- |
+| `exec_timeout_minutes` | int  | 5       | Execution timeout in minutes (0 = no limit) |
 
 ## Skills Tool
 
 The skills tool manages skill discovery and installation via registries like ClawHub.
 
-| Config | Type | Default | Description |
-| --- | --- | --- | --- |
-| `registries.clawhub.enabled` | bool | true | Enable ClawHub registry |
-| `registries.clawhub.base_url` | string | `https://clawhub.ai` | ClawHub base URL |
-| `registries.clawhub.search_path` | string | `/api/v1/search` | Search API path |
-| `registries.clawhub.skills_path` | string | `/api/v1/skills` | Skills API path |
-| `registries.clawhub.download_path` | string | `/api/v1/download` | Download API path |
+| Config                             | Type   | Default              | Description             |
+| ---------------------------------- | ------ | -------------------- | ----------------------- |
+| `registries.clawhub.enabled`       | bool   | true                 | Enable ClawHub registry |
+| `registries.clawhub.base_url`      | string | `https://clawhub.ai` | ClawHub base URL        |
+| `registries.clawhub.search_path`   | string | `/api/v1/search`     | Search API path         |
+| `registries.clawhub.skills_path`   | string | `/api/v1/skills`     | Skills API path         |
+| `registries.clawhub.download_path` | string | `/api/v1/download`   | Download API path       |
 
 ```json
 {
