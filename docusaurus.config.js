@@ -52,12 +52,12 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      image: 'img/logo.jpg',
+      image: 'img/logo.webp',
       navbar: {
         title: 'PicoClaw',
         logo: {
           alt: 'PicoClaw Logo',
-          src: 'img/logo.jpg',
+          src: 'img/logo.png',
         },
         items: [
           {

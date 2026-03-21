@@ -11,7 +11,7 @@ function HomepageHero() {
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className="container">
-        <img src="img/logo.jpg" alt="PicoClaw" width={180} style={{ borderRadius: '50%', marginBottom: '1rem' }} />
+        <img src="img/logo.webp" alt="PicoClaw" width={180} style={{ borderRadius: '50%', marginBottom: '1rem' }} />
         <h1 className="hero__title">{siteConfig.title}</h1>
         <p className="hero__subtitle">
           <Translate id="homepage.tagline">
