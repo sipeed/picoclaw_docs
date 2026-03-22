@@ -103,7 +103,7 @@ PicoClaw 可以运行在几乎任何 Linux 设备上：
 | Pi 4 B | ARM64 | [picoclaw_Linux_arm64.tar.gz](https://github.com/sipeed/picoclaw/releases/latest/download/picoclaw_Linux_arm64.tar.gz) | Raspberry Pi OS Lite（64 位）|
 | Pi 5 | ARM64 | [picoclaw_Linux_arm64.tar.gz](https://github.com/sipeed/picoclaw/releases/latest/download/picoclaw_Linux_arm64.tar.gz) | Raspberry Pi OS Lite（64 位）|
 
-> Pi 2 B 使用 ARMv7，暂不支持。
+<!-- > Pi 2 B 使用 ARMv7，暂不支持。 -->
 
 ## 下一步
 
