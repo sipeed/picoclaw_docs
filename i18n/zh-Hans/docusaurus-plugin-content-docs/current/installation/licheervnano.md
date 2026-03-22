@@ -9,6 +9,8 @@ title: 在 LicheeRV Nano 上部署
 
 LicheeRV Nano 是一款超微型开发板（尺寸仅为 22.86 × 35.56 mm），搭载算能 SG2002 处理器（包含 1 GHz 可选 RISC-V/ARM 大核与 700 MHz RISC-V 小核），并内置 256MB DDR3 内存与 1 TOPS 算力的 NPU。此外，它板载了 MIPI-CSI、MIPI-DSI、SDIO、ETH、USB、SPI、UART 及 I2C 等丰富接口，能够满足多样化的应用扩展需求。其直插与半孔兼容设计，也非常便于后期的量产贴片。
 
+LicheeRV Nano 的更多详细信息，请参考 [Sipeed 官方文档](https://wiki.sipeed.com/hardware/zh/lichee/RV_Nano/1_intro.html)。
+
 ## 前提条件
 
 - **系统与网络**：LicheeRV Nano 已成功烧录系统并接入网络。推荐使用 Sipeed 官方编译的 [系统镜像](https://github.com/sipeed/LicheeRV-Nano-Build/releases/latest)，您可以使用 Win32DiskImager 或 balenaEtcher 等工具将镜像写入 SD 卡中。

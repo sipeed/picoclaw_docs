@@ -14,6 +14,7 @@ title: 安装
 | 🐧 Linux | x86_64 | [picoclaw_Linux_x86_64.tar.gz](https://github.com/sipeed/picoclaw/releases/latest/download/picoclaw_Linux_x86_64.tar.gz) |
 | 🐧 Linux | ARM64 | [picoclaw_Linux_arm64.tar.gz](https://github.com/sipeed/picoclaw/releases/latest/download/picoclaw_Linux_arm64.tar.gz) |
 | 🐧 Linux | ARMv6（32 位）| [picoclaw_Linux_armv6.tar.gz](https://github.com/sipeed/picoclaw/releases/latest/download/picoclaw_Linux_armv6.tar.gz) |
+| 🐧 Linux | ARMv7）| [picoclaw_Linux_armv6.tar.gz](https://github.com/sipeed/picoclaw/releases/latest/download/picoclaw_Linux_armv7.tar.gz) |
 | 🐧 Linux | RISC-V 64 | [picoclaw_Linux_riscv64.tar.gz](https://github.com/sipeed/picoclaw/releases/latest/download/picoclaw_Linux_riscv64.tar.gz) |
 | 🐧 Linux | LoongArch64 | [picoclaw_Linux_loong64.tar.gz](https://github.com/sipeed/picoclaw/releases/latest/download/picoclaw_Linux_loong64.tar.gz) |
 | 🍎 macOS | ARM64 (Apple Silicon) | [picoclaw_Darwin_arm64.tar.gz](https://github.com/sipeed/picoclaw/releases/latest/download/picoclaw_Darwin_arm64.tar.gz) |
@@ -102,7 +103,7 @@ PicoClaw 可以运行在几乎任何 Linux 设备上：
 | Pi 4 B | ARM64 | [picoclaw_Linux_arm64.tar.gz](https://github.com/sipeed/picoclaw/releases/latest/download/picoclaw_Linux_arm64.tar.gz) | Raspberry Pi OS Lite（64 位）|
 | Pi 5 | ARM64 | [picoclaw_Linux_arm64.tar.gz](https://github.com/sipeed/picoclaw/releases/latest/download/picoclaw_Linux_arm64.tar.gz) | Raspberry Pi OS Lite（64 位）|
 
-> Pi 2 B 使用 ARMv7，暂不支持。
+<!-- > Pi 2 B 使用 ARMv7，暂不支持。 -->
 
 ## 下一步
 

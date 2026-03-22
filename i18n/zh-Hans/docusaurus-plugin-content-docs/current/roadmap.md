@@ -106,10 +106,10 @@ title: 路线图
 
 
 
-## 🎨 7. 品牌与社区
+<!-- ## 🎨 7. 品牌与社区
 
-* [**Logo 设计**](https://github.com/sipeed/picoclaw/issues/297)：我们正在寻找 **螳螂虾（口足目）** 的 Logo 设计！
-  * *创意概念*：需要体现"小而强大"和"闪电出击"的特质。
+* [**Logo 设计**](https://github.com/sipeed/picoclaw/issues/297)：我们正在寻找 **皮皮虾** 的 Logo 设计！
+  * *创意概念*：需要体现"小而强大"和"闪电出击"的特质。 -->
 
 
 

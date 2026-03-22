@@ -106,10 +106,10 @@ title: Roadmap
 
 
 
-## 🎨 7. Brand & Community
+<!-- ## 🎨 7. Brand & Community
 
 * [**Logo Design**](https://github.com/sipeed/picoclaw/issues/297): We are looking for a **Mantis Shrimp (Stomatopoda)** logo design!
-  * *Concept*: Needs to reflect "Small but Mighty" and "Lightning Fast Strikes."
+  * *Concept*: Needs to reflect "Small but Mighty" and "Lightning Fast Strikes." -->
 
 
 
