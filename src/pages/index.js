@@ -9,10 +9,16 @@ import styles from './index.module.css';
 function HomepageHero() {
   const { siteConfig } = useDocusaurusContext();
   return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
-      <div className="container">
-        <img src="img/logo.webp" alt="PicoClaw" width={180} style={{ borderRadius: '50%', marginBottom: '1rem' }} />
-        <h1 className="hero__title">{siteConfig.title}</h1>
+    <>
+      <header className={clsx('hero hero--primary', styles.heroBanner)}>
+        {/* Banner background */}
+      </header>
+      <div className="container" style={{ textAlign: 'center', padding: '2rem 0' }}>
+        {/* <img src="img/logo.webp" alt="PicoClaw" width={180} style={{ borderRadius: '50%', marginBottom: '1rem' }} /> */}
+        <h1 className="hero__title">
+          <span style={{ color: '#20567c' }}>Pico</span>
+          <span style={{ color: '#da5b4a' }}>Claw</span>
+        </h1>
         <p className="hero__subtitle">
           <Translate id="homepage.tagline">
             Ultra-Efficient AI Assistant in Go
@@ -37,24 +43,30 @@ function HomepageHero() {
           </div>
         </div>
         <div className={styles.buttons}>
-          <Link className="button button--secondary button--lg" to="/docs">
+          <Link 
+            className="button button--secondary button--lg" 
+            to="/docs"
+            style={{ backgroundColor: '#00add8', borderColor: '#00add8', color: 'white' }}
+          >
             <Translate id="homepage.getStarted">Get Started</Translate>
           </Link>
           <Link
             className="button button--outline button--secondary button--lg"
             to="https://github.com/sipeed/picoclaw"
+            style={{ color: '#00add8', borderColor: '#00add8', backgroundColor: 'transparent' }}
           >
             GitHub
           </Link>
           <Link
             className="button button--outline button--secondary button--lg"
             to="https://discord.gg/V4sAZ9XWpN"
+            style={{ color: '#00add8', borderColor: '#00add8', backgroundColor: 'transparent' }}
           >
             Discord
           </Link>
         </div>
       </div>
-    </header>
+    </>
   );
 }
 
