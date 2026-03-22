@@ -48,14 +48,9 @@
   flex-wrap: wrap;
 }
 
-/* Stats bar */
-.statsBar {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin: 1rem 0;
-  flex-wrap: wrap;
-  font-size: 1.1rem;
-  font-weight: 600;
-  opacity: 0.9;
+.navbar__title {
+  background: linear-gradient(90deg, #20567c 50%, #da5b4a 50%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

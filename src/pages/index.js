@@ -11,14 +11,12 @@ function HomepageHero() {
   return (
     <>
       <header className={clsx('hero hero--primary', styles.heroBanner)}>
-        {/* Banner background */}
+        <h1 className="hero__title" style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: 0 }}>
+          <Translate id="homepage.title">PicoClaw</Translate>
+        </h1>
       </header>
       <div className="container" style={{ textAlign: 'center', padding: '2rem 0' }}>
         {/* <img src="img/logo.webp" alt="PicoClaw" width={180} style={{ borderRadius: '50%', marginBottom: '1rem' }} /> */}
-        <h1 className="hero__title">
-          <span style={{ color: '#20567c' }}>Pico</span>
-          <span style={{ color: '#da5b4a' }}>Claw</span>
-        </h1>
         <p className="hero__subtitle">
           <Translate id="homepage.tagline">
             Ultra-Efficient AI Assistant in Go

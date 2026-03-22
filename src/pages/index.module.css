@@ -7,7 +7,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  min-height: 450px;
+  min-height: 350px;
 }
 
 @media screen and (max-width: 996px) {
@@ -23,14 +23,6 @@
   gap: 1rem;
   margin-top: 1.5rem;
   flex-wrap: wrap;
-}
-
-:global(.hero__title) {
-  color: #20567c;
-}
-
-:global(.hero__subtitle) {
-  color: #20567c;
 }
 
 .statsBar {
@@ -51,7 +43,6 @@
   font-size: 2rem;
   font-weight: 800;
   line-height: 1;
-  color: #20567c;
 }
 
 .statLabel {
