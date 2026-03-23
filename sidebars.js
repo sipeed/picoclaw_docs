@@ -16,7 +16,7 @@ const sidebars = {
       label: 'Installation',
       collapsible: true,
       collapsed: true,
-      link: { type: 'doc', id: 'installation' },
+      link: { type: 'doc', id: 'installation/index' },
       items: [
         'installation/licheervnano',
         'installation/maixcam',

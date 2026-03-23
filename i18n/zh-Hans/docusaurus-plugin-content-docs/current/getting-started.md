@@ -3,6 +3,9 @@ id: getting-started
 title: 快速开始
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # 快速开始
 
 2 分钟内启动 PicoClaw。
@@ -10,6 +13,51 @@ title: 快速开始
 :::tip 获取 API Key
 在 `~/.picoclaw/config.json` 中设置您的 API Key。获取 API Key：[Volcengine（CodingPlan）](https://console.volcengine.com)（LLM）· [OpenRouter](https://openrouter.ai/keys)（LLM）· [智谱 AI](https://open.bigmodel.cn/usercenter/proj-mgmt/apikeys)（LLM）。网络搜索是**可选的** — 获取免费的 [Tavily API](https://tavily.com)（每月 1000 次免费查询）或 [Brave Search API](https://brave.com/search/api)（每月 2000 次免费查询）
 :::
+
+## 第零步：安装 PicoClaw
+
+<Tabs>
+  <TabItem value="pwsh" label="PowerShell（跨平台）" default>
+
+PowerShell 安装脚本支持 Windows 与类 Unix 平台。
+
+- Linux/macOS/FreeBSD/NetBSD 需先安装 PowerShell Core（`pwsh`）。
+- 支持用户安装与系统安装两种模式。
+- 以下命令必须在 PowerShell 终端执行，不能直接粘贴到 bash/ash/zsh。
+- 在轻量 Linux 发行版（例如 OpenWrt）上，**不建议**使用 `user` 模式，可能会遇到 PATH 问题。更推荐使用 root 权限执行 `system` 模式安装。
+
+```powershell
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/sipeed/picoclaw_docs/main/static/scripts/picoclaw/install-picoclaw.ps1" -OutFile install-picoclaw.ps1
+
+if (Get-Command pwsh -ErrorAction SilentlyContinue) {
+  pwsh -ExecutionPolicy Bypass -File ./install-picoclaw.ps1 -InstallMode user -Source cdn
+} elseif ($env:OS -eq "Windows_NT" -and (Get-Command powershell.exe -ErrorAction SilentlyContinue)) {
+  powershell.exe -ExecutionPolicy Bypass -File .\install-picoclaw.ps1 -InstallMode user -Source cdn
+} else {
+  throw "未找到 PowerShell 可执行程序，请先安装 PowerShell Core（pwsh）。"
+}
+```
+
+  </TabItem>
+  <TabItem value="bash" label="Bash（类 Unix）">
+
+Bash 安装脚本支持 Linux/macOS/FreeBSD/NetBSD。
+
+- 暂不支持 Windows。
+- 需要 GNU Bash 4+。
+- 不支持 `ash` / BusyBox 等轻量 shell。
+- 在轻量 Linux 发行版（例如 OpenWrt）上，**不建议**使用 `user` 模式，可能会遇到 PATH 问题。更推荐使用 root 权限执行 `system` 模式安装。
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/sipeed/picoclaw_docs/main/static/scripts/picoclaw/install-picoclaw.sh -o install-picoclaw.sh
+chmod +x ./install-picoclaw.sh
+bash ./install-picoclaw.sh --mode user --source cdn
+```
+
+  </TabItem>
+</Tabs>
+
+完整安装方式请查看 [安装页面](./installation)。
 
 ## 第一步：初始化
 

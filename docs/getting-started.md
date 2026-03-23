@@ -3,6 +3,9 @@ id: getting-started
 title: Getting Started
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Getting Started
 
 Get PicoClaw running in 2 minutes.
@@ -10,6 +13,53 @@ Get PicoClaw running in 2 minutes.
 :::tip API Keys
 Set your API Key in `~/.picoclaw/config.json`. Get API Keys: [Volcengine (CodingPlan)](https://console.volcengine.com) (LLM) · [OpenRouter](https://openrouter.ai/keys) (LLM) · [Zhipu](https://open.bigmodel.cn/usercenter/proj-mgmt/apikeys) (LLM). Web search is **optional** — get a free [Tavily API](https://tavily.com) (1000 free queries/month) or [Brave Search API](https://brave.com/search/api) (2000 free queries/month).
 :::
+
+## Step 0: Install PicoClaw
+
+<Tabs>
+  <TabItem value="pwsh" label="PowerShell (Cross-platform)" default>
+
+PowerShell script supports Windows and Unix-like systems.
+
+- On Linux/macOS/FreeBSD/NetBSD, install PowerShell Core (`pwsh`) first.
+- Supports user mode and system mode.
+- Run the following commands in a PowerShell terminal only. Do not paste them into bash/ash/zsh.
+- For users in Chinese Mainland, you may append `-Source cdn` to use the CDN source.
+- `user` mode installation is **not recommended** on lightweight Linux distros (e.g. OpenWrt) due to potential PATH issues. The better option is to run the installer in `system` mode with root privileges.
+
+```powershell
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/sipeed/picoclaw_docs/main/static/scripts/picoclaw/install-picoclaw.ps1" -OutFile install-picoclaw.ps1
+
+if (Get-Command pwsh -ErrorAction SilentlyContinue) {
+  pwsh -ExecutionPolicy Bypass -File ./install-picoclaw.ps1 -InstallMode user
+} elseif ($env:OS -eq "Windows_NT" -and (Get-Command powershell.exe -ErrorAction SilentlyContinue)) {
+  powershell.exe -ExecutionPolicy Bypass -File .\install-picoclaw.ps1 -InstallMode user
+} else {
+  throw "PowerShell executable not found. Please install PowerShell Core (pwsh)."
+}
+```
+
+  </TabItem>
+  <TabItem value="bash" label="Bash (Unix-like)">
+
+Bash installer supports Linux/macOS/FreeBSD/NetBSD.
+
+- Not supported on Windows.
+- Requires GNU Bash 4+.
+- `ash` / BusyBox shell are not supported.
+- `user` mode installation is **not recommended** on lightweight Linux distros (e.g. OpenWrt) due to potential PATH issues. The better option is to run the installer in `system` mode with root privileges.
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/sipeed/picoclaw_docs/main/static/scripts/picoclaw/install-picoclaw.sh -o install-picoclaw.sh
+chmod +x ./install-picoclaw.sh
+# For users in Chinese Mainland, append: --source cdn
+bash ./install-picoclaw.sh --mode user
+```
+
+  </TabItem>
+</Tabs>
+
+See [Installation](./installation) for full installation options.
 
 ## Step 1: Initialize
 

@@ -1,11 +1,77 @@
 ---
-id: installation
+id: index
 title: 安装
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # 安装
 
-## 方式一：使用预编译二进制文件（推荐）
+## 方式一：自动化安装（推荐）
+
+<Tabs>
+	<TabItem value="pwsh" label="PowerShell（跨平台）" default>
+
+PowerShell 安装脚本可用于 Windows 与类 Unix 平台。
+
+- Linux/macOS/FreeBSD/NetBSD 需先安装 PowerShell Core（`pwsh`）。
+- 支持用户安装与系统安装两种模式。
+- 以下命令必须在 PowerShell 终端执行，不能直接粘贴到 bash/ash/zsh。
+- 在轻量 Linux 发行版（例如 OpenWrt）上，**不建议**使用 `user` 模式，可能会遇到 PATH 问题。更推荐使用 root 权限执行 `system` 模式安装。
+
+```powershell
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/sipeed/picoclaw_docs/main/static/scripts/picoclaw/install-picoclaw.ps1" -OutFile install-picoclaw.ps1
+
+if (Get-Command pwsh -ErrorAction SilentlyContinue) {
+    pwsh -ExecutionPolicy Bypass -File ./install-picoclaw.ps1 -InstallMode user -Source cdn
+} elseif ($env:OS -eq "Windows_NT" -and (Get-Command powershell.exe -ErrorAction SilentlyContinue)) {
+    powershell.exe -ExecutionPolicy Bypass -File .\install-picoclaw.ps1 -InstallMode user -Source cdn
+} else {
+    throw "未找到 PowerShell 可执行程序，请先安装 PowerShell Core（pwsh）。"
+}
+```
+
+```powershell
+# 系统安装（需要管理员或 root 权限）
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/sipeed/picoclaw_docs/main/static/scripts/picoclaw/install-picoclaw.ps1" -OutFile install-picoclaw.ps1
+
+if (Get-Command pwsh -ErrorAction SilentlyContinue) {
+    pwsh -ExecutionPolicy Bypass -File ./install-picoclaw.ps1 -InstallMode system -Source cdn
+} elseif ($env:OS -eq "Windows_NT" -and (Get-Command powershell.exe -ErrorAction SilentlyContinue)) {
+    powershell.exe -ExecutionPolicy Bypass -File .\install-picoclaw.ps1 -InstallMode system -Source cdn
+} else {
+    throw "未找到 PowerShell 可执行程序，请先安装 PowerShell Core（pwsh）。"
+}
+```
+
+	</TabItem>
+	<TabItem value="bash" label="Bash（类 Unix）">
+
+Bash 安装脚本仅支持类 Unix 系统。
+
+- 暂不支持 Windows。
+- 需要 GNU Bash 4+。
+- 不支持 `ash` / BusyBox 等轻量 shell。
+- 在轻量 Linux 发行版（例如 OpenWrt）上，**不建议**使用 `user` 模式，可能会遇到 PATH 问题。更推荐使用 root 权限执行 `system` 模式安装。
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/sipeed/picoclaw_docs/main/static/scripts/picoclaw/install-picoclaw.sh -o install-picoclaw.sh
+chmod +x ./install-picoclaw.sh
+bash ./install-picoclaw.sh --mode user --source cdn
+```
+
+```bash
+# 系统安装（需要 root 权限）
+curl -fsSL https://raw.githubusercontent.com/sipeed/picoclaw_docs/main/static/scripts/picoclaw/install-picoclaw.sh -o install-picoclaw.sh
+chmod +x ./install-picoclaw.sh
+sudo bash ./install-picoclaw.sh --mode system --source cdn
+```
+
+	</TabItem>
+</Tabs>
+
+## 方式二：使用预编译二进制文件
 
 从 [Releases 页面](https://github.com/sipeed/picoclaw/releases/latest) 下载最新版本。所有版本打包为 `.tar.gz`（Linux/macOS/FreeBSD）或 `.zip`（Windows）。
 
@@ -31,7 +97,7 @@ tar -xzf picoclaw_Linux_arm64.tar.gz
 ./picoclaw onboard
 ```
 
-## 方式二：从源码构建
+## 方式三：从源码构建
 
 需要 Go 1.21+。
 
@@ -52,7 +118,7 @@ make build-all
 make install
 ```
 
-## 方式三：Docker Compose
+## 方式四：Docker Compose
 
 无需本地安装，直接运行。
 

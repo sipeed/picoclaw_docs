@@ -1,11 +1,80 @@
 ---
-id: installation
+id: index
 title: Installation
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Installation
 
-## Option 1: Precompiled Binary (Recommended)
+## Option 1: Automated Installer (Recommended)
+
+<Tabs>
+	<TabItem value="pwsh" label="PowerShell (Cross-platform)" default>
+
+PowerShell installer works on Windows and Unix-like platforms.
+
+- On Linux/macOS/FreeBSD/NetBSD, install PowerShell Core (`pwsh`) first.
+- Supports both user mode and system mode.
+- Run the following commands in a PowerShell terminal only. Do not paste them into bash/ash/zsh.
+- For users in Chinese Mainland, you may append `-Source cdn` to use the CDN source.
+- `user` mode installation is **not recommended** on lightweight Linux distros (e.g. OpenWrt) due to potential PATH issues. The better option is to run the installer in `system` mode with root privileges.
+
+```powershell
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/sipeed/picoclaw_docs/main/static/scripts/picoclaw/install-picoclaw.ps1" -OutFile install-picoclaw.ps1
+
+if (Get-Command pwsh -ErrorAction SilentlyContinue) {
+    pwsh -ExecutionPolicy Bypass -File ./install-picoclaw.ps1 -InstallMode user
+} elseif ($env:OS -eq "Windows_NT" -and (Get-Command powershell.exe -ErrorAction SilentlyContinue)) {
+    powershell.exe -ExecutionPolicy Bypass -File .\install-picoclaw.ps1 -InstallMode user
+} else {
+    throw "PowerShell executable not found. Please install PowerShell Core (pwsh)."
+}
+```
+
+```powershell
+# System install (requires Administrator/root privileges)
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/sipeed/picoclaw_docs/main/static/scripts/picoclaw/install-picoclaw.ps1" -OutFile install-picoclaw.ps1
+
+if (Get-Command pwsh -ErrorAction SilentlyContinue) {
+    pwsh -ExecutionPolicy Bypass -File ./install-picoclaw.ps1 -InstallMode system
+} elseif ($env:OS -eq "Windows_NT" -and (Get-Command powershell.exe -ErrorAction SilentlyContinue)) {
+    powershell.exe -ExecutionPolicy Bypass -File .\install-picoclaw.ps1 -InstallMode system
+} else {
+    throw "PowerShell executable not found. Please install PowerShell Core (pwsh)."
+}
+```
+
+	</TabItem>
+	<TabItem value="bash" label="Bash (Unix-like)">
+
+Bash installer supports Unix-like systems only.
+
+- Not supported on Windows.
+- Requires GNU Bash 4+.
+- `ash` / BusyBox shell are not supported.
+- `user` mode installation is **not recommended** on lightweight Linux distros (e.g. OpenWrt) due to potential PATH issues. The better option is to run the installer in `system` mode with root privileges.
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/sipeed/picoclaw_docs/main/static/scripts/picoclaw/install-picoclaw.sh -o install-picoclaw.sh
+chmod +x ./install-picoclaw.sh
+# For users in Chinese Mainland, append: --source cdn
+bash ./install-picoclaw.sh --mode user
+```
+
+```bash
+# System install (requires root privileges)
+curl -fsSL https://raw.githubusercontent.com/sipeed/picoclaw_docs/main/static/scripts/picoclaw/install-picoclaw.sh -o install-picoclaw.sh
+chmod +x ./install-picoclaw.sh
+# For users in Chinese Mainland, append: --source cdn
+sudo bash ./install-picoclaw.sh --mode system
+```
+
+	</TabItem>
+</Tabs>
+
+## Option 2: Precompiled Binary
 
 Download the latest release from the [Releases page](https://github.com/sipeed/picoclaw/releases/latest). All releases are packaged as `.tar.gz` (Linux/macOS/FreeBSD) or `.zip` (Windows).
 
@@ -31,7 +100,7 @@ tar -xzf picoclaw_Linux_arm64.tar.gz
 ./picoclaw onboard
 ```
 
-## Option 2: Build from Source
+## Option 3: Build from Source
 
 Requires Go 1.21+.
 
@@ -54,7 +123,7 @@ make install
 
 The binary is placed in `build/picoclaw-{platform}-{arch}`.
 
-## Option 3: Docker Compose
+## Option 4: Docker Compose
 
 Run PicoClaw without installing anything locally.
 
