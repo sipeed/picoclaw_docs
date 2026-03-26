@@ -9,6 +9,37 @@ All notable changes to PicoClaw are documented here.
 
 ---
 
+## v0.2.4
+
+*Released: 2026-03-25*
+
+### Highlights
+
+- **Largest Update Ever**: 539 files changed, ~86,000 lines of code added, surpassing 26K Stars
+- **Agent Architecture Overhaul**: Turn & Sub-turn lifecycle, EventBus, Hook system, Steering dynamic intervention
+- **Deep WeChat/WeCom Integration**: Enhanced message processing and context management
+- **Security System Upgrade**: Comprehensive security configuration and permission management
+- **New Providers & Channels**: Extensive new model and channel support
+
+### Agent Architecture Refactor (Phase 1)
+
+- **Turn & Sub-turn Lifecycle**: Turn as atomic unit for context compression and session management, supporting Sub-turn with max concurrency 5 and max nesting depth 3, supporting evaluator-optimizer mode
+- **EventBus**: 18 event types defined, covering full Agent lifecycle including conversation turns, tool calls, LLM requests/responses, sub-task creation/termination, Steering injection, context compression
+- **Hook System**: Supports Observer, Interceptor, and Approval hook types with 5 checkpoints (before_llm, after_llm, before_tool, after_tool, approve_tool), supporting both in-process and external process hooks (stdio/gRPC, Python/Node.js compatible)
+- **Steering Dynamic Intervention**: Inject new instructions into running Agent during tool call gaps
+- **Context Budget Management**: Proactively check Token consumption before each LLM call, automatically compress history when approaching limits while preserving conversation coherence based on Turn boundary detection
+- **AGENT.md Structured Definition**: Define Agent identity, capabilities, and personality through AGENT.md file with YAML frontmatter
+
+### Channels & Integration
+
+- **Deep WeChat/WeCom Integration**: Enhanced message processing and context management capabilities
+- **Security System Upgrade**: Comprehensive security configuration with optimized permission management
+- **New Providers & Channels**: Expanded Provider and Channel options
+
+### Full changelog
+- [GitHub v0.2.3...v0.2.4](https://github.com/sipeed/picoclaw/compare/v0.2.3...v0.2.4)
+---
+
 ## v0.2.1
 
 *Released: 2026-03-09*

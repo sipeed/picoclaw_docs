@@ -9,6 +9,37 @@ PicoClaw 的所有重要更新记录。
 
 ---
 
+## v0.2.4
+
+*发布日期：2026-03-25*
+
+### 核心亮点
+
+- **最大规模更新**：539 个文件变更，新增约 86,000 行代码，突破 26K Stars
+- **Agent 架构全面重构**：Turn & Sub-turn 生命周期、EventBus 事件总线、Hook 系统、Steering 动态干预
+- **微信/企业微信深度集成**：增强的消息处理与上下文管理
+- **安全体系升级**：完善的安全配置与权限管理
+- **新 Provider 与 Channel**：大量新增模型与渠道支持
+
+### Agent 架构重构 (Phase 1)
+
+- **Turn & Sub-turn 生命周期**：Turn 作为上下文压缩和会话管理的原子单元，支持最大并发数 5、最大嵌套深度 3 的 Sub-turn，支持 evaluator-optimizer 模式
+- **EventBus 事件总线**：定义 18 种事件类型，覆盖 Agent 运行全生命周期，包括对话回合、工具调用、LLM 请求/响应、子任务创建/结束、Steering 注入、上下文压缩
+- **Hook 系统**：支持 Observer、Interceptor、Approval 三种 Hook 类型，提供 5 个检查点（before_llm、after_llm、before_tool、after_tool、approve_tool），支持进程内和外部进程 Hook（stdio/gRPC，Python/Node.js 等任意语言均可接入）
+- **Steering 动态干预**：允许在工具调用间隙向运行中的 Agent 注入新指令
+- **上下文预算管理**：每次 LLM 调用前主动检查 Token 消耗，接近上限时自动安全压缩历史对话，基于 Turn 边界检测保留对话连贯性
+- **AGENT.md 结构化定义**：通过带 YAML frontmatter 的 AGENT.md 文件定义 Agent 身份、能力和人格
+
+### 渠道与集成
+
+- **微信/企业微信深度集成**：增强消息处理和上下文管理能力
+- **安全体系升级**：完善安全配置，优化权限管理机制
+- **新 Provider 与 Channel**：扩展更多 Provider 和 Channel 选项
+
+### 完整更新日志
+- [GitHub v0.2.3...v0.2.4](https://github.com/sipeed/picoclaw/compare/v0.2.3...v0.2.4)
+---
+
 ## v0.2.1
 
 *发布日期：2026-03-09*

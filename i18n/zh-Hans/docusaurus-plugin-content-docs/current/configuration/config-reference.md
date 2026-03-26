@@ -361,3 +361,17 @@ title: 完整配置参考
 | `enabled` | bool | 处理期间显示"正在输入"状态 |
 
 支持的通道：Slack、Matrix。
+
+## 安全配置
+
+### .security.yml 文件
+
+PicoClaw 新增了的 `.security.yml` 文件存储敏感凭证，如 API 密钥。此文件应添加到 `.gitignore` 中，以防止意外提交密钥。
+
+### 密钥优先级顺序
+
+解析凭证时，PicoClaw 使用以下优先级顺序：
+
+1. **config.json**：在主配置文件中定义的凭证优先级最高
+2. **.security.yml**：在安全文件中定义的凭证作为备用
+

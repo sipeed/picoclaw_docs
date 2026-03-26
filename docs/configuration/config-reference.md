@@ -361,3 +361,16 @@ Supported by: Feishu, Slack, Matrix.
 | `enabled` | bool | Show typing indicator while processing |
 
 Supported by: Slack, Matrix.
+
+## Security Configuration
+
+### .security.yml File
+
+PicoClaw now supports a dedicated `.security.yml` file for storing sensitive credentials like API keys. This file is intended to be added to `.gitignore` to prevent accidental commit of secrets.
+
+### Key Priority Order
+
+When resolving credentials, PicoClaw uses the following priority order:
+
+1. **config.json**: Credentials defined in the main configuration file take highest priority
+2. **.security.yml**: Credentials defined in the security file are used as fallbacks
