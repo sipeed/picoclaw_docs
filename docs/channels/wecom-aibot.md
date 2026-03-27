@@ -7,7 +7,7 @@ title: WeCom AI Bot (企业微信智能机器人)
 
 WeCom AI Bot (智能机器人) is the official WeCom AI Bot integration using the streaming pull protocol. It supports both private and group chats with streaming responses.
 
-For the simpler group chat bot, see [WeCom Bot](./wecom-bot). For the self-built app integration, see [WeCom App](./wecom-app).
+For the simpler group chat bot, see [WeCom Bot](./wecom-bot.md). For the self-built app integration, see [WeCom App](./wecom-app.md).
 
 ## Comparison with Other WeCom Channels
 

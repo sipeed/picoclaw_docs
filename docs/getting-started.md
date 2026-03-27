@@ -53,7 +53,7 @@ Edit `~/.picoclaw/config.json`:
 }
 ```
 
-See [Model Configuration](./configuration/model-list) for all supported providers.
+See [Model Configuration](./configuration/model-list.md) for all supported providers.
 
 ## Step 3: Chat
 

@@ -130,6 +130,6 @@ PicoClaw runs on almost any Linux device:
 
 ## Next Steps
 
-- [Getting Started](./getting-started) — configure and run your first chat
-- [Configuration](./configuration) — full configuration reference
-- [Chat Channels](./channels) — connect to Telegram, Discord, and more
+- [Getting Started](./getting-started.md) — configure and run your first chat
+- [Configuration](./configuration/index.md) — full configuration reference
+- [Chat Channels](./channels/index.md) — connect to Telegram, Discord, and more

@@ -7,7 +7,7 @@ title: WeCom App (企业微信自建应用)
 
 WeCom App (自建应用) offers more features than WeCom Bot: private chat, proactive messaging, and more.
 
-For the simpler group chat bot, see [WeCom Bot](./wecom-bot). For the official AI Bot integration, see [WeCom AI Bot](./wecom-aibot).
+For the simpler group chat bot, see [WeCom Bot](./wecom-bot.md). For the official AI Bot integration, see [WeCom AI Bot](./wecom-aibot.md).
 
 ## Features
 

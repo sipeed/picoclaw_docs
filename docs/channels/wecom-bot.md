@@ -7,7 +7,7 @@ title: WeCom Bot (企业微信机器人)
 
 WeCom Bot (智能机器人) is the easier WeCom integration. It supports group chats via webhook.
 
-For the full-featured WeCom App integration (private chat, proactive messaging), see [WeCom App](./wecom-app). For the official AI Bot integration, see [WeCom AI Bot](./wecom-aibot).
+For the full-featured WeCom App integration (private chat, proactive messaging), see [WeCom App](./wecom-app.md). For the official AI Bot integration, see [WeCom AI Bot](./wecom-aibot.md).
 
 ## Setup
 

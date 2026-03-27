@@ -53,7 +53,7 @@ picoclaw onboard
 }
 ```
 
-详见 [Model 配置](./configuration/model-list)，查看所有支持的提供商。
+详见 [Model 配置](./configuration/model-list.md)，查看所有支持的提供商。
 
 ## 第三步：对话
 

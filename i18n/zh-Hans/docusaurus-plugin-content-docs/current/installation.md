@@ -129,6 +129,6 @@ PicoClaw 可以运行在几乎任何 Linux 设备上：
 
 ## 下一步
 
-- [快速开始](./getting-started) — 配置并运行第一次对话
-- [配置说明](./configuration) — 完整配置参考
-- [聊天通道](./channels) — 接入 Telegram、Discord 等
+- [快速开始](./getting-started.md) — 配置并运行第一次对话
+- [配置说明](./configuration/index.md) — 完整配置参考
+- [聊天通道](./channels/index.md) — 接入 Telegram、Discord 等
