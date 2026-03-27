@@ -20,6 +20,7 @@ const sidebars = {
       items: [
         'installation/licheervnano',
         'installation/maixcam',
+        'installation/macos',
       ],
     },
     {
