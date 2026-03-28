@@ -1,17 +1,17 @@
 ---
 id: macos
-title: Deploy on macOS
+title: Deploy on MacOS
 ---
 
-# Deploy on macOS
+# Deploy on MacOS
 
-This document guides you through deploying PicoClaw on a macOS system.
+This document guides you through deploying PicoClaw on a MacOS system.
 
 ## Installation
 
 ### Download the Package
 
-1. Visit the [PicoClaw website](https://picoclaw.io/) and download the macOS package.
+1. Visit the [PicoClaw website](https://picoclaw.io/) and download the MacOS package.
 
 ![Download](/img/installation/macdownload.png)
 
@@ -21,24 +21,35 @@ This document guides you through deploying PicoClaw on a macOS system.
 
 ## Start PicoClaw
 
-Launch PicoClaw using the binary file.
+After extracting the archive, launch PicoClaw by double-clicking `picoclaw-launcher`.
 
-After the service starts, open your browser and navigate to the following address to access the PicoClaw Web UI:
+Once the service starts, it will automatically open your browser. If the browser does not open, navigate to the following address to access the PicoClaw Web UI:
 
 ```text
 http://localhost:18800
 ```
-- Note: Safari may block HTTP connections. If this happens, try using another browser.
 
 ![webui](/img/installation/macwebui.png)
 
-## macOS Security Notice
+- Note: Safari may block HTTP links. You can resolve this by going to Safari Preferences → Security → and unchecking "Warn before visiting an insecure website".
 
-Due to macOS security restrictions, you may need to manually allow the application to run.
+![safariset](/img/installation/safariset.png)
+
+## MacOS — First Launch Security Warning
+
+MacOS may block `picoclaw-launcher` on first launch because it was downloaded from the internet and is not notarized by the Mac App Store.
+
+**Step 1:** Double-click `picoclaw-launcher`. A security warning will appear:
 
 ![macsafe](/img/installation/macos.jpg)
 
+> *"picoclaw-launcher" cannot be opened — Apple cannot verify that "picoclaw-launcher" is free of malware that may harm your Mac or compromise your privacy.*
+
+**Step 2:** Open **System Settings** → **Privacy & Security** → Scroll down to the **Security** section → Click **Open Anyway** → Click **Open** again in the confirmation dialog.
+
 ![macsafe](/img/installation/macos1.jpg)
+
+After completing this operation, launching `picoclaw-launcher` will no longer show the warning in the future.
 
 
 

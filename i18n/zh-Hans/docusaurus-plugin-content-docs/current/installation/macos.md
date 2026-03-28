@@ -30,13 +30,16 @@ title: 在 macOS 上部署
 ```text
 http://localhost:18800
 ```
-- 注意，Safari会拦截http链接，可以尝试更换浏览器。
-
 ![webui](/img/installation/macwebui.png)
 
-## macOS — 首次启动安全警告
+- 注意，Safari可能会拦截http链接，可以通过取消勾选 Safari 偏好设置->安全性->不安全的站点链接：通过 HTTP 连接网站前接受警告。
+![safariset](/img/installation/safariset.png)
 
-macOS 可能会在首次启动时拦截 `picoclaw-launcher`，因为它从互联网下载，未经 Mac App Store 公证。 
+
+
+## MacOS — 首次启动安全警告
+
+MacOS 可能会在首次启动时拦截 `picoclaw-launcher`，因为它从互联网下载，未经 Mac App Store 公证。 
 
 **第一步：** 双击 `picoclaw-launcher`，会出现安全警告：
 
