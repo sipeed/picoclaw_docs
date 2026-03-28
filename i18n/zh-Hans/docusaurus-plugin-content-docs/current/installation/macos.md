@@ -24,7 +24,7 @@ title: 在 MacOS 上部署
 
 ## 启动 PicoClaw
 
-通过二进制文件启动 PicoClaw
+解压后，通过双击 picoclaw-launcher 启动 PicoClaw
 服务启动后，打开浏览器，访问以下地址即可进入 PicoClaw 的 Web UI：
 
 ```text
