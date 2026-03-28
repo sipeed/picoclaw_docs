@@ -1,6 +1,6 @@
 ---
 id: macos
-title: 在 MacOS 上部署
+title: 在 macOS 上部署
 ---
 
 # 在 MacOS 上部署
