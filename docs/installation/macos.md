@@ -31,7 +31,7 @@ http://localhost:18800
 
 ![webui](/img/installation/macwebui.png)
 
-- Note: Safari may block HTTP links. You can resolve this by going to Safari Preferences → Security → and unchecking "Warn before visiting an insecure website".
+- Note: Safari may block HTTP links. You can resolve this by going to Safari Preferences → Security → and unchecking "Warn before connecting to a website over HTTP".
 
 ![safariset](/img/installation/safariset.png)
 
