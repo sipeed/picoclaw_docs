@@ -1,17 +1,17 @@
 ---
 id: macos
-title: Deploy on MacOS
+title: Deploy on macOS
 ---
 
-# Deploy on MacOS
+# Deploy on macOS
 
-This document guides you through deploying PicoClaw on a MacOS system.
+This document guides you through deploying PicoClaw on a macOS system.
 
 ## Installation
 
 ### Download the Package
 
-1. Visit the [PicoClaw website](https://picoclaw.io/) and download the MacOS package.
+1. Visit the [PicoClaw website](https://picoclaw.io/) and download the macOS package.
 
 ![Download](/img/installation/macdownload.png)
 
@@ -35,9 +35,9 @@ http://localhost:18800
 
 ![safariset](/img/installation/safariset.png)
 
-## MacOS — First Launch Security Warning
+## macOS — First Launch Security Warning
 
-MacOS may block `picoclaw-launcher` on first launch because it was downloaded from the internet and is not notarized by the Mac App Store.
+macOS may block `picoclaw-launcher` on first launch because it was downloaded from the internet and is not notarized by the Mac App Store.
 
 **Step 1:** Double-click `picoclaw-launcher`. A security warning will appear:
 

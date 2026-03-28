@@ -3,16 +3,16 @@ id: macos
 title: 在 macOS 上部署
 ---
 
-# 在 MacOS 上部署
+# 在 macOS 上部署
 
-本文档将指导您在 MacOS 系统上部署 PicoClaw。
+本文档将指导您在 macOS 系统上部署 PicoClaw。
 
 ## 安装方式
 
 
 ### 下载对应的压缩包
 
-1. 访问 [PicoClaw官网](https://picoclaw.io/) 下载适用于 MacOS 的压缩包
+1. 访问 [PicoClaw官网](https://picoclaw.io/) 下载适用于 macOS 的压缩包
 
 ![下载](/img/installation/macdownload.png)
 
@@ -37,9 +37,9 @@ http://localhost:18800
 
 
 
-## MacOS — 首次启动安全警告
+## macOS — 首次启动安全警告
 
-MacOS 可能会在首次启动时拦截 `picoclaw-launcher`，因为它从互联网下载，未经 Mac App Store 公证。 
+macOS 可能会在首次启动时拦截 `picoclaw-launcher`，因为它从互联网下载，未经 Mac App Store 公证。 
 
 **第一步：** 双击 `picoclaw-launcher`，会出现安全警告：
 
