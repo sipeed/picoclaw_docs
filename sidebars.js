@@ -37,6 +37,9 @@ const sidebars = {
         'configuration/config-reference',
         'credential-encryption',
         'sensitive-data-filtering',
+        'configuration/exec',
+
+
       ],
     },
     {

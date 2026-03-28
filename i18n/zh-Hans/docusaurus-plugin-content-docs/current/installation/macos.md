@@ -35,8 +35,8 @@ http://localhost:18800
 ![webui](/img/installation/macwebui.png)
 
 ## 由于mac的安全设置，需要手动允许打开
-![macsafe](/img/installation/macos.png)
+![macsafe](/img/installation/macos.jpg)
 
-![macsafe](/img/installation/macos1.png)
+![macsafe](/img/installation/macos1.jpg)
 
 

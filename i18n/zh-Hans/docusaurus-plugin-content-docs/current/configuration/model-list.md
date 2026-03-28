@@ -38,6 +38,7 @@ PicoClaw 采用**以模型为中心**的配置方式。只需指定 `vendor/mode
 | **神算云** | `shengsuanyun/` | `https://router.shengsuanyun.com/api/v1` | OpenAI | [获取](https://router.shengsuanyun.com) |
 | **Antigravity** | `antigravity/` | Google Cloud | 自定义 | 仅 OAuth |
 | **GitHub Copilot** | `github-copilot/` | `localhost:4321` | gRPC | — |
+| **MiMo** | `mimo/` | `https://api.xiaomimimo.com/v1` | OpenAI | [获取](https://platform.xiaomimimo.com) |
 
 ## 基础配置
 
