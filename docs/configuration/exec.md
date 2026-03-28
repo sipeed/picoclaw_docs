@@ -70,7 +70,7 @@ Suitable for high-security, read-only environments:
 ```
 **Effect:** All command requests are rejected, both local and remote.
 
-Scenario 2: Allow Local Execution Only
+## Scenario 2: Allow Local Execution Only
 
 Suitable when local automation is needed but remote command execution is not allowed:
 ```json
@@ -85,7 +85,7 @@ Suitable when local automation is needed but remote command execution is not all
 ```
 **Effect:** Local terminal commands can execute
 Remote channel requests (Telegram, Discord, etc.) are rejected
-Scenario 3: Fully Open (Default)
+### Scenario 3: Fully Open (Default)
 
 Suitable for development environments or trusted networks:
 ```json
