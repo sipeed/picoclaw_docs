@@ -38,6 +38,7 @@ This enables **multi-agent support** with flexible provider selection:
 | **ShengSuanYun** | `shengsuanyun/` | `https://router.shengsuanyun.com/api/v1` | OpenAI | [Get Key](https://router.shengsuanyun.com) |
 | **Antigravity** | `antigravity/` | Google Cloud | Custom | OAuth only |
 | **GitHub Copilot** | `github-copilot/` | `localhost:4321` | gRPC | — |
+| **MiMo** | `mimo/` | `https://api.xiaomimimo.com/v1` | OpenAI | [获取](https://platform.xiaomimimo.com) |
 
 ## Basic Configuration
 
