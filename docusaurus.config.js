@@ -117,4 +117,17 @@ const config = {
     }),
 };
 
+config.themes = [
+  [
+    require.resolve('@easyops-cn/docusaurus-search-local'),
+    /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
+    ({
+      hashed: true,
+      language: ['en', 'zh'],
+      indexBlog: false,
+      docsRouteBasePath: '/docs',
+    }),
+  ],
+];
+
 module.exports = config;
