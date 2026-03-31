@@ -118,10 +118,10 @@ PicoClaw 通过 `cron` 工具支持提醒和周期性任务：
 让旧手机变身 AI 助手：
 
 ```bash
-wget https://github.com/sipeed/picoclaw/releases/latest/download/picoclaw-linux-arm64
-chmod +x picoclaw-linux-arm64
+wget https://github.com/sipeed/picoclaw/releases/latest/download/picoclaw_Linux_arm64.tar.gz
+tar xzf picoclaw_Linux_arm64.tar.gz
 pkg install proot
-termux-chroot ./picoclaw-linux-arm64 onboard
+termux-chroot ./picoclaw onboard
 ```
 
 ![PicoClaw 在 Termux 中运行](https://github.com/sipeed/picoclaw/raw/main/assets/termux.jpg)

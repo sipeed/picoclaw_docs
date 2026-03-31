@@ -118,10 +118,10 @@ Jobs are stored in `~/.picoclaw/workspace/cron/` and processed automatically.
 Give your old phone a second life as an AI assistant:
 
 ```bash
-wget https://github.com/sipeed/picoclaw/releases/latest/download/picoclaw-linux-arm64
-chmod +x picoclaw-linux-arm64
+wget https://github.com/sipeed/picoclaw/releases/latest/download/picoclaw_Linux_arm64.tar.gz
+tar xzf picoclaw_Linux_arm64.tar.gz
 pkg install proot
-termux-chroot ./picoclaw-linux-arm64 onboard
+termux-chroot ./picoclaw onboard
 ```
 
 ![PicoClaw running in Termux](https://github.com/sipeed/picoclaw/raw/main/assets/termux.jpg)
