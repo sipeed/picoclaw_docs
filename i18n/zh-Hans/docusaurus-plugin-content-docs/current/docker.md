@@ -30,7 +30,11 @@ docker compose -f docker/docker-compose.yml --profile gateway up -d
 :::
 
 :::note 网关 Profile
-`gateway` profile 仅提供 Webhook 处理和健康检查端点，不提供通用 Web 界面。
+`gateway` profile 仅提供 Webhook 处理（包括启用时的 Pico 通道）和健康检查端点。不提供通用 REST 聊天接口。启动器模式在 18800 端口提供浏览器 UI。
+:::
+
+:::info 重启策略
+网关和启动器服务使用 `restart: unless-stopped`，因此在崩溃或系统重启后会自动重启，除非被明确停止。
 :::
 
 ## 启动器模式（Web 控制台）
@@ -43,8 +47,8 @@ docker compose -f docker/docker-compose.yml --profile launcher up -d
 
 打开 `http://localhost:18800` 即可管理模型、渠道和网关进程。
 
-:::warning 无身份验证
-启动器没有内置身份验证。切勿将 18800 端口直接暴露到公网，请自行添加认证层（反向代理、VPN 等）。
+:::warning Dashboard Token
+Web 控制台使用 Dashboard Token（每次运行时在内存中生成，除非设置了 `PICOCLAW_LAUNCHER_TOKEN`）。切勿将启动器暴露到不受信任的网络或公网，请自行添加认证层（反向代理、VPN 等）。
 :::
 
 ## Agent 模式
