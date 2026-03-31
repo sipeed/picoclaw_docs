@@ -1,7 +1,7 @@
 {
   "source_repo": "https://github.com/sipeed/picoclaw",
-  "source_commit": "9d6a445bb175bb3881265c2d68e0685f72ba2786",
-  "generated_at": "2026-03-25T00:00:00+08:00",
+  "source_commit": "2d8556205faaf24059f60c70f118230e1ffc0095",
+  "generated_at": "2026-03-30T00:00:00+08:00",
   "docs": {
     "docs/intro.md": {
       "source_files": ["README.md", "assets/arch.jpg"]
@@ -13,22 +13,22 @@
       "source_files": ["README.md", "Makefile", "docker/Dockerfile", "docker/docker-compose.yml", ".goreleaser.yaml"]
     },
     "docs/configuration/index.md": {
-      "source_files": ["pkg/config/config.go", "pkg/config/defaults.go", "config/config.example.json"]
+      "source_files": ["pkg/config/config.go", "pkg/config/config_struct.go", "pkg/config/defaults.go", "config/config.example.json", "docs/configuration.md"]
     },
     "docs/configuration/config-reference.md": {
-      "source_files": ["pkg/config/config.go", "pkg/config/defaults.go", "config/config.example.json"]
+      "source_files": ["pkg/config/config.go", "pkg/config/config_struct.go", "pkg/config/defaults.go", "config/config.example.json"]
     },
     "docs/configuration/model-list.md": {
-      "source_files": ["pkg/config/config.go", "pkg/providers/factory.go", "pkg/providers/factory_provider.go", "config/config.example.json"]
+      "source_files": ["pkg/config/config.go", "pkg/config/config_struct.go", "pkg/providers/factory.go", "pkg/providers/factory_provider.go", "config/config.example.json"]
     },
     "docs/configuration/tools.md": {
-      "source_files": ["pkg/config/config.go", "pkg/tools/registry.go", "pkg/tools/types.go", "pkg/tools/web.go", "pkg/tools/shell.go", "pkg/tools/filesystem.go", "pkg/tools/mcp_tool.go", "pkg/tools/cron.go", "pkg/tools/spawn.go", "pkg/mcp/manager.go"]
+      "source_files": ["pkg/config/config.go", "pkg/tools/registry.go", "pkg/tools/types.go", "pkg/tools/web.go", "pkg/tools/shell.go", "pkg/tools/filesystem.go", "pkg/tools/mcp_tool.go", "pkg/tools/cron.go", "pkg/tools/spawn.go", "pkg/tools/reaction.go", "pkg/mcp/manager.go", "docs/tools_configuration.md"]
     },
     "docs/configuration/heartbeat.md": {
       "source_files": ["pkg/heartbeat/service.go", "pkg/config/config.go"]
     },
     "docs/configuration/security-sandbox.md": {
-      "source_files": ["pkg/tools/shell.go", "pkg/tools/filesystem.go", "pkg/config/config.go"]
+      "source_files": ["pkg/tools/shell.go", "pkg/tools/filesystem.go", "pkg/config/config.go", "docs/security_configuration.md"]
     },
     "docs/channels/index.md": {
       "source_files": ["pkg/channels/manager.go", "pkg/channels/base.go", "pkg/channels/registry.go", "pkg/channels/interfaces.go"]
@@ -48,14 +48,8 @@
     "docs/channels/feishu.md": {
       "source_files": ["pkg/channels/feishu/feishu_64.go", "pkg/channels/feishu/feishu_32.go", "pkg/channels/feishu/common.go", "pkg/channels/feishu/init.go"]
     },
-    "docs/channels/wecom-bot.md": {
-      "source_files": ["pkg/channels/wecom/bot.go", "pkg/channels/wecom/common.go", "pkg/channels/wecom/init.go"]
-    },
-    "docs/channels/wecom-app.md": {
-      "source_files": ["pkg/channels/wecom/app.go", "pkg/channels/wecom/common.go", "pkg/channels/wecom/init.go"]
-    },
-    "docs/channels/wecom-aibot.md": {
-      "source_files": ["pkg/channels/wecom/aibot.go", "pkg/channels/wecom/common.go", "pkg/channels/wecom/init.go"]
+    "docs/channels/wecom.md": {
+      "source_files": ["pkg/channels/wecom/wecom.go", "docs/channels/wecom/README.md", "docs/channels/wecom/README.zh.md"]
     },
     "docs/channels/qq.md": {
       "source_files": ["pkg/channels/qq/qq.go", "pkg/channels/qq/init.go"]
@@ -73,10 +67,10 @@
       "source_files": ["pkg/channels/matrix/matrix.go", "pkg/channels/matrix/init.go", "docs/channels/matrix/README.md", "docs/channels/matrix/README.zh.md"]
     },
     "docs/channels/weixin.md": {
-      "source_files": ["pkg/channels/weixin/weixin.go", "pkg/channels/weixin/api.go", "pkg/channels/weixin/auth.go", "docs/channels/weixin/README.md", "docs/channels/weixin/README.zh.md"]
+      "source_files": ["pkg/channels/weixin/weixin.go", "pkg/channels/weixin/api.go", "pkg/channels/weixin/auth.go", "pkg/channels/weixin/state.go", "docs/channels/weixin/README.md", "docs/channels/weixin/README.zh.md"]
     },
     "docs/providers/index.md": {
-      "source_files": ["pkg/providers/factory.go", "pkg/providers/factory_provider.go", "pkg/providers/http_provider.go", "pkg/providers/openai_compat/provider.go", "pkg/providers/anthropic/provider.go"]
+      "source_files": ["pkg/providers/factory.go", "pkg/providers/factory_provider.go", "pkg/providers/http_provider.go", "pkg/providers/openai_compat/provider.go", "pkg/providers/anthropic/provider.go", "docs/providers.md"]
     },
     "docs/providers/antigravity.md": {
       "source_files": ["pkg/providers/antigravity_provider.go", "docs/ANTIGRAVITY_AUTH.md"]
@@ -92,6 +86,9 @@
     },
     "docs/spawn-tasks.md": {
       "source_files": ["docs/spawn-tasks.md", "pkg/tools/spawn.go", "pkg/heartbeat/service.go"]
+    },
+    "docs/cron.md": {
+      "source_files": ["docs/cron.md", "pkg/tools/cron.go", "pkg/cron/service.go"]
     },
     "docs/credential-encryption.md": {
       "source_files": ["docs/credential_encryption.md", "pkg/credential/encrypt.go", "pkg/credential/decrypt.go"]

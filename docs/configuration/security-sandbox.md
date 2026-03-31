@@ -98,6 +98,43 @@ The `restrict_to_workspace` setting applies consistently across all execution pa
 
 All paths share the same workspace restriction — there's no way to bypass the security boundary through subagents or scheduled tasks.
 
+## Channel Access Control (`allow_from`)
+
+Each channel supports an `allow_from` array that restricts which users can interact with the bot:
+
+```json
+{
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "allow_from": ["123456789"]
+    }
+  }
+}
+```
+
+| Value | Behavior |
+| --- | --- |
+| `[]` (empty) | Allow everyone (a security warning is logged at startup) |
+| `["user1", "user2"]` | Allow only the listed user IDs |
+| `["*"]` | Allow everyone (explicit wildcard, acknowledges open access) |
+
+:::warning Open Access
+Using `"*"` or an empty `allow_from` array means **anyone** can interact with your bot. Use this only when you intentionally want public access. PicoClaw logs a security warning at startup if `allow_from` is empty.
+:::
+
+## .security.yml
+
+PicoClaw v2 supports a `.security.yml` file for storing sensitive credentials (API keys, tokens, secrets) separately from `config.json`. This file should be placed in the same directory as `config.json` (typically `~/.picoclaw/.security.yml`) and added to `.gitignore`.
+
+Values from `.security.yml` are automatically mapped to the corresponding fields in `config.json` at load time. If a field exists in both files, `.security.yml` takes precedence.
+
+```bash
+chmod 600 ~/.picoclaw/.security.yml
+```
+
+See [Credential Encryption](../credential-encryption.md) for details on encrypting values in `.security.yml`.
+
 ## Safe Paths
 
 The following paths are always accessible regardless of workspace restriction:

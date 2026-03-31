@@ -123,6 +123,10 @@ PicoClaw reacts to user messages with an emoji to acknowledge receipt. You can c
 
 Leave empty to use the default "Pin" emoji. See the [Feishu Emoji List](https://open.larkoffice.com/document/server-docs/im-v1/message-reaction/emojis-introduce) for available emojis.
 
+:::note
+Empty or whitespace-only entries in the `random_reaction_emoji` list are automatically filtered out. For example, `["", "Pin"]` is treated the same as `["Pin"]`. If the list contains no valid entries after filtering, the default "Pin" emoji is used.
+:::
+
 ## How It Works
 
 - PicoClaw uses the Lark SDK with **WebSocket mode** for event handling

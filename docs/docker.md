@@ -30,7 +30,11 @@ By default, the Gateway listens on `127.0.0.1`. Set `PICOCLAW_GATEWAY_HOST=0.0.0
 :::
 
 :::note Gateway Profile
-The `gateway` profile serves webhook handlers and health endpoints only. It does not provide a general-purpose web interface.
+The `gateway` profile only serves the webhook handlers (including Pico when enabled) and health endpoints on the gateway port. It does not expose generic REST chat endpoints. The Launcher mode adds the browser UI on port 18800.
+:::
+
+:::info Restart Policy
+The gateway and launcher services use `restart: unless-stopped` so they automatically restart after crashes or system reboots, unless explicitly stopped.
 :::
 
 ## Launcher Mode (Web Console)
@@ -43,8 +47,8 @@ docker compose -f docker/docker-compose.yml --profile launcher up -d
 
 Open `http://localhost:18800` to manage models, channels, and the gateway process.
 
-:::warning No Authentication
-The Launcher has no built-in authentication. Do not expose port 18800 to the public internet without adding your own auth layer (reverse proxy, VPN, etc.).
+:::warning Dashboard Token
+The web console uses a dashboard token (generated in-memory per run unless `PICOCLAW_LAUNCHER_TOKEN` is set). Do not expose the launcher to untrusted networks or the public internet without adding your own auth layer (reverse proxy, VPN, etc.).
 :::
 
 ## Agent Mode

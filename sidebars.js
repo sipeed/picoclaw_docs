@@ -52,9 +52,7 @@ const sidebars = {
         'channels/slack',
         'channels/qq',
         'channels/dingtalk',
-        'channels/wecom-bot',
-        'channels/wecom-app',
-        'channels/wecom-aibot',
+        'channels/wecom',
         'channels/feishu',
         'channels/line',
         'channels/onebot',
@@ -83,6 +81,7 @@ const sidebars = {
         'hooks',
         'steering',
         'spawn-tasks',
+        'cron',
       ],
     },
     {
