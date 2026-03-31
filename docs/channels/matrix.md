@@ -80,6 +80,7 @@ The bot will connect to the homeserver and start listening for messages. If `joi
 ## Supported Features
 
 - **Text messages** — Send and receive text messages with Markdown support
+- **Improved HTML formatting** — Markdown responses are converted to HTML using a CommonMark-compliant parser with XHTML output, ensuring reliable rendering of lists, code blocks, and other formatting without requiring blank lines before block elements
 - **Media messages** — Incoming image/audio/video/file download and outgoing upload
 - **Audio transcription** — Incoming audio is normalized into the existing transcription flow (`[audio: ...]`)
 - **Group trigger rules** — Supports mention-only mode and keyword prefixes

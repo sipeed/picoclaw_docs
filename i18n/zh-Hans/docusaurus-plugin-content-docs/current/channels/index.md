@@ -21,9 +21,7 @@ picoclaw gateway
 | **Slack** | 简单 | Socket 模式，无需公网 IP。 |
 | **QQ** | 简单 | 官方 QQ 机器人 API（AppID + AppSecret）。 |
 | **钉钉** | 中等 | Stream 模式，无需公网 IP。 |
-| **企业微信机器人** | 中等 | 群聊 Webhook。 |
-| **企业微信自建应用** | 困难 | 私聊、主动推送消息。 |
-| **企业微信智能机器人** | 中等 | 官方 AI Bot，流式拉取协议。 |
+| **企业微信** | 简单 | 统一 WebSocket 企业微信集成，基于 AI Bot API。支持扫码登录。 |
 | **飞书** | 困难 | 企业协作平台。 |
 | **LINE** | 困难 | 通过共享网关端口接收 Webhook。 |
 | **OneBot** | 中等 | 兼容 NapCat/Go-CQHTTP。 |
@@ -55,7 +53,7 @@ picoclaw gateway
 }
 ```
 
-将 `allow_from` 设置为空数组 `[]` 可允许所有用户访问。
+将 `allow_from` 设置为空数组 `[]` 可允许所有用户访问。也可以设置 `allow_from: ["*"]` 来显式允许所有用户（启动时会打印警告日志）。
 
 ## 通用通道字段
 
@@ -68,4 +66,6 @@ picoclaw gateway
 
 ## 共享网关
 
-所有基于 Webhook 的通道（LINE、企业微信机器人、企业微信自建应用、企业微信智能机器人）共享同一个网关 HTTP 服务器，端口为 `18790`。不再需要每个通道单独配置 `webhook_host`/`webhook_port`——只需配置 `webhook_path` 即可区分各端点。
+所有基于 Webhook 的通道（LINE、钉钉等）共享同一个网关 HTTP 服务器，端口为 `18790`。不再需要每个通道单独配置 `webhook_host`/`webhook_port`——只需配置 `webhook_path` 即可区分各端点。企业微信现在使用出站 WebSocket 连接，不再需要公网 Webhook。
+
+日志级别通过 `gateway.log_level` 控制（默认：`warn`）。支持的值：`debug`、`info`、`warn`、`error`、`fatal`。

@@ -66,6 +66,10 @@ PicoClaw 提供了现代化的Web管理界面，可以一键获取二维码。
 | `allow_from` | (可选) 允许与机器人交互的微信 User ID 列表。如果为空，任何能给此微信号发消息的人都可以触发机器人。 |
 | `proxy` | (可选) HTTP 代理地址（例如 `http://localhost:7890`），适合网络访问受限环境。 |
 
+## 会话持久化
+
+PicoClaw 会自动将微信的 context token 持久化到磁盘，使对话会话在重启后得以恢复。每条收到的消息都携带一个 `context_token`，用于将回复关联到正确的对话；这些 token 保存在 `~/.picoclaw/channels/weixin/context-tokens/` 目录下，并在网关启动时自动恢复。这意味着你可以重启 PicoClaw 而不会丢失回复进行中对话的能力。
+
 ## ⚠️ 注意事项
 
 - **单端绑定**: iLink 令牌通常与单个会话绑定。在其他地方重新扫码激活可能会导致旧令牌失效。

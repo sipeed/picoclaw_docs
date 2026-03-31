@@ -9,6 +9,8 @@ title: 完整配置参考
 
 ```json
 {
+  "version": 2,
+
   "agents": {
     "defaults": {
       "workspace": "~/.picoclaw/workspace",
@@ -264,12 +266,19 @@ title: 完整配置参考
 
   "gateway": {
     "host": "127.0.0.1",
-    "port": 18790
+    "port": 18790,
+    "log_level": "warn"
   }
 }
 ```
 
 ## 字段说明
+
+### `version`
+
+| 字段 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `version` | int | `0` | 配置架构版本。当前版本为 `2`。新配置应设置为 `2`。 |
 
 ### `agents.defaults`
 
@@ -305,16 +314,23 @@ title: 完整配置参考
 | --- | --- | --- | --- |
 | `model_name` | string | 是 | 别名（在 `agents.defaults.model_name` 中引用） |
 | `model` | string | 是 | `vendor/model-id` 格式 |
-| `api_key` | string | 视情况 | 提供商 API Key |
+| `api_keys` | array | 视情况 | API 认证密钥（数组；支持多个密钥用于负载均衡）。基于 HTTP 的提供商必填，除非 `api_base` 指向本地服务。 |
 | `api_base` | string | 否 | 覆盖默认 API 地址 |
+| `enabled` | bool | 否 | 该模型条目是否启用。迁移期间默认为 `true`（有 API 密钥或名为 `local-model` 的模型自动启用）。设为 `false` 可禁用模型但不删除配置。 |
 | `auth_method` | string | 否 | 认证方式（如 `oauth`） |
 | `proxy` | string | 否 | 该模型的 HTTP/SOCKS 代理 |
-| `request_timeout` | int | 否 | 请求超时时间（秒），默认 120 |
+| `request_timeout` | int | 否 | 请求超时时间（秒）；`<=0` 使用默认值 120s |
 | `rpm` | int | 否 | 速率限制（每分钟请求数） |
 | `max_tokens_field` | string | 否 | 覆盖 API 请求中的 max tokens 字段名 |
 | `connect_mode` | string | 否 | 连接模式覆盖 |
 | `workspace` | string | 否 | 模型级工作目录覆盖 |
 | `thinking_level` | string | 否 | 扩展思考级别：`off`、`low`、`medium`、`high`、`xhigh` 或 `adaptive` |
+| `fallbacks` | array | 否 | 故障转移备用模型名 |
+| `extra_body` | object | 否 | 注入 API 请求体的额外字段 |
+
+:::note V2 中 API Key 格式变更
+在 V2 中，`api_key`（单数字符串）已移除，仅支持 `api_keys`（数组）。从 V0/V1 迁移时，两种格式会自动合并为 `api_keys` 数组。API 密钥也可使用 `SecureString` 模式：明文、`enc://<base64>`（加密）或 `file://<path>`（文件引用）。详见[凭证加密](../credential-encryption.md)。
+:::
 
 ### `gateway`
 
@@ -322,6 +338,8 @@ title: 完整配置参考
 | --- | --- | --- | --- |
 | `host` | string | `127.0.0.1` | 网关监听地址 |
 | `port` | int | 18790 | 网关监听端口 |
+| `log_level` | string | `warn` | 日志详细程度：`debug`、`info`、`warn`、`error`、`fatal`。也可通过 `PICOCLAW_LOG_LEVEL` 环境变量设置。 |
+| `hot_reload` | bool | `false` | 启用配置热重载 |
 
 设置 `host: "0.0.0.0"` 可让网关对外开放。
 
@@ -366,7 +384,7 @@ title: 完整配置参考
 
 ### .security.yml 文件
 
-PicoClaw 新增了的 `.security.yml` 文件存储敏感凭证，如 API 密钥。此文件应添加到 `.gitignore` 中，以防止意外提交密钥。
+PicoClaw 支持专用的 `.security.yml` 文件来存储敏感凭证（API 密钥、令牌、密钥）。此文件应添加到 `.gitignore` 中，以防止意外提交密钥。
 
 ### 密钥优先级顺序
 

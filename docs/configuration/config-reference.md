@@ -9,6 +9,8 @@ Complete annotated `config.json` example. Copy from `config/config.example.json`
 
 ```json
 {
+  "version": 2,
+
   "agents": {
     "defaults": {
       "workspace": "~/.picoclaw/workspace",
@@ -264,12 +266,19 @@ Complete annotated `config.json` example. Copy from `config/config.example.json`
 
   "gateway": {
     "host": "127.0.0.1",
-    "port": 18790
+    "port": 18790,
+    "log_level": "warn"
   }
 }
 ```
 
 ## Field Reference
+
+### `version`
+
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `version` | int | `0` | Config schema version. Current version is `2`. New configs should set this to `2`. |
 
 ### `agents.defaults`
 
@@ -305,16 +314,23 @@ When enabled, PicoClaw scores each incoming message against structural features 
 | --- | --- | --- | --- |
 | `model_name` | string | Yes | Alias used in `agents.defaults.model_name` |
 | `model` | string | Yes | `vendor/model-id` format |
-| `api_key` | string | Depends | API key for the provider |
+| `api_keys` | array | Depends | API authentication keys (array; supports multiple keys for load balancing). Required for HTTP-based providers unless `api_base` points to a local server. |
 | `api_base` | string | No | Override default API base URL |
+| `enabled` | bool | No | Whether this model entry is active. Defaults to `true` during migration for models with API keys or named `local-model`. Set to `false` to disable a model without removing its configuration. |
 | `auth_method` | string | No | Authentication method (e.g., `oauth`) |
 | `proxy` | string | No | HTTP/SOCKS proxy for this model |
-| `request_timeout` | int | No | Request timeout in seconds (default: 120) |
+| `request_timeout` | int | No | Request timeout in seconds; `<=0` uses default 120s |
 | `rpm` | int | No | Rate limit (requests per minute) |
 | `max_tokens_field` | string | No | Override the max tokens field name in API requests |
 | `connect_mode` | string | No | Connection mode override |
 | `workspace` | string | No | Per-model workspace override |
 | `thinking_level` | string | No | Extended thinking level: `off`, `low`, `medium`, `high`, `xhigh`, or `adaptive` |
+| `fallbacks` | array | No | Fallback model names for failover |
+| `extra_body` | object | No | Additional fields to inject into API request body |
+
+:::note API Key Format Change in V2
+In V2, `api_key` (singular string) has been removed. Only `api_keys` (array) is supported. During migration from V0/V1, both formats are automatically merged into the `api_keys` array. API keys can also use the `SecureString` pattern: plaintext, `enc://<base64>` (encrypted), or `file://<path>` (file reference). See [Credential Encryption](../credential-encryption.md).
+:::
 
 ### `gateway`
 
@@ -322,6 +338,8 @@ When enabled, PicoClaw scores each incoming message against structural features 
 | --- | --- | --- | --- |
 | `host` | string | `127.0.0.1` | Gateway listen host |
 | `port` | int | 18790 | Gateway listen port |
+| `log_level` | string | `warn` | Log verbosity: `debug`, `info`, `warn`, `error`, `fatal`. Can also be set via `PICOCLAW_LOG_LEVEL` env var. |
+| `hot_reload` | bool | `false` | Enable hot-reload of config changes |
 
 Set `host: "0.0.0.0"` to make the gateway accessible from other devices.
 

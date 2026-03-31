@@ -21,9 +21,7 @@ picoclaw gateway
 | **Slack** | Easy | Socket mode, no public IP needed. |
 | **QQ** | Easy | Official QQ bot API (AppID + AppSecret). |
 | **DingTalk** | Medium | Stream mode, no public IP needed. |
-| **WeCom Bot** | Medium | Group chat via webhook. |
-| **WeCom App** | Hard | Private chat, proactive messaging. |
-| **WeCom AI Bot** | Medium | Official AI Bot with streaming pull protocol. |
+| **WeCom** | Easy | Unified WebSocket-based WeCom integration via AI Bot API. QR login supported. |
 | **Feishu** | Hard | Enterprise collaboration platform. |
 | **LINE** | Hard | Webhook via shared gateway port. |
 | **OneBot** | Medium | Compatible with NapCat/Go-CQHTTP. |
@@ -55,7 +53,7 @@ All channels support the `allow_from` field to restrict access to specific users
 }
 ```
 
-Set `allow_from` to an empty array `[]` to allow all users.
+Set `allow_from` to an empty array `[]` to allow all users. You can also set `allow_from: ["*"]` to explicitly allow all users (a warning will be logged at startup).
 
 ## Common Channel Fields
 
@@ -68,4 +66,6 @@ All channels support these optional fields:
 
 ## Shared Gateway
 
-All webhook-based channels (LINE, WeCom, WeCom App, WeCom AI Bot) share the single gateway HTTP server on port `18790`. Per-channel `webhook_host`/`webhook_port` fields are no longer needed — just configure `webhook_path` to differentiate endpoints.
+All webhook-based channels (LINE, DingTalk, etc.) share the single gateway HTTP server on port `18790`. Per-channel `webhook_host`/`webhook_port` fields are no longer needed — just configure `webhook_path` to differentiate endpoints. WeCom now uses outbound WebSocket and does not require a public-facing webhook.
+
+Log verbosity is controlled by `gateway.log_level` (default: `warn`). Supported values: `debug`, `info`, `warn`, `error`, `fatal`.

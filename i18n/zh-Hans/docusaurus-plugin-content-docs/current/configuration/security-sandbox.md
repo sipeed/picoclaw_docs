@@ -98,6 +98,43 @@ export PICOCLAW_AGENTS_DEFAULTS_RESTRICT_TO_WORKSPACE=false
 
 所有路径共享同一个工作目录限制——无法通过子 Agent 或定时任务绕过安全边界。
 
+## 渠道访问控制（`allow_from`）
+
+每个渠道支持 `allow_from` 数组，用于限制哪些用户可以与机器人交互：
+
+```json
+{
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "allow_from": ["123456789"]
+    }
+  }
+}
+```
+
+| 值 | 行为 |
+| --- | --- |
+| `[]`（空数组） | 允许所有人（启动时会输出安全警告） |
+| `["user1", "user2"]` | 仅允许列出的用户 ID |
+| `["*"]` | 允许所有人（显式通配符，明确承认公开访问） |
+
+:::warning 公开访问
+使用 `"*"` 或空 `allow_from` 数组意味着**任何人**都可以与你的机器人交互。仅在你确实需要公开访问时使用此设置。如果 `allow_from` 为空，PicoClaw 会在启动时输出安全警告。
+:::
+
+## .security.yml
+
+PicoClaw v2 支持使用 `.security.yml` 文件将敏感凭证（API 密钥、令牌、密钥）与 `config.json` 分开存储。此文件应放在与 `config.json` 同一目录下（通常为 `~/.picoclaw/.security.yml`），并添加到 `.gitignore` 中。
+
+`.security.yml` 中的值会在加载时自动映射到 `config.json` 中的对应字段。如果两个文件中都存在某个字段，则 `.security.yml` 优先。
+
+```bash
+chmod 600 ~/.picoclaw/.security.yml
+```
+
+详见[凭证加密](../credential-encryption.md)了解如何加密 `.security.yml` 中的值。
+
 ## 安全路径
 
 以下路径始终可访问，不受工作目录限制：

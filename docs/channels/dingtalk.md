@@ -85,6 +85,10 @@ DingTalk Stream Mode uses a persistent WebSocket connection maintained by the SD
 - **Session Webhook**: Each incoming message carries a `sessionWebhook` URL for direct replies
 - **Max message length**: 20,000 characters per message (longer responses are automatically truncated)
 
+### Mention Handling in Groups
+
+When the bot is @-mentioned in a group chat, PicoClaw automatically strips leading `@mention` tags from the message before passing it to the agent. This ensures the agent receives clean input text without the `@BotName` prefix. The bot uses DingTalk's `IsInAtList` field to reliably detect whether it was mentioned, rather than parsing the text manually.
+
 ### Group vs Private Chat
 
 | Feature | Private Chat | Group Chat |

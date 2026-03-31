@@ -95,6 +95,16 @@ The Telegram channel registers these built-in bot commands:
 | `/show [model\|channel]` | Show current configuration |
 | `/list [models\|channels]` | List available options |
 
+## Quoted Reply Support
+
+When a user replies to a message in Telegram (using the built-in "Reply" feature), PicoClaw automatically includes the quoted message as context for the agent. This works for both user messages and the bot's own previous responses:
+
+- **Text**: The quoted message text is prepended to the user's new message as `[quoted user/assistant message from author]: ...`
+- **Media**: If the quoted message contains voice or audio, those files are also downloaded and included in the agent's input
+- **Role detection**: The bot distinguishes whether the quoted message was from a user, the bot itself (assistant), or another bot
+
+This allows the agent to understand conversational context even when messages are not sent consecutively.
+
 ## Media Support
 
 The bot handles photos, audio files, documents, and voice messages. Voice messages are transcribed if a Whisper model is configured (see [Voice Transcription](#voice-transcription)).

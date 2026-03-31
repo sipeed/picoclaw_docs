@@ -67,6 +67,10 @@ You can also manually configure the filter rules in `config.json` under the `cha
 | `allow_from` | (Optional) List of WeChat User IDs permitted to interact with the bot. If empty, anyone who can send messages to the connected account can trigger the bot. |
 | `proxy` | (Optional) HTTP proxy address (e.g. `http://localhost:7890`) for environments where connection to `ilinkai.weixin.qq.com` is restricted. |
 
+## Session Persistence
+
+PicoClaw automatically persists WeChat context tokens to disk, so conversation sessions survive across restarts. Each inbound message carries a `context_token` that links replies to the correct conversation; these tokens are saved to `~/.picoclaw/channels/weixin/context-tokens/` and restored when the gateway starts. This means you can restart PicoClaw without losing the ability to reply to ongoing conversations.
+
 ## ⚠️ Important Notes
 
 - **One Account Only**: The iLink token binds to a single session. Starting a new interaction generally invalidates older tokens if another device authorizes.
