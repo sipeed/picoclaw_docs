@@ -9,6 +9,8 @@ title: 完整配置参考
 
 ```json
 {
+  "version": 2,
+
   "agents": {
     "defaults": {
       "workspace": "~/.picoclaw/workspace",
@@ -264,12 +266,19 @@ title: 完整配置参考
 
   "gateway": {
     "host": "127.0.0.1",
-    "port": 18790
+    "port": 18790,
+    "log_level": "warn"
   }
 }
 ```
 
 ## 字段说明
+
+### `version`
+
+| 字段 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `version` | int | `0` | 配置架构版本。当前版本为 `2`。新配置应设置为 `2`。 |
 
 ### `agents.defaults`
 
