@@ -125,11 +125,3 @@ SiliconFlow uses a **pay-as-you-go** model, charging based on the actual model u
 **Solutions**:
 - Check if model name is correct
 - Check SiliconFlow documentation for available models
-
-### Request Timeout
-
-**Cause**: Network issues or service busy
-
-**Solutions**:
-- Check network connection
-- Retry later

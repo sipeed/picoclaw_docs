@@ -46,6 +46,10 @@ Supports GitHub / Google login.
 
 > ⚠️ **Note**: Keep your API Key secure and avoid exposing it.
 
+![OpenRouter API Key](/img/providers/openrouterapi.png)
+
+![OpenRouter API Key](/img/providers/openrouterapi1.png)
+
 ---
 
 ## Configuring PicoClaw
@@ -124,12 +128,6 @@ OpenRouter uses a **pay-as-you-go** model, charging based on the actual model us
 **Solutions**:
 - Check if the model is still available
 - Top up account balance
-
-### Request Rejected
-
-**Cause**: Missing required Headers
-
-**Solution**: Ensure requests include `HTTP-Referer` and `X-Title` headers
 
 ### Response Timeout
 

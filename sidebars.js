@@ -21,6 +21,7 @@ const sidebars = {
         'installation/licheervnano',
         'installation/maixcam',
         'installation/macos',
+        'installation/android',
       ],
     },
     {

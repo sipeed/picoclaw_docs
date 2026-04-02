@@ -46,8 +46,9 @@ title: OpenRouter API
 
 > ⚠️ **注意**：请妥善保存 API Key，避免泄露。
 
-！[OpenRouter API Key](/img/providers/openrouterapi.png)
-！[OpenRouter API Key](/img/providers/openrouterapi1.png)
+![OpenRouter API Key](/img/providers/openrouterapi.png)
+
+![OpenRouter API Key](/img/providers/openrouterapi1.png)
 ---
 
 ## 配置 PicoClaw
@@ -126,12 +127,6 @@ OpenRouter 采用 **按使用量计费** 模式，根据实际使用的模型和
 **解决**：
 - 检查模型是否仍然可用
 - 充值账户余额
-
-### 请求被拒绝
-
-**原因**：缺少必要的 Headers
-
-**解决**：确保请求包含 `HTTP-Referer` 和 `X-Title` Headers
 
 ### 响应超时
 
