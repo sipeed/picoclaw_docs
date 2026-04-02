@@ -83,6 +83,17 @@ Control how the bot responds in server channels (does not affect DMs — the bot
 The old top-level `"mention_only": true` field is automatically migrated to `"group_trigger": {"mention_only": true}`.
 :::
 
+## Voice Channel
+
+PicoClaw can join Discord voice channels and participate in voice conversations:
+
+- Join a voice channel yourself, then type `!vc join` in a text channel to make the bot join
+- Leave the voice channel with `!vc leave`
+- Voice input is transcribed using the configured ASR model and sent to the agent
+- The agent's response is converted to audio via TTS and played back in the voice channel
+
+Voice requires `voice.tts_model_name` to be configured in `config.json`. See [Model Configuration](../configuration/model-list.md) for details.
+
 ## Media Support
 
-Discord audio attachments are automatically transcribed if a Whisper model is configured. Other attachments (images, files) are downloaded and included as context.
+Discord audio attachments are automatically transcribed if an ASR model is configured. Other attachments (images, files) are downloaded and included as context.

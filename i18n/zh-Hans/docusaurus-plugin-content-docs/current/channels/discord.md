@@ -83,6 +83,17 @@ picoclaw gateway
 旧的顶层 `"mention_only": true` 字段会自动迁移为 `"group_trigger": {"mention_only": true}`。
 :::
 
+## 语音频道
+
+PicoClaw 可以加入 Discord 语音频道并参与语音对话：
+
+- 先自己加入一个语音频道，然后在文字频道输入 `!vc join` 让机器人加入
+- 输入 `!vc leave` 让机器人离开语音频道
+- 语音输入会通过配置的 ASR 模型转写后发送给 Agent
+- Agent 的回复会通过 TTS 转换为音频在语音频道中播放
+
+语音功能需要在 `config.json` 中配置 `voice.tts_model_name`。详情参考[模型配置](../configuration/model-list.md)。
+
 ## 媒体支持
 
-如果配置了 Whisper 模型，Discord 的音频附件会自动转写。其他附件（图片、文件）会被下载并作为上下文。
+如果配置了 ASR 模型，Discord 的音频附件会自动转写。其他附件（图片、文件）会被下载并作为上下文。

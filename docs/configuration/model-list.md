@@ -20,6 +20,7 @@ This enables **multi-agent support** with flexible provider selection:
 | --- | --- | --- | --- | --- |
 | **OpenAI** | `openai/` | `https://api.openai.com/v1` | OpenAI | [Get Key](https://platform.openai.com) |
 | **Anthropic** | `anthropic/` | `https://api.anthropic.com/v1` | Anthropic | [Get Key](https://console.anthropic.com) |
+| **Venice AI** | `venice/` | `https://api.venice.ai/api/v1` | OpenAI | [Get Key](https://venice.ai) |
 | **Zhipu AI (GLM)** | `zhipu/` | `https://open.bigmodel.cn/api/paas/v4` | OpenAI | [Get Key](https://open.bigmodel.cn/usercenter/proj-mgmt/apikeys) |
 | **DeepSeek** | `deepseek/` | `https://api.deepseek.com/v1` | OpenAI | [Get Key](https://platform.deepseek.com) |
 | **Google Gemini** | `gemini/` | `https://generativelanguage.googleapis.com/v1beta` | OpenAI | [Get Key](https://aistudio.google.com/api-keys) |
@@ -85,8 +86,9 @@ This enables **multi-agent support** with flexible provider selection:
 | `api_base` | string | No | Override default API base URL |
 | `auth_method` | string | No | Authentication method (e.g., `oauth`) |
 | `proxy` | string | No | HTTP/SOCKS proxy for this model's API calls |
+| `user_agent` | string | No | Custom `User-Agent` header for API requests |
 | `request_timeout` | int | No | Request timeout in seconds (default: 120) |
-| `rpm` | int | No | Rate limit — requests per minute |
+| `rpm` | int | No | Rate limit — requests per minute (see [Rate Limiting](../rate-limiting)) |
 
 ## Vendor Examples
 
@@ -122,6 +124,16 @@ This enables **multi-agent support** with flexible provider selection:
 
 > Run `picoclaw auth login --provider anthropic` to paste your API token.
 
+### Venice AI
+
+```json
+{
+  "model_name": "venice-uncensored",
+  "model": "venice/venice-uncensored",
+  "api_key": "your-venice-api-key"
+}
+```
+
 ### DeepSeek
 
 ```json
@@ -131,6 +143,17 @@ This enables **multi-agent support** with flexible provider selection:
   "api_key": "sk-..."
 }
 ```
+
+### LM Studio (Local)
+
+```json
+{
+  "model_name": "lmstudio-local",
+  "model": "lmstudio/openai/gpt-oss-20b"
+}
+```
+
+`api_base` defaults to `http://localhost:1234/v1`. API key is optional unless your LM Studio server enables authentication. PicoClaw strips the `lmstudio/` prefix before sending requests.
 
 ### Ollama (Local)
 

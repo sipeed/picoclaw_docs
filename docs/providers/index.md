@@ -14,6 +14,7 @@ PicoClaw supports 20+ LLM providers through its `model_list` configuration.
 | --- | --- | --- |
 | **OpenAI** | GPT models | [platform.openai.com](https://platform.openai.com) |
 | **Anthropic** | Claude models | [console.anthropic.com](https://console.anthropic.com) |
+| **Venice AI** | Venice AI models | [venice.ai](https://venice.ai) |
 | **Google Gemini** | Gemini models | [aistudio.google.com](https://aistudio.google.com) |
 | **Zhipu AI** | GLM models (CN) | [bigmodel.cn](https://bigmodel.cn) |
 | **Z.AI** | Z.AI Coding Plan (GLM) | [z.ai](https://z.ai/manage-apikey/apikey-list) |

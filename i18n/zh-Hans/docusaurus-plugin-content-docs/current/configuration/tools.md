@@ -498,6 +498,69 @@ MCP 工具以 `mcp_<服务器名>_<工具名>` 的命名格式注册，与内置
 
 > **提示：** 每服务器的 `deferred` 设置与 `discovery.enabled` 是独立的。您可以保持全局 `discovery.enabled: false`（所有工具默认可见），同时将高工具量的服务器标记为 `"deferred": true` 以避免它们的工具污染上下文。
 
+## 文件工具
+
+### 读取文件（read_file）
+
+`read_file` 工具用于从 workspace 中读取文件，支持两种模式：
+
+| 配置项 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| `enabled` | bool | true | 启用 read_file 工具 |
+| `mode` | string | `"bytes"` | 读取模式：`"bytes"`（按字节偏移切片）或 `"lines"`（按行号切片） |
+| `max_read_file_size` | int | 0 | 工具可读取的最大文件大小（字节），0 表示使用默认限制 |
+
+```json
+{
+  "tools": {
+    "read_file": {
+      "enabled": true,
+      "mode": "bytes"
+    }
+  }
+}
+```
+
+`"bytes"` 模式下 Agent 指定字节偏移；`"lines"` 模式下 Agent 指定行号。处理经常按行号引用代码的场景时推荐使用 `"lines"` 模式。
+
+### 加载图片（load_image）
+
+`load_image` 工具将本地图片文件加载到 Agent 上下文中，使支持视觉的模型能够分析本地图片。支持格式：JPEG、PNG、GIF、WebP、BMP。
+
+| 配置项 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| `enabled` | bool | true | 启用 load_image 工具 |
+
+```json
+{
+  "tools": {
+    "load_image": {
+      "enabled": true
+    }
+  }
+}
+```
+
+该工具返回 `media://` 引用，Agent 循环在下一次 LLM 请求中将其解析为 base64 编码的图片。这与 `send_file`（将文件发送给用户）不同；`load_image` 使 LLM 能看到图片内容。
+
+### 发送语音（send_tts）
+
+`send_tts` 工具将文本转换为语音并发送到当前聊天。需要在 `voice.tts_model_name` 中配置 TTS 模型。
+
+| 配置项 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| `enabled` | bool | false | 启用 send_tts 工具 |
+
+```json
+{
+  "tools": {
+    "send_tts": {
+      "enabled": true
+    }
+  }
+}
+```
+
 ## Skills 工具（技能商店）
 
 Skills 工具管理通过注册表（如 ClawHub）发现和安装技能。

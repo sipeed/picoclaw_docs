@@ -20,6 +20,7 @@ PicoClaw 采用**以模型为中心**的配置方式。只需指定 `vendor/mode
 | --- | --- | --- | --- | --- |
 | **OpenAI** | `openai/` | `https://api.openai.com/v1` | OpenAI | [获取](https://platform.openai.com) |
 | **Anthropic** | `anthropic/` | `https://api.anthropic.com/v1` | Anthropic | [获取](https://console.anthropic.com) |
+| **Venice AI** | `venice/` | `https://api.venice.ai/api/v1` | OpenAI | [获取](https://venice.ai) |
 | **智谱 AI（GLM）** | `zhipu/` | `https://open.bigmodel.cn/api/paas/v4` | OpenAI | [获取](https://open.bigmodel.cn/usercenter/proj-mgmt/apikeys) |
 | **DeepSeek** | `deepseek/` | `https://api.deepseek.com/v1` | OpenAI | [获取](https://platform.deepseek.com) |
 | **Google Gemini** | `gemini/` | `https://generativelanguage.googleapis.com/v1beta` | OpenAI | [获取](https://aistudio.google.com/api-keys) |
@@ -85,8 +86,9 @@ PicoClaw 采用**以模型为中心**的配置方式。只需指定 `vendor/mode
 | `api_base` | string | 否 | 覆盖默认 API 地址 |
 | `auth_method` | string | 否 | 认证方式（如 `oauth`） |
 | `proxy` | string | 否 | 该模型 API 调用的 HTTP/SOCKS 代理 |
+| `user_agent` | string | 否 | API 请求的自定义 `User-Agent` 请求头 |
 | `request_timeout` | int | 否 | 请求超时时间（秒），默认 120 |
-| `rpm` | int | 否 | 速率限制 — 每分钟请求数 |
+| `rpm` | int | 否 | 速率限制 — 每分钟请求数（参见[速率限制](../rate-limiting)） |
 
 ## 各提供商示例
 
@@ -122,6 +124,16 @@ PicoClaw 采用**以模型为中心**的配置方式。只需指定 `vendor/mode
 
 > 也可运行 `picoclaw auth login --provider anthropic` 粘贴 API Token。
 
+### Venice AI
+
+```json
+{
+  "model_name": "venice-uncensored",
+  "model": "venice/venice-uncensored",
+  "api_key": "your-venice-api-key"
+}
+```
+
 ### DeepSeek
 
 ```json
@@ -131,6 +143,17 @@ PicoClaw 采用**以模型为中心**的配置方式。只需指定 `vendor/mode
   "api_key": "sk-..."
 }
 ```
+
+### LM Studio（本地部署）
+
+```json
+{
+  "model_name": "lmstudio-local",
+  "model": "lmstudio/openai/gpt-oss-20b"
+}
+```
+
+`api_base` 默认为 `http://localhost:1234/v1`。除非 LM Studio 服务器启用了认证，否则无需 API Key。PicoClaw 发送请求前会去掉 `lmstudio/` 前缀。
 
 ### Ollama（本地部署）
 

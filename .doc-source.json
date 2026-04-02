@@ -1,7 +1,7 @@
 {
   "source_repo": "https://github.com/sipeed/picoclaw",
-  "source_commit": "2d8556205faaf24059f60c70f118230e1ffc0095",
-  "generated_at": "2026-03-30T00:00:00+08:00",
+  "source_commit": "b114dcaeb1eb6032e817fb7e7ca9a25cff4eb529",
+  "generated_at": "2026-03-31T00:00:00+08:00",
   "docs": {
     "docs/intro.md": {
       "source_files": ["README.md", "assets/arch.jpg"]
@@ -119,6 +119,9 @@
     },
     "docs/changelog.md": {
       "source_files": ["CHANGELOG.md"]
+    },
+    "docs/rate-limiting.md": {
+      "source_files": ["docs/rate-limiting.md", "pkg/providers/ratelimiter.go", "pkg/providers/fallback.go", "pkg/agent/model_resolution.go"]
     }
   }
 }

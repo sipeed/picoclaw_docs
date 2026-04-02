@@ -500,6 +500,69 @@ MCP tools are registered with the naming convention `mcp_<server>_<tool>` and ap
 
 > **Tip:** `deferred` on a per-server basis is independent of `discovery.enabled`. You can keep `discovery.enabled: false` globally (all tools visible by default) and still mark individual high-volume servers as `"deferred": true` to avoid polluting the context with their tools.
 
+## File Tools
+
+### Read File
+
+The `read_file` tool reads files from the workspace. It supports two modes:
+
+| Config | Type | Default | Description |
+|--------|------|---------|-------------|
+| `enabled` | bool | true | Enable the read_file tool |
+| `mode` | string | `"bytes"` | Read mode: `"bytes"` (offset/length slicing) or `"lines"` (line-number-based slicing) |
+| `max_read_file_size` | int | 0 | Max file size in bytes the tool will read (0 = default limit) |
+
+```json
+{
+  "tools": {
+    "read_file": {
+      "enabled": true,
+      "mode": "bytes"
+    }
+  }
+}
+```
+
+In `"bytes"` mode the agent specifies byte offsets; in `"lines"` mode it specifies line numbers. Choose `"lines"` when working with source code that the agent frequently navigates by line reference.
+
+### Load Image
+
+The `load_image` tool loads a local image file into the agent's context so vision-capable models can analyze it. Supported formats: JPEG, PNG, GIF, WebP, BMP.
+
+| Config | Type | Default | Description |
+|--------|------|---------|-------------|
+| `enabled` | bool | true | Enable the load_image tool |
+
+```json
+{
+  "tools": {
+    "load_image": {
+      "enabled": true
+    }
+  }
+}
+```
+
+The tool returns a `media://` reference that the agent loop resolves to a base64-encoded image in the next LLM request. This is distinct from `send_file` (which sends the file to the user); `load_image` makes the image visible to the LLM.
+
+### Send TTS
+
+The `send_tts` tool converts text to speech and sends the audio to the current chat. It requires a TTS model configured under `voice.tts_model_name`.
+
+| Config | Type | Default | Description |
+|--------|------|---------|-------------|
+| `enabled` | bool | false | Enable the send_tts tool |
+
+```json
+{
+  "tools": {
+    "send_tts": {
+      "enabled": true
+    }
+  }
+}
+```
+
 ## Skills Tool
 
 The skills tool manages skill discovery and installation via registries like ClawHub.
