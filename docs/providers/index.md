@@ -27,8 +27,9 @@ PicoClaw supports 20+ LLM providers through its `model_list` configuration.
 | **Mistral** | Mistral models | [console.mistral.ai](https://console.mistral.ai) |
 | **Avian** | Avian models | [avian.io](https://avian.io) |
 | **Xiaomi MiMo** | MiMo models | [platform.xiaomimimo.com](https://platform.xiaomimimo.com) |
-| **Ollama** | Local models | Local (no key needed) |
-| **vLLM** | Local OpenAI-compatible | Local |
+| **Ollama** | Local model server | Local (no key needed) |
+| **LM Studio** | Local model server (OpenAI-compatible) | Local (default no key) |
+| **vLLM** | Local model server (OpenAI-compatible) | Local |
 | **LiteLLM** | LiteLLM proxy | Local proxy |
 | **Cerebras** | Fast inference | [cerebras.ai](https://cerebras.ai) |
 | **VolcEngine** | Doubao models, CodingPlan (CN) | [console.volcengine.com](https://console.volcengine.com) |

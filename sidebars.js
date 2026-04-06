@@ -76,6 +76,7 @@ const sidebars = {
         'providers/openai-api',
         'providers/gemini-api',
         'providers/openrouter-api',
+        'providers/lmstudio-api',
         'providers/siliconflow-api',
       ],
     },

@@ -27,8 +27,9 @@ PicoClaw 通过 `model_list` 配置支持 20+ 个 LLM 提供商。
 | **Mistral** | Mistral 系列模型 | [console.mistral.ai](https://console.mistral.ai) |
 | **Avian** | Avian 系列模型 | [avian.io](https://avian.io) |
 | **小米 MiMo** | MiMo 系列模型 | [platform.xiaomimimo.com](https://platform.xiaomimimo.com) |
-| **Ollama** | 本地模型 | 本地部署，无需 Key |
-| **vLLM** | 本地 OpenAI 兼容服务 | 本地部署 |
+| **Ollama** | 本地模型服务 | 本地部署，无需 Key |
+| **LM Studio** | 本地模型服务（OpenAI 兼容） | 本地部署（默认无需 Key） |
+| **vLLM** | 本地模型服务（OpenAI 兼容） | 本地部署 |
 | **LiteLLM** | LiteLLM 代理 | 本地代理 |
 | **Cerebras** | 高速推理 | [cerebras.ai](https://cerebras.ai) |
 | **火山引擎** | 豆包模型、CodingPlan | [console.volcengine.com](https://console.volcengine.com) |
