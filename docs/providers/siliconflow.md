@@ -60,7 +60,7 @@ Edit preset settings, or click the **"Add Model"** button in the top right corne
 | Field | Value |
 |-------|-------|
 | Model Alias | Custom name, e.g., `deepseek-chat` |
-| Model Identifier | `deepseek-chat` (or other supported models) |
+| Model Identifier | `openai/deepseek-ai/DeepSeek-V3` (or another SiliconFlow model ID) |
 | API Key | SiliconFlow API Key |
 | API Base URL | `https://api.siliconflow.cn/v1` |
 
@@ -73,26 +73,26 @@ Add in `config.json`:
   "model_list": [
     {
       "model_name": "deepseek-chat",
-      "model": "deepseek-chat",
-      "base_url": "https://api.siliconflow.cn/v1",
-      "auth_method": "api_key",
-      "api_key": "YOUR_SILICONFLOW_API_KEY"
+      "model": "openai/deepseek-ai/DeepSeek-V3",
+      "api_base": "https://api.siliconflow.cn/v1",
+      "api_keys": ["YOUR_SILICONFLOW_API_KEY"]
     },
     {
       "model_name": "deepseek-coder",
-      "model": "deepseek-coder",
-      "base_url": "https://api.siliconflow.cn/v1",
-      "auth_method": "api_key",
-      "api_key": "YOUR_SILICONFLOW_API_KEY"
+      "model": "openai/deepseek-ai/DeepSeek-Coder-V2-Instruct",
+      "api_base": "https://api.siliconflow.cn/v1",
+      "api_keys": ["YOUR_SILICONFLOW_API_KEY"]
     }
   ],
   "agents": {
     "defaults": {
-      "model": "deepseek-chat"
+      "model_name": "deepseek-chat"
     }
   }
 }
 ```
+
+For production, keep keys in `~/.picoclaw/.security.yml` and keep `config.json` focused on model structure.
 
 ---
 

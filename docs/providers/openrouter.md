@@ -65,9 +65,9 @@ Edit preset settings, or click the **"Add Model"** button in the top right corne
 | Field | Value |
 |-------|-------|
 | Model Alias | Custom name, e.g., `gpt-4o-mini` |
-| Model Identifier | `openai/gpt-4o-mini` (or other supported models) |
+| Model Identifier | `openrouter/openai/gpt-4o-mini` (or other supported models) |
 | API Key | OpenRouter API Key |
-| API Base URL | `https://openrouter.ai/api/v1` |
+| API Base URL | Leave empty (default: `https://openrouter.ai/api/v1`) |
 
 ### Option 2: Edit Configuration File
 
@@ -78,30 +78,28 @@ Add in `config.json`:
   "model_list": [
     {
       "model_name": "gpt-4o-mini",
-      "model": "openai/gpt-4o-mini",
-      "base_url": "https://openrouter.ai/api/v1",
-      "auth_method": "api_key",
-      "api_key": "YOUR_OPENROUTER_API_KEY",
-      "headers": {
+      "model": "openrouter/openai/gpt-4o-mini",
+      "api_keys": ["YOUR_OPENROUTER_API_KEY"],
+      "custom_headers": {
         "HTTP-Referer": "http://localhost",
         "X-Title": "PicoClaw"
       }
     },
     {
       "model_name": "claude-3-haiku",
-      "model": "anthropic/claude-3-haiku",
-      "base_url": "https://openrouter.ai/api/v1",
-      "auth_method": "api_key",
-      "api_key": "YOUR_OPENROUTER_API_KEY"
+      "model": "openrouter/anthropic/claude-3-haiku",
+      "api_keys": ["YOUR_OPENROUTER_API_KEY"]
     }
   ],
   "agents": {
     "defaults": {
-      "model": "gpt-4o-mini"
+      "model_name": "gpt-4o-mini"
     }
   }
 }
 ```
+
+For production, keep keys in `~/.picoclaw/.security.yml` and keep `config.json` focused on model structure.
 
 ---
 

@@ -35,6 +35,10 @@ PicoClaw 会自动提取授权码并完成认证流程。
 
 ## 2. 管理模型
 
+日常模型管理推荐优先使用 Web UI。
+
+![Web UI 模型配置](/img/providers/webuimodel.png)
+
 ### 查看可用模型
 
 查看你的项目可访问哪些模型及其配额：

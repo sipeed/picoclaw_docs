@@ -34,6 +34,8 @@ See [Sensitive Data Filtering](/docs/sensitive-data-filtering) for full document
 
 Web tools are used for web search and fetching.
 
+In config schema `2`, `brave`, `tavily`, and `perplexity` use `api_keys` (array). Their `api_key` field in `config.json` is ignored.
+
 ### Web Fetcher
 
 General settings for fetching and processing webpage content.
@@ -49,8 +51,7 @@ General settings for fetching and processing webpage content.
 | Config | Type | Default | Description |
 |--------|------|---------|-------------|
 | `enabled` | bool | false | Enable Brave search |
-| `api_key` | string | -- | Brave Search API key |
-| `api_keys` | string[] | -- | Multiple API keys for rotation (takes priority over `api_key`) |
+| `api_keys` | string[] | -- | One or more Brave Search API keys for rotation |
 | `max_results` | int | 5 | Maximum number of results |
 
 Get a free API key at [brave.com/search/api](https://brave.com/search/api) (2000 free queries/month).
@@ -94,8 +95,7 @@ Baidu Search uses the [Qianfan AI Search API](https://cloud.baidu.com/doc/qianfa
 | Config | Type | Default | Description |
 |--------|------|---------|-------------|
 | `enabled` | bool | false | Enable Perplexity search |
-| `api_key` | string | -- | Perplexity API key |
-| `api_keys` | string[] | -- | Multiple API keys for rotation (takes priority over `api_key`) |
+| `api_keys` | string[] | -- | One or more Perplexity API keys for rotation |
 | `max_results` | int | 5 | Maximum number of results |
 
 ### Tavily
@@ -103,7 +103,7 @@ Baidu Search uses the [Qianfan AI Search API](https://cloud.baidu.com/doc/qianfa
 | Config | Type | Default | Description |
 |--------|------|---------|-------------|
 | `enabled` | bool | false | Enable Tavily search |
-| `api_key` | string | -- | Tavily API key |
+| `api_keys` | string[] | -- | One or more Tavily API keys for rotation |
 | `base_url` | string | -- | Custom Tavily API base URL |
 | `max_results` | int | 5 | Maximum number of results |
 
@@ -171,7 +171,7 @@ If `range` is omitted, PicoClaw performs an unrestricted search.
     "web": {
       "brave": {
         "enabled": true,
-        "api_key": "YOUR_BRAVE_API_KEY",
+        "api_keys": ["YOUR_BRAVE_API_KEY"],
         "max_results": 5
       },
       "duckduckgo": {
@@ -184,7 +184,7 @@ If `range` is omitted, PicoClaw performs an unrestricted search.
       },
       "perplexity": {
         "enabled": false,
-        "api_key": "pplx-xxx",
+        "api_keys": ["pplx-xxx"],
         "max_results": 5
       },
       "proxy": "socks5://127.0.0.1:1080"

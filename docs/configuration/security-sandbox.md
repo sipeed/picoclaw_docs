@@ -125,9 +125,11 @@ Using `"*"` or an empty `allow_from` array means **anyone** can interact with yo
 
 ## .security.yml
 
-PicoClaw v2 supports a `.security.yml` file for storing sensitive credentials (API keys, tokens, secrets) separately from `config.json`. This file should be placed in the same directory as `config.json` (typically `~/.picoclaw/.security.yml`) and added to `.gitignore`.
+Config schema `2` supports a `.security.yml` file for storing sensitive credentials (API keys, tokens, secrets) separately from `config.json`. This file should be placed in the same directory as `config.json` (typically `~/.picoclaw/.security.yml`) and added to `.gitignore`.
 
-Values from `.security.yml` are automatically mapped to the corresponding fields in `config.json` at load time. If a field exists in both files, `.security.yml` takes precedence.
+Values from `.security.yml` are automatically mapped to the corresponding fields at load time. If a field exists in both files, `.security.yml` takes precedence.
+
+For `model_list` in schema `2`, `config.json` `api_key` is ignored. Use `.security.yml` with `api_keys` for model credentials.
 
 ```bash
 chmod 600 ~/.picoclaw/.security.yml

@@ -122,7 +122,7 @@ async function exchangeCode(params: {
   });
 
   const data = await response.json();
-  
+
   return {
     access: data.access_token,
     refresh: data.refresh_token,
@@ -265,7 +265,7 @@ async function fetchAvailableModels(
   );
 
   const data = await response.json();
-  
+
   // Returns models with quota information
   return Object.entries(data.models).map(([modelId, modelInfo]) => ({
     id: modelId,
@@ -326,7 +326,7 @@ export async function fetchAntigravityUsage(
 
   // Extract credits info
   const { availablePromptCredits, planInfo, currentTier } = data;
-  
+
   // 2. Fetch model quotas
   const modelsRes = await fetch(
     `${BASE_URL}/v1internal:fetchAvailableModels`,
@@ -380,14 +380,14 @@ const antigravityPlugin = {
   name: "Google Antigravity Auth",
   description: "OAuth flow for Google Antigravity (Cloud Code Assist)",
   configSchema: emptyPluginConfigSchema(),
-  
+
   register(api: PicoClawPluginApi) {
     api.registerProvider({
       id: "google-antigravity",
       label: "Google Antigravity",
       docsPath: "/providers/models",
       aliases: ["antigravity"],
-      
+
       auth: [
         {
           id: "oauth",
@@ -574,6 +574,10 @@ Each SSE message (`data: {...}`) is wrapped in a `response` field:
 
 ## Configuration
 
+For a smoother and more intuitive setup experience, we recommend configuring model entries in Web UI first.
+
+![Web UI Model Setup](/img/providers/webuimodel.png)
+
 ### config.json Configuration
 
 ```json
@@ -587,7 +591,7 @@ Each SSE message (`data: {...}`) is wrapped in a `response` field:
   ],
   "agents": {
     "defaults": {
-      "model": "gemini-flash"
+      "model_name": "gemini-flash"
     }
   }
 }
@@ -692,7 +696,7 @@ case "your-provider":
     {
       "model_name": "your-model",
       "model": "your-provider/model-name",
-      "api_key": "your-api-key",
+      "api_keys": ["your-api-key"],
       "api_base": "https://api.your-provider.com/v1"
     }
   ]
@@ -726,7 +730,7 @@ picoclaw agent -m "Hello" --model your-model
 export PICOCLAW_AGENTS_DEFAULTS_MODEL=your-model
 
 # Override provider settings
-export PICOCLAW_MODEL_LIST='[{"model_name":"your-model","model":"your-provider/model-name","api_key":"..."}]'
+export PICOCLAW_MODEL_LIST='[{"model_name":"your-model","model":"your-provider/model-name","api_keys":["..."]}]'
 ```
 
 ---

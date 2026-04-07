@@ -125,9 +125,11 @@ export PICOCLAW_AGENTS_DEFAULTS_RESTRICT_TO_WORKSPACE=false
 
 ## .security.yml
 
-PicoClaw v2 支持使用 `.security.yml` 文件将敏感凭证（API 密钥、令牌、密钥）与 `config.json` 分开存储。此文件应放在与 `config.json` 同一目录下（通常为 `~/.picoclaw/.security.yml`），并添加到 `.gitignore` 中。
+配置 schema `2` 支持使用 `.security.yml` 文件将敏感凭证（API 密钥、令牌、密钥）与 `config.json` 分开存储。此文件应放在与 `config.json` 同一目录下（通常为 `~/.picoclaw/.security.yml`），并添加到 `.gitignore` 中。
 
-`.security.yml` 中的值会在加载时自动映射到 `config.json` 中的对应字段。如果两个文件中都存在某个字段，则 `.security.yml` 优先。
+`.security.yml` 中的值会在加载时自动映射到对应字段。如果两个文件中都存在某个字段，则 `.security.yml` 优先。
+
+对于 schema `2` 的 `model_list`，`config.json` 中的 `api_key` 会被忽略。请在 `.security.yml` 中使用 `api_keys` 配置模型密钥。
 
 ```bash
 chmod 600 ~/.picoclaw/.security.yml

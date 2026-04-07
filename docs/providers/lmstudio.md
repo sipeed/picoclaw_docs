@@ -84,13 +84,15 @@ Add in `config.json`:
   ],
   "agents": {
     "defaults": {
-      "model": "lmstudio-local"
+      "model_name": "lmstudio-local"
     }
   }
 }
 ```
 
 PicoClaw strips the `lmstudio/` prefix before sending requests. If `api_base` is not set, it defaults to `http://localhost:1234/v1`.
+
+If your LM Studio server enables authentication, configure credentials with `api_keys` in `~/.picoclaw/.security.yml`.
 
 ---
 

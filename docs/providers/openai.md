@@ -58,7 +58,7 @@ Edit preset settings, or click the **"Add Model"** button in the top right corne
 
 ### Option 2: Edit Configuration File
 
-Add OpenAI models in `config.json` and set `auth_method` to `api_key`:
+Add OpenAI models in `config.json` (schema v2 uses `api_keys`):
 
 ```json
 {
@@ -66,23 +66,23 @@ Add OpenAI models in `config.json` and set `auth_method` to `api_key`:
     {
       "model_name": "gpt-4o-mini",
       "model": "openai/gpt-4o-mini",
-      "auth_method": "api_key",
-      "api_key": "YOUR_OPENAI_API_KEY_HERE"
+      "api_keys": ["YOUR_OPENAI_API_KEY_HERE"]
     },
     {
       "model_name": "gpt-4o",
       "model": "openai/gpt-4o",
-      "auth_method": "api_key",
-      "api_key": "YOUR_OPENAI_API_KEY_HERE"
+      "api_keys": ["YOUR_OPENAI_API_KEY_HERE"]
     }
   ],
   "agents": {
     "defaults": {
-      "model": "gpt-4o-mini"
+      "model_name": "gpt-4o-mini"
     }
   }
 }
 ```
+
+For production, keep keys in `~/.picoclaw/.security.yml` and keep `config.json` focused on model structure.
 
 ---
 

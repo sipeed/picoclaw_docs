@@ -52,37 +52,37 @@ Edit preset settings, or click the **"Add Model"** button in the top right corne
 | Field | Value |
 |-------|-------|
 | Model Alias | Custom name, e.g., `gemini-flash` |
-| Model Identifier | `google/gemini-2.0-flash` (or other supported models) |
+| Model Identifier | `gemini/gemini-2.0-flash` (or other supported models) |
 | API Key | Google AI Studio API Key |
 | API Base URL | Leave empty (uses default) |
 
 ### Option 2: Edit Configuration File
 
-Add Gemini models in `config.json` and set `auth_method` to `api_key`:
+Add Gemini models in `config.json` (schema v2 uses `api_keys`):
 
 ```json
 {
   "model_list": [
     {
       "model_name": "gemini-flash",
-      "model": "google/gemini-2.0-flash",
-      "auth_method": "api_key",
-      "api_key": "YOUR_GEMINI_API_KEY_HERE"
+      "model": "gemini/gemini-2.0-flash",
+      "api_keys": ["YOUR_GEMINI_API_KEY_HERE"]
     },
     {
       "model_name": "gemini-pro",
-      "model": "google/gemini-1.5-pro",
-      "auth_method": "api_key",
-      "api_key": "YOUR_GEMINI_API_KEY_HERE"
+      "model": "gemini/gemini-1.5-pro",
+      "api_keys": ["YOUR_GEMINI_API_KEY_HERE"]
     }
   ],
   "agents": {
     "defaults": {
-      "model": "gemini-flash"
+      "model_name": "gemini-flash"
     }
   }
 }
 ```
+
+For production, keep keys in `~/.picoclaw/.security.yml` and keep `config.json` focused on model structure.
 
 ---
 

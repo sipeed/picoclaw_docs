@@ -6,7 +6,11 @@ sidebar_label: 概览
 
 # 提供商
 
-PicoClaw 通过 `model_list` 配置支持 20+ 个 LLM 提供商。
+PicoClaw 通过 `model_list` 支持多种 LLM 协议族。
+
+为了提供更流畅和直观的配置体验，我们推荐优先使用 Web UI 配置模型。
+
+![Web UI 模型配置](/img/providers/webuimodel.png)
 
 ## 支持的提供商
 
@@ -14,6 +18,7 @@ PicoClaw 通过 `model_list` 配置支持 20+ 个 LLM 提供商。
 | --- | --- | --- |
 | **OpenAI** | GPT 系列模型 | [platform.openai.com](https://platform.openai.com) |
 | **Anthropic** | Claude 系列模型 | [console.anthropic.com](https://console.anthropic.com) |
+| **Anthropic Messages** | Anthropic Messages 原生接口 | [console.anthropic.com](https://console.anthropic.com) |
 | **Venice AI** | Venice AI 系列模型 | [venice.ai](https://venice.ai) |
 | **Google Gemini** | Gemini 系列模型 | [aistudio.google.com](https://aistudio.google.com) |
 | **智谱 AI** | GLM 系列模型 | [bigmodel.cn](https://bigmodel.cn) |
@@ -26,17 +31,24 @@ PicoClaw 通过 `model_list` 配置支持 20+ 个 LLM 提供商。
 | **NVIDIA** | NVIDIA AI 模型 | [build.nvidia.com](https://build.nvidia.com) |
 | **Mistral** | Mistral 系列模型 | [console.mistral.ai](https://console.mistral.ai) |
 | **Avian** | Avian 系列模型 | [avian.io](https://avian.io) |
+| **LongCat** | LongCat 系列模型 | [longcat.chat](https://longcat.chat/platform) |
+| **ModelScope** | ModelScope 系列模型 | [modelscope.cn](https://modelscope.cn) |
+| **Novita** | Novita 系列模型 | [novita.ai](https://novita.ai) |
+| **Vivgrid** | Vivgrid 托管模型 | [vivgrid.com](https://vivgrid.com) |
+| **神算云** | 神算云系列模型 | [router.shengsuanyun.com](https://router.shengsuanyun.com) |
 | **小米 MiMo** | MiMo 系列模型 | [platform.xiaomimimo.com](https://platform.xiaomimimo.com) |
 | **Ollama** | 本地模型服务 | 本地部署，无需 Key |
 | **LM Studio** | 本地模型服务（OpenAI 兼容） | 本地部署（默认无需 Key） |
 | **vLLM** | 本地模型服务（OpenAI 兼容） | 本地部署 |
 | **LiteLLM** | LiteLLM 代理 | 本地代理 |
 | **Cerebras** | 高速推理 | [cerebras.ai](https://cerebras.ai) |
-| **火山引擎** | 豆包模型、CodingPlan | [console.volcengine.com](https://console.volcengine.com) |
-| **BytePlus** | CodingPlan（国际版） | [console.byteplus.com](https://console.byteplus.com) |
+| **火山引擎** | 豆包系列模型 | [console.volcengine.com](https://console.volcengine.com) |
+| **Azure OpenAI** | Azure 托管 OpenAI 模型 | Azure Portal |
+| **AWS Bedrock** | Bedrock 托管模型 | AWS Console |
 | **Antigravity** | Google Cloud Code Assist | 仅 OAuth |
 | **Minimax** | MiniMax 系列模型 | [platform.minimaxi.com](https://platform.minimaxi.com) |
-| **GitHub Copilot** | Copilot 模型 | — |
+| **GitHub Copilot** | Copilot 桥接模型 | — |
+| **Claude CLI / Codex CLI** | 本地 CLI 模型桥接 | 本地 CLI 鉴权 |
 
 ## 快速配置
 

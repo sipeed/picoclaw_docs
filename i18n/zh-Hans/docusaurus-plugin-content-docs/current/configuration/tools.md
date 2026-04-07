@@ -34,6 +34,8 @@ title: 工具配置
 
 网络搜索工具用于网页搜索和抓取。
 
+在配置 schema `2` 中，`brave`、`tavily`、`perplexity` 使用 `api_keys`（数组）。它们在 `config.json` 里的 `api_key` 字段会被忽略。
+
 ### Web Fetcher（网页抓取）
 
 网页内容抓取和处理的通用设置。
@@ -49,8 +51,7 @@ title: 工具配置
 | 配置项 | 类型 | 默认值 | 说明 |
 |--------|------|--------|------|
 | `enabled` | bool | false | 启用 Brave 搜索 |
-| `api_key` | string | -- | Brave Search API Key |
-| `api_keys` | string[] | -- | 多个 API Key 轮换使用（优先于 `api_key`） |
+| `api_keys` | string[] | -- | 一个或多个 Brave Search API Key，用于轮换 |
 | `max_results` | int | 5 | 最大返回结果数 |
 
 在 [brave.com/search/api](https://brave.com/search/api) 免费获取 API Key（每月 2000 次查询）。
@@ -94,8 +95,7 @@ DuckDuckGo 默认启用，无需 API Key。
 | 配置项 | 类型 | 默认值 | 说明 |
 |--------|------|--------|------|
 | `enabled` | bool | false | 启用 Perplexity 搜索 |
-| `api_key` | string | -- | Perplexity API Key |
-| `api_keys` | string[] | -- | 多个 API Key 轮换使用（优先于 `api_key`） |
+| `api_keys` | string[] | -- | 一个或多个 Perplexity API Key，用于轮换 |
 | `max_results` | int | 5 | 最大返回结果数 |
 
 ### Tavily
@@ -103,7 +103,7 @@ DuckDuckGo 默认启用，无需 API Key。
 | 配置项 | 类型 | 默认值 | 说明 |
 |--------|------|--------|------|
 | `enabled` | bool | false | 启用 Tavily 搜索 |
-| `api_key` | string | -- | Tavily API Key |
+| `api_keys` | string[] | -- | 一个或多个 Tavily API Key，用于轮换 |
 | `base_url` | string | -- | 自定义 Tavily API 地址 |
 | `max_results` | int | 5 | 最大返回结果数 |
 
@@ -171,7 +171,7 @@ DuckDuckGo 默认启用，无需 API Key。
     "web": {
       "brave": {
         "enabled": true,
-        "api_key": "YOUR_BRAVE_API_KEY",
+        "api_keys": ["YOUR_BRAVE_API_KEY"],
         "max_results": 5
       },
       "duckduckgo": {
@@ -184,7 +184,7 @@ DuckDuckGo 默认启用，无需 API Key。
       },
       "perplexity": {
         "enabled": false,
-        "api_key": "pplx-xxx",
+        "api_keys": ["pplx-xxx"],
         "max_results": 5
       },
       "proxy": "socks5://127.0.0.1:1080"

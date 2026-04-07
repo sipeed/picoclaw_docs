@@ -33,6 +33,10 @@ PicoClaw will extract the authorization code and complete the process automatica
 
 ## 2. Managing Models
 
+For day-to-day model management, Web UI is the recommended approach.
+
+![Web UI Model Setup](/img/providers/webuimodel.png)
+
 ### List Available Models
 To see which models your project has access to and check their quotas:
 
@@ -54,7 +58,7 @@ If you are deploying via Coolify or Docker, follow these steps to test:
 
 1.  **Environment Variables**:
     *   `PICOCLAW_AGENTS_DEFAULTS_MODEL=gemini-flash`
-2.  **Authentication persistence**: 
+2.  **Authentication persistence**:
     If you've logged in locally, you can copy your credentials to the server:
     ```bash
     scp ~/.picoclaw/auth.json user@your-server:~/.picoclaw/

@@ -9,8 +9,12 @@ sidebar_label: 概览
 配置文件：`~/.picoclaw/config.json`
 
 :::tip 配置版本 2
-PicoClaw v2 引入了配置版本 2。新配置应在顶层包含 `"version": 2`。已有的 V0/V1 配置会在首次加载时自动迁移。详见[迁移指南](../migration/model-list-migration.md)。
+当前使用的是配置 schema 版本 `2`。新配置应在顶层包含 `"version": 2`。已有的 V0/V1 配置会在首次加载时自动迁移。详见[迁移指南](../migration/model-list-migration.md)。
 :::
+
+为了提供更流畅和直观的配置体验，我们推荐优先通过 Web UI 进行模型配置与管理。
+
+![Web UI 模型配置](/img/providers/webuimodel.png)
 
 ## 配置区域
 

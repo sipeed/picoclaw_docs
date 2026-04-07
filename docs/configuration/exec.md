@@ -43,6 +43,48 @@ export PICOCLAW_TOOLS_EXEC_ENABLED=false
 ### Use Cases
 | Scenario                                                         | Recommended Setting                 |
 | ---------------------------------------------------------------- | ----------------------------------- |
+| Production / read-only mode                                      | `enabled: false`                    |
+| Development with automation                                      | `enabled: true`                     |
+| High-security environments                                       | `enabled: false`                    |
+
+### Impact
+
+When this setting is disabled:
+
+- Agents cannot run shell commands through the `exec` tool
+- Shell commands in cron tasks cannot run
+- All command requests are rejected immediately
+
+## Allow Remote Command Execution
+
+### Description
+
+When enabled, command execution is allowed for remote sessions and non-local contexts. When disabled, only trusted local contexts can execute commands.
+
+### Configuration
+
+**Via configuration file:**
+
+```json
+{
+  "tools": {
+    "exec": {
+      "allow_remote": false
+    }
+  }
+}
+```
+
+**Via environment variable:**
+
+```bash
+export PICOCLAW_TOOLS_EXEC_ALLOW_REMOTE=false
+```
+
+### Use Cases
+
+| Scenario                                                         | Recommended Setting                 |
+| ---------------------------------------------------------------- | ----------------------------------- |
 | Local-only usage                                                 | `allow_remote: false`               |
 | Remote channels (Telegram, Discord, etc.) need command execution | `allow_remote: true`                |
 | Multi-user remote access                                         | `allow_remote: false` (more secure) |
@@ -56,6 +98,7 @@ export PICOCLAW_TOOLS_EXEC_ENABLED=false
 | Non-local context     | HTTP API calls, Webhook triggers, etc.                |
 
 ## Combined Usage Examples
+
 ### Scenario 1: Fully Disable Command Execution
 
 Suitable for high-security, read-only environments:
@@ -70,7 +113,7 @@ Suitable for high-security, read-only environments:
 ```
 **Effect:** All command requests are rejected, both local and remote.
 
-## Scenario 2: Allow Local Execution Only
+### Scenario 2: Allow Local Execution Only
 
 Suitable when local automation is needed but remote command execution is not allowed:
 ```json
@@ -83,8 +126,11 @@ Suitable when local automation is needed but remote command execution is not all
   }
 }
 ```
-**Effect:** Local terminal commands can execute
-Remote channel requests (Telegram, Discord, etc.) are rejected
+**Effect:**
+
+- Local terminal commands can execute
+- Remote channel requests (Telegram, Discord, etc.) are rejected
+
 ### Scenario 3: Fully Open (Default)
 
 Suitable for development environments or trusted networks:

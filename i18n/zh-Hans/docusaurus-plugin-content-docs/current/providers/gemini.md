@@ -52,37 +52,37 @@ PicoClaw 提供了 WebUI 界面，您可以在 WebUI 中轻松配置模型，无
 | 字段 | 填写内容 |
 |------|----------|
 | 模型别名 | 自定义名称，如 `gemini-flash` |
-| 模型标识符 | `google/gemini-2.0-flash`（或其他支持的模型） |
+| 模型标识符 | `gemini/gemini-2.0-flash`（或其他支持的模型） |
 | API Key | Google AI Studio API Key |
 | API Base URL | 留空（使用默认地址） |
 
 ### 方式二：编辑配置文件
 
-在 `config.json` 中添加 Gemini 模型，将 `auth_method` 设置为 `api_key`：
+在 `config.json` 中添加 Gemini 模型（schema v2 使用 `api_keys`）：
 
 ```json
 {
   "model_list": [
     {
       "model_name": "gemini-flash",
-      "model": "google/gemini-2.0-flash",
-      "auth_method": "api_key",
-      "api_key": "YOUR_GEMINI_API_KEY_HERE"
+      "model": "gemini/gemini-2.0-flash",
+      "api_keys": ["YOUR_GEMINI_API_KEY_HERE"]
     },
     {
       "model_name": "gemini-pro",
-      "model": "google/gemini-1.5-pro",
-      "auth_method": "api_key",
-      "api_key": "YOUR_GEMINI_API_KEY_HERE"
+      "model": "gemini/gemini-1.5-pro",
+      "api_keys": ["YOUR_GEMINI_API_KEY_HERE"]
     }
   ],
   "agents": {
     "defaults": {
-      "model": "gemini-flash"
+      "model_name": "gemini-flash"
     }
   }
 }
 ```
+
+生产环境建议将真实密钥放在 `~/.picoclaw/.security.yml`，`config.json` 主要用于维护模型结构。
 
 ---
 

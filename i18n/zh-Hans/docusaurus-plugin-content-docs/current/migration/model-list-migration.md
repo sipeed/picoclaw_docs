@@ -22,7 +22,7 @@ title: 迁移指南：providers → model_list
 | --- | --- |
 | v1.x | 引入 `model_list`，`providers` 已废弃但仍可用 |
 | v1.x+1 | 显著的废弃警告，提供迁移工具 |
-| v2.0 | 移除 `providers` 配置 |
+| 配置 schema v2 | 活跃 schema 中移除 `providers`，旧配置会自动迁移 |
 
 ## 迁移前后对比
 
@@ -51,7 +51,7 @@ title: 迁移指南：providers → model_list
 }
 ```
 
-### 迁移后：新版 `model_list` 配置（V2）
+### 迁移后：新版 `model_list` 配置（配置 schema v2）
 
 ```json
 {
@@ -129,7 +129,7 @@ title: 迁移指南：providers → model_list
 *基于 HTTP 的协议需要 `api_keys`，除非 `api_base` 指向本地服务。
 
 :::note API Key 格式变更
-在 V2 中，`api_key`（单数）已**移除**，仅支持 `api_keys`（数组）。从 V0/V1 迁移时，`api_key` 和 `api_keys` 会自动合并为新的 `api_keys` 数组。
+在配置 schema V2 中，`api_key`（单数）已**移除**，仅支持 `api_keys`（数组）。从 V0/V1 迁移时，`api_key` 和 `api_keys` 会自动合并为新的 `api_keys` 数组。
 :::
 
 ## 负载均衡

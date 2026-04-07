@@ -9,8 +9,12 @@ sidebar_label: Overview
 Config file: `~/.picoclaw/config.json`
 
 :::tip Config Version 2
-PicoClaw v2 introduces config version 2. New configs should include `"version": 2` at the top level. Existing V0/V1 configs are automatically migrated on first load. See the [Migration Guide](../migration/model-list-migration.md) for details.
+Config schema version `2` is the current format. New configs should include `"version": 2` at the top level. Existing V0/V1 configs are automatically migrated on first load. See the [Migration Guide](../migration/model-list-migration.md) for details.
 :::
+
+For a smoother setup experience, we recommend using Web UI as the primary way to configure and manage models.
+
+![Web UI Model Setup](/img/providers/webuimodel.png)
 
 ## Sections
 

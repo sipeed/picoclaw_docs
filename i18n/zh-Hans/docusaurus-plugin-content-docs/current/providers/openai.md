@@ -58,7 +58,7 @@ PicoClaw 提供了 WebUI 界面，您可以在 WebUI 中轻松配置模型，无
 
 ### 方式二：编辑配置文件
 
-在 `config.json` 中添加 OpenAI 模型，将 `auth_method` 设置为 `api_key`：
+在 `config.json` 中添加 OpenAI 模型（schema v2 使用 `api_keys`）：
 
 ```json
 {
@@ -66,23 +66,23 @@ PicoClaw 提供了 WebUI 界面，您可以在 WebUI 中轻松配置模型，无
     {
       "model_name": "gpt-4o-mini",
       "model": "openai/gpt-4o-mini",
-      "auth_method": "api_key",
-      "api_key": "YOUR_OPENAI_API_KEY_HERE"
+      "api_keys": ["YOUR_OPENAI_API_KEY_HERE"]
     },
     {
       "model_name": "gpt-4o",
       "model": "openai/gpt-4o",
-      "auth_method": "api_key",
-      "api_key": "YOUR_OPENAI_API_KEY_HERE"
+      "api_keys": ["YOUR_OPENAI_API_KEY_HERE"]
     }
   ],
   "agents": {
     "defaults": {
-      "model": "gpt-4o-mini"
+      "model_name": "gpt-4o-mini"
     }
   }
 }
 ```
+
+生产环境建议将真实密钥放在 `~/.picoclaw/.security.yml`，`config.json` 主要用于维护模型结构。
 
 ---
 

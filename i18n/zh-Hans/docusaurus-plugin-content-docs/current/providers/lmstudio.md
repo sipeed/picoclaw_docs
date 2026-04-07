@@ -84,13 +84,15 @@ PicoClaw 提供了 WebUI 界面，您可以在 WebUI 中轻松配置模型，无
   ],
   "agents": {
     "defaults": {
-      "model": "lmstudio-local"
+      "model_name": "lmstudio-local"
     }
   }
 }
 ```
 
 PicoClaw 发送请求前会去掉 `lmstudio/` 前缀。若未显式设置 `api_base`，默认使用 `http://localhost:1234/v1`。
+
+如果 LM Studio 开启鉴权，请在 `~/.picoclaw/.security.yml` 中使用 `api_keys` 配置密钥。
 
 ---
 

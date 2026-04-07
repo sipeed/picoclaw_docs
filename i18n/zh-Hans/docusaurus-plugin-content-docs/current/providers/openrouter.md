@@ -64,9 +64,9 @@ PicoClaw 提供了 WebUI 界面，您可以在 WebUI 中轻松配置模型，无
 | 字段 | 填写内容 |
 |------|----------|
 | 模型别名 | 自定义名称，如 `gpt-4o-mini` |
-| 模型标识符 | `openai/gpt-4o-mini`（或其他支持的模型） |
+| 模型标识符 | `openrouter/openai/gpt-4o-mini`（或其他支持的模型） |
 | API Key | OpenRouter API Key |
-| API Base URL | `https://openrouter.ai/api/v1` |
+| API Base URL | 留空即可（默认：`https://openrouter.ai/api/v1`） |
 
 ### 方式二：编辑配置文件
 
@@ -77,30 +77,28 @@ PicoClaw 提供了 WebUI 界面，您可以在 WebUI 中轻松配置模型，无
   "model_list": [
     {
       "model_name": "gpt-4o-mini",
-      "model": "openai/gpt-4o-mini",
-      "base_url": "https://openrouter.ai/api/v1",
-      "auth_method": "api_key",
-      "api_key": "YOUR_OPENROUTER_API_KEY",
-      "headers": {
+      "model": "openrouter/openai/gpt-4o-mini",
+      "api_keys": ["YOUR_OPENROUTER_API_KEY"],
+      "custom_headers": {
         "HTTP-Referer": "http://localhost",
         "X-Title": "PicoClaw"
       }
     },
     {
       "model_name": "claude-3-haiku",
-      "model": "anthropic/claude-3-haiku",
-      "base_url": "https://openrouter.ai/api/v1",
-      "auth_method": "api_key",
-      "api_key": "YOUR_OPENROUTER_API_KEY"
+      "model": "openrouter/anthropic/claude-3-haiku",
+      "api_keys": ["YOUR_OPENROUTER_API_KEY"]
     }
   ],
   "agents": {
     "defaults": {
-      "model": "gpt-4o-mini"
+      "model_name": "gpt-4o-mini"
     }
   }
 }
 ```
+
+生产环境建议将真实密钥放在 `~/.picoclaw/.security.yml`，`config.json` 主要用于维护模型结构。
 
 ---
 

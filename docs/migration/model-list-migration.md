@@ -22,7 +22,7 @@ The new `model_list` configuration offers several advantages:
 |---------|--------|
 | v1.x | `model_list` introduced, `providers` deprecated but functional |
 | v1.x+1 | Prominent deprecation warnings, migration tool available |
-| v2.0 | `providers` configuration removed |
+| config schema v2 | `providers` removed from active schema; legacy configs are auto-migrated |
 
 ## Before and After
 
@@ -51,7 +51,7 @@ The new `model_list` configuration offers several advantages:
 }
 ```
 
-### After: New `model_list` Configuration (V2)
+### After: New `model_list` Configuration (Schema v2)
 
 ```json
 {
@@ -133,7 +133,7 @@ The `model` field uses a protocol prefix format: `[protocol/]model-identifier`
 *`api_keys` is required for HTTP-based protocols unless `api_base` points to a local server.
 
 :::note API Key Format Change
-In V2, `api_key` (singular) has been **removed**. Only `api_keys` (array) is supported. During migration from V0/V1, both `api_key` and `api_keys` are automatically merged into the new `api_keys` array.
+In config schema V2, `api_key` (singular) has been **removed**. Only `api_keys` (array) is supported. During migration from V0/V1, both `api_key` and `api_keys` are automatically merged into the new `api_keys` array.
 :::
 
 ## Load Balancing

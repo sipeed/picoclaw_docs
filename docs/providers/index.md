@@ -6,7 +6,11 @@ sidebar_label: Overview
 
 # Providers
 
-PicoClaw supports 20+ LLM providers through its `model_list` configuration.
+PicoClaw supports many LLM protocol families through `model_list`.
+
+For a smoother and more intuitive setup experience, we recommend using Web UI as the primary way to configure models.
+
+![Web UI Model Setup](/img/providers/webuimodel.png)
 
 ## Supported Providers
 
@@ -14,6 +18,7 @@ PicoClaw supports 20+ LLM providers through its `model_list` configuration.
 | --- | --- | --- |
 | **OpenAI** | GPT models | [platform.openai.com](https://platform.openai.com) |
 | **Anthropic** | Claude models | [console.anthropic.com](https://console.anthropic.com) |
+| **Anthropic Messages** | Native Anthropic Messages API | [console.anthropic.com](https://console.anthropic.com) |
 | **Venice AI** | Venice AI models | [venice.ai](https://venice.ai) |
 | **Google Gemini** | Gemini models | [aistudio.google.com](https://aistudio.google.com) |
 | **Zhipu AI** | GLM models (CN) | [bigmodel.cn](https://bigmodel.cn) |
@@ -26,17 +31,24 @@ PicoClaw supports 20+ LLM providers through its `model_list` configuration.
 | **NVIDIA** | NVIDIA AI models | [build.nvidia.com](https://build.nvidia.com) |
 | **Mistral** | Mistral models | [console.mistral.ai](https://console.mistral.ai) |
 | **Avian** | Avian models | [avian.io](https://avian.io) |
+| **LongCat** | LongCat models | [longcat.chat](https://longcat.chat/platform) |
+| **ModelScope** | ModelScope models | [modelscope.cn](https://modelscope.cn) |
+| **Novita** | Novita models | [novita.ai](https://novita.ai) |
+| **Vivgrid** | Vivgrid hosted models | [vivgrid.com](https://vivgrid.com) |
+| **ShengSuanYun** | ShengSuanYun models | [router.shengsuanyun.com](https://router.shengsuanyun.com) |
 | **Xiaomi MiMo** | MiMo models | [platform.xiaomimimo.com](https://platform.xiaomimimo.com) |
 | **Ollama** | Local model server | Local (no key needed) |
 | **LM Studio** | Local model server (OpenAI-compatible) | Local (default no key) |
 | **vLLM** | Local model server (OpenAI-compatible) | Local |
 | **LiteLLM** | LiteLLM proxy | Local proxy |
 | **Cerebras** | Fast inference | [cerebras.ai](https://cerebras.ai) |
-| **VolcEngine** | Doubao models, CodingPlan (CN) | [console.volcengine.com](https://console.volcengine.com) |
-| **BytePlus** | CodingPlan (International) | [console.byteplus.com](https://console.byteplus.com) |
+| **VolcEngine** | Doubao models | [console.volcengine.com](https://console.volcengine.com) |
+| **Azure OpenAI** | Azure-hosted OpenAI models | Azure Portal |
+| **AWS Bedrock** | Bedrock-hosted models | AWS Console |
 | **Antigravity** | Google Cloud Code Assist | OAuth only |
 | **Minimax** | MiniMax models | [platform.minimaxi.com](https://platform.minimaxi.com) |
-| **GitHub Copilot** | Copilot models | — |
+| **GitHub Copilot** | Copilot bridge models | — |
+| **Claude CLI / Codex CLI** | Local CLI model bridges | Local CLI auth |
 
 ## Quick Setup
 
