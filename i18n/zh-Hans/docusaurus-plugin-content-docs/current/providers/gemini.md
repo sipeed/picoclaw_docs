@@ -11,13 +11,13 @@ title: Gemini API (Google AI Studio)
 
 Gemini 提供多个模型系列，适用于不同性能与成本场景：
 
+## 支持的模型
+
 | 模型 | 特点 | 适用场景 |
 |------|------|----------|
 | gemini-2.0-flash | 速度快、成本低 | 高并发、日常对话 |
 | gemini-1.5-pro | 高质量多模态 | 复杂任务、长文本理解 |
 | gemini-1.5-flash | 平衡性能与成本 | 通用场景 |
-
----
 
 ## 获取 API Key
 
@@ -36,8 +36,6 @@ Gemini 提供多个模型系列，适用于不同性能与成本场景：
 ![Gemini API Key](/img/providers/geminiapi.png)
 
 ![Gemini API Key](/img/providers/geminiapi1.png)
-
----
 
 ## 配置 PicoClaw
 
@@ -84,9 +82,7 @@ PicoClaw 提供了 WebUI 界面，您可以在 WebUI 中轻松配置模型，无
 
 生产环境建议将真实密钥放在 `~/.picoclaw/.security.yml`，`config.json` 主要用于维护模型结构。
 
----
-
-## 限制与配额
+## 注意事项
 
 ### 免费层级
 
@@ -100,17 +96,15 @@ Google AI Studio 为开发者提供免费层级：
 
 如需更高配额或企业级隐私保护，可升级至付费层级或使用 Google Cloud Vertex AI。
 
----
+### 常见问题
 
-## 常见问题
-
-### API Key 无效
+#### API Key 无效
 
 **原因**：API Key 过期或被撤销
 
 **解决**：前往 Google AI Studio 重新生成 API Key
 
-### 请求超时
+#### 请求超时
 
 **原因**：网络问题或请求过于频繁
 
@@ -119,7 +113,7 @@ Google AI Studio 为开发者提供免费层级：
 - 降低请求频率
 - 使用代理（如需要）
 
-### 模型不可用
+#### 模型不可用
 
 **原因**：部分模型在特定地区不可用
 

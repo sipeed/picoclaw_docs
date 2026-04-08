@@ -16,14 +16,12 @@ title: LM Studio API
 - 默认无需 API Key
 - 提供 GUI 界面进行模型加载和管理
 
-PicoClaw 中的模型标识符映射：
+## 支持的模型
 
 | LM Studio API 标识符 | PicoClaw 模型标识符 | 说明 | 适用场景 |
 |-------|----------|----------|-----------|
 | `openai/gpt-oss-20b` | `lmstudio/openai/gpt-oss-20b` | 来自 LM Studio 右侧面板 | 日常对话与编程任务 |
 | `your-model-id` | `lmstudio/your-model-id` | 任意已加载模型均可使用 | 自定义本地工作流 |
-
----
 
 ## 获取 API Key
 
@@ -45,8 +43,6 @@ PicoClaw 中的模型标识符映射：
 > 注意：LM Studio 默认不需要 API Key。只有在你开启了服务鉴权时，才需要在 PicoClaw 中填写 API Key。
 
 ![LM Studio 本地服务](/img/providers/lmstudio.png)
-
----
 
 ## 配置 PicoClaw
 
@@ -90,13 +86,41 @@ PicoClaw 提供了 WebUI 界面，您可以在 WebUI 中轻松配置模型，无
 }
 ```
 
-PicoClaw 发送请求前会去掉 `lmstudio/` 前缀。若未显式设置 `api_base`，默认使用 `http://localhost:1234/v1`。
+生产环境建议将真实密钥放在 `~/.picoclaw/.security.yml`，`config.json` 主要用于维护模型结构。
 
-如果 LM Studio 开启鉴权，请在 `~/.picoclaw/.security.yml` 中使用 `api_keys` 配置密钥。
+## 注意事项
 
----
+### 本地部署要求
 
-## 限制与配额
+- **硬件要求**：根据模型大小需要足够的 RAM 和 GPU 内存
+- **网络要求**：本地服务，无需互联网连接
+- **兼容性**：支持多种量化格式（GGUF、GGML 等）
+
+### 性能考虑
+
+- **推理速度**：取决于本地硬件性能
+- **并发限制**：单机部署的并发能力有限
+- **模型切换**：需要手动重新加载模型
+
+### 常见问题
+
+#### 模型加载失败
+
+**原因**：模型文件损坏或硬件不足
+
+**解决**：
+- 检查模型文件完整性
+- 确保有足够的 RAM/GPU 内存
+- 尝试使用量化版本的模型
+
+#### 服务连接失败
+
+**原因**：LM Studio 服务未启动或端口冲突
+
+**解决**：
+- 确认 LM Studio Local Server 已启动
+- 检查端口 1234 是否被占用
+- 尝试重启 LM Studio
 
 ### 计费方式
 

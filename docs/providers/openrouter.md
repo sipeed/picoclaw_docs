@@ -16,7 +16,7 @@ With OpenRouter, you can:
 - Avoid rate limiting issues from single platforms
 - Switch models flexibly without changing code
 
-Popular available models:
+## Supported Models
 
 | Model | Provider | Features | Use Cases |
 |-------|----------|----------|-----------|
@@ -25,8 +25,6 @@ Popular available models:
 | anthropic/claude-3-haiku | Anthropic | Fast | Light tasks |
 | anthropic/claude-3-opus | Anthropic | High reasoning | Complex analysis |
 | google/gemini-pro | Google | Strong multimodal | General tasks |
-
----
 
 ## Getting API Key
 
@@ -49,8 +47,6 @@ Supports GitHub / Google login.
 ![OpenRouter API Key](/img/providers/openrouterapi.png)
 
 ![OpenRouter API Key](/img/providers/openrouterapi1.png)
-
----
 
 ## Configuring PicoClaw
 
@@ -101,9 +97,7 @@ Add in `config.json`:
 
 For production, keep keys in `~/.picoclaw/.security.yml` and keep `config.json` focused on model structure.
 
----
-
-## Limits & Quotas
+## Notes
 
 ### Billing
 
@@ -115,11 +109,9 @@ OpenRouter uses a **pay-as-you-go** model, charging based on the actual model us
 - Free models may have stricter limits
 - Paid users enjoy higher rate quotas
 
----
+### Common Issues
 
-## Common Issues
-
-### Model Unavailable
+#### Model Unavailable
 
 **Cause**: Model discontinued or insufficient account balance
 
@@ -127,7 +119,7 @@ OpenRouter uses a **pay-as-you-go** model, charging based on the actual model us
 - Check if the model is still available
 - Top up account balance
 
-### Response Timeout
+#### Response Timeout
 
 **Cause**: Slow model response or network issues
 

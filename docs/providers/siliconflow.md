@@ -9,14 +9,7 @@ title: SiliconFlow API
 
 **SiliconFlow** is a platform providing cost-effective LLM inference services, supporting various open-source and commercial models (such as DeepSeek, Qwen, LLaMA, etc.).
 
-Key features:
-
-- High-performance inference (optimized for inference)
-- Low cost (cheaper than official APIs)
-- OpenAI-compatible interface (direct integration with existing tools)
-- China-friendly access (no complex proxy needed)
-
-Popular models:
+## Supported Models
 
 | Model | Provider | Features | Use Cases |
 |-------|----------|----------|-----------|
@@ -24,8 +17,6 @@ Popular models:
 | deepseek-coder | DeepSeek | Strong coding ability | Programming tasks |
 | qwen2-7b-instruct | Alibaba | Chinese optimized | Chinese scenarios |
 | llama3-70b-instruct | Meta | Open-source LLM | General tasks |
-
----
 
 ## Getting API Key
 
@@ -44,8 +35,6 @@ Supports phone number or other registration methods.
 3. **Copy and save** your Key
 
 > ⚠️ **Note**: API Key is only shown once, please save it securely.
-
----
 
 ## Configuring PicoClaw
 
@@ -94,9 +83,7 @@ Add in `config.json`:
 
 For production, keep keys in `~/.picoclaw/.security.yml` and keep `config.json` focused on model structure.
 
----
-
-## Limits & Quotas
+## Notes
 
 ### Billing
 
@@ -108,17 +95,15 @@ SiliconFlow uses a **pay-as-you-go** model, charging based on the actual model u
 - New users may have free quota
 - Higher rate quotas available after topping up
 
----
+### Common Issues
 
-## Common Issues
-
-### Insufficient Balance
+#### Insufficient Balance
 
 **Cause**: Account balance depleted
 
 **Solution**: Top up in the console
 
-### Model Unavailable
+#### Model Unavailable
 
 **Cause**: Incorrect model name or model discontinued
 

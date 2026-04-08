@@ -79,6 +79,12 @@ const sidebars = {
         'providers/openrouter-api',
         'providers/lmstudio-api',
         'providers/siliconflow-api',
+        'providers/qwen-api',
+        'providers/volcengine-api',
+        'providers/zhipu-api',
+        'providers/deepseek-api',
+        'providers/moonshot-api',
+        'providers/minimax-api',
       ],
     },
     {

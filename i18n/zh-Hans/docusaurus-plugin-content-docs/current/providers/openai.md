@@ -11,13 +11,13 @@ title: OpenAI API
 
 OpenAI 提供多个模型系列，适用于不同性能与成本场景：
 
+## 支持的模型
+
 | 模型 | 特点 | 适用场景 |
 |------|------|----------|
 | gpt-4o-mini | 速度快、成本低 | 高并发、日常对话 |
 | gpt-4o | 高质量多模态 | 复杂任务、图像理解 |
 | gpt-4.1 | 更强推理与代码能力 | 代码生成、逻辑推理 |
-
----
 
 ## 获取 API Key
 
@@ -36,8 +36,6 @@ OpenAI 提供多个模型系列，适用于不同性能与成本场景：
 ![API Keys 页面](/img/providers/openaiapi.png)
 
 ![创建新的 API Key](/img/providers/openaiapi1.png)
-
----
 
 ## 配置 PicoClaw
 
@@ -84,9 +82,7 @@ PicoClaw 提供了 WebUI 界面，您可以在 WebUI 中轻松配置模型，无
 
 生产环境建议将真实密钥放在 `~/.picoclaw/.security.yml`，`config.json` 主要用于维护模型结构。
 
----
-
-## 限制与配额
+## 注意事项
 
 ### 计费方式
 

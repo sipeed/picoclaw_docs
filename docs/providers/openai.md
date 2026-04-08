@@ -11,13 +11,13 @@ title: OpenAI API
 
 OpenAI provides multiple model series for different performance and cost scenarios:
 
+## Supported Models
+
 | Model | Features | Use Cases |
 |-------|----------|-----------|
 | gpt-4o-mini | Fast, low cost | High concurrency, daily conversations |
 | gpt-4o | High-quality multimodal | Complex tasks, image understanding |
 | gpt-4.1 | Stronger reasoning & code capabilities | Code generation, logical reasoning |
-
----
 
 ## Getting API Key
 
@@ -36,8 +36,6 @@ Go to [OpenAI Platform](https://platform.openai.com/) and log in to your account
 ![API Keys Page](/img/providers/openaiapi.png)
 
 ![Create New API Key](/img/providers/openaiapi1.png)
-
----
 
 ## Configuring PicoClaw
 
@@ -84,9 +82,7 @@ Add OpenAI models in `config.json` (schema v2 uses `api_keys`):
 
 For production, keep keys in `~/.picoclaw/.security.yml` and keep `config.json` focused on model structure.
 
----
-
-## Limits & Quotas
+## Notes
 
 ### Billing
 

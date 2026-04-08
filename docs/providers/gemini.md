@@ -11,13 +11,13 @@ title: Gemini API (Google AI Studio)
 
 Gemini offers multiple model series for different performance and cost scenarios:
 
+## Supported Models
+
 | Model | Features | Use Cases |
 |-------|----------|-----------|
 | gemini-2.0-flash | Fast, low cost | High concurrency, daily conversations |
 | gemini-1.5-pro | High-quality multimodal | Complex tasks, long context understanding |
 | gemini-1.5-flash | Balanced performance & cost | General use cases |
-
----
 
 ## Getting API Key
 
@@ -36,8 +36,6 @@ Go to [Google AI Studio](https://aistudio.google.com/) and log in with your Goog
 ![Gemini API Key](/img/providers/geminiapi.png)
 
 ![Gemini API Key](/img/providers/geminiapi1.png)
-
----
 
 ## Configuring PicoClaw
 
@@ -84,9 +82,7 @@ Add Gemini models in `config.json` (schema v2 uses `api_keys`):
 
 For production, keep keys in `~/.picoclaw/.security.yml` and keep `config.json` focused on model structure.
 
----
-
-## Limits & Quotas
+## Notes
 
 ### Free Tier
 
@@ -100,17 +96,15 @@ Google AI Studio offers a free tier for developers:
 
 For higher quotas or enterprise-level privacy protection, upgrade to paid tier or use Google Cloud Vertex AI.
 
----
+### Common Issues
 
-## Common Issues
-
-### Invalid API Key
+#### Invalid API Key
 
 **Cause**: API Key expired or revoked
 
 **Solution**: Regenerate API Key in Google AI Studio
 
-### Request Timeout
+#### Request Timeout
 
 **Cause**: Network issues or too many requests
 
@@ -119,7 +113,7 @@ For higher quotas or enterprise-level privacy protection, upgrade to paid tier o
 - Reduce request frequency
 - Use proxy if needed
 
-### Model Unavailable
+#### Model Unavailable
 
 **Cause**: Some models are not available in certain regions
 

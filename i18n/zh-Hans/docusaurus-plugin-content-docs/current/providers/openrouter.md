@@ -16,7 +16,7 @@ title: OpenRouter API
 - 避免单一平台限流问题
 - 灵活切换模型，无需更改代码
 
-常见可用模型：
+## 支持的模型
 
 | 模型 | 提供商 | 特点 | 适用场景 |
 |------|--------|------|----------|
@@ -25,8 +25,6 @@ title: OpenRouter API
 | anthropic/claude-3-haiku | Anthropic | 速度快 | 轻量任务 |
 | anthropic/claude-3-opus | Anthropic | 高推理能力 | 复杂分析 |
 | google/gemini-pro | Google | 强多模态 | 综合任务 |
-
----
 
 ## 获取 API Key
 
@@ -49,7 +47,6 @@ title: OpenRouter API
 ![OpenRouter API Key](/img/providers/openrouterapi.png)
 
 ![OpenRouter API Key](/img/providers/openrouterapi1.png)
----
 
 ## 配置 PicoClaw
 
@@ -100,9 +97,7 @@ PicoClaw 提供了 WebUI 界面，您可以在 WebUI 中轻松配置模型，无
 
 生产环境建议将真实密钥放在 `~/.picoclaw/.security.yml`，`config.json` 主要用于维护模型结构。
 
----
-
-## 限制与配额
+## 注意事项
 
 ### 计费方式
 
@@ -114,11 +109,9 @@ OpenRouter 采用 **按使用量计费** 模式，根据实际使用的模型和
 - 免费模型可能有更严格的限制
 - 付费用户享有更高的速率配额
 
----
+### 常见问题
 
-## 常见问题
-
-### 模型不可用
+#### 模型不可用
 
 **原因**：模型已下架或账户余额不足
 
@@ -126,7 +119,7 @@ OpenRouter 采用 **按使用量计费** 模式，根据实际使用的模型和
 - 检查模型是否仍然可用
 - 充值账户余额
 
-### 响应超时
+#### 响应超时
 
 **原因**：模型响应较慢或网络问题
 
