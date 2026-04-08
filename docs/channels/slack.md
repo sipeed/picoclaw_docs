@@ -88,7 +88,7 @@ picoclaw gateway
 | `bot_token` | string | Yes | Bot User OAuth Token (starts with `xoxb-`) |
 | `app_token` | string | Yes | App-Level Token for Socket Mode (starts with `xapp-`) |
 | `allow_from` | array | No | Slack user ID whitelist (empty = allow all) |
-| `group_trigger` | object | No | Group chat trigger settings (see [Common Channel Fields](./#common-channel-fields)) |
+| `group_trigger` | object | No | Group chat trigger settings (see [Common Channel Fields](../#common-channel-fields)) |
 | `typing` | object | No | Typing indicator config (`enabled`) |
 | `placeholder` | object | No | Placeholder message config (`enabled`, `text`) |
 | `reasoning_channel_id` | string | No | Route reasoning output to a separate channel |

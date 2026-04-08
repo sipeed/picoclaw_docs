@@ -73,7 +73,7 @@ picoclaw gateway
 | `device_id` | string | 否 | 可选的 Matrix 设备 ID |
 | `join_on_invite` | bool | 否 | 被邀请时自动加入房间（默认：false） |
 | `allow_from` | array | 否 | Matrix 用户 ID 白名单（空数组 = 允许所有用户） |
-| `group_trigger` | object | 否 | 群聊触发设置（见[通用通道字段](./#通用通道字段)） |
+| `group_trigger` | object | 否 | 群聊触发设置（见[通用通道字段](../#通用通道字段)） |
 | `placeholder` | object | 否 | 占位消息配置（`enabled`、`text`） |
 | `reasoning_channel_id` | string | 否 | 将推理过程输出到单独的房间 |
 

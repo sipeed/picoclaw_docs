@@ -130,7 +130,7 @@ model_list:
 | `proxy` | string | 否 | 该模型 API 调用的 HTTP/SOCKS 代理 |
 | `user_agent` | string | 否 | API 请求的自定义 `User-Agent` 请求头 |
 | `request_timeout` | int | 否 | 请求超时时间（秒），默认 120 |
-| `rpm` | int | 否 | 速率限制 — 每分钟请求数（参见[速率限制](../rate-limiting)） |
+| `rpm` | int | 否 | 速率限制 — 每分钟请求数（参见[速率限制](../rate-limiting.md)） |
 
 :::warning `config.json` 中的 `api_key`
 在配置 schema `2` 中，`config.json` 里的 `model_list[].api_key` 会被忽略。请在 `.security.yml` 中使用 `api_keys`。旧版 V0/V1 配置中的 `api_key` 仅在迁移过程中会被合并。
@@ -305,7 +305,7 @@ model_list:
 }
 ```
 
-详细迁移步骤请参考[迁移指南](../migration/model-list-migration)。
+详细迁移步骤请参考[迁移指南](../migration/model-list-migration.md)。
 
 ## 语音转文字
 

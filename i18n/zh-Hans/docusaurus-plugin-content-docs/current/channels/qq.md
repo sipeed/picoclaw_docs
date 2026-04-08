@@ -63,7 +63,7 @@ picoclaw gateway
 | `app_id` | string | 是 | QQ 机器人 AppID |
 | `app_secret` | string | 是 | QQ 机器人 AppSecret |
 | `allow_from` | array | 否 | 用户 ID 白名单（空数组 = 允许所有用户） |
-| `group_trigger` | object | 否 | 群聊触发设置（见[通用通道字段](./#通用通道字段)） |
+| `group_trigger` | object | 否 | 群聊触发设置（见[通用通道字段](../#通用通道字段)） |
 | `reasoning_channel_id` | string | 否 | 将推理过程输出到单独的聊天 |
 
 ## 工作原理

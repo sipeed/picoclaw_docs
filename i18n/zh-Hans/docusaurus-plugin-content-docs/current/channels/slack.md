@@ -88,7 +88,7 @@ picoclaw gateway
 | `bot_token` | string | 是 | Bot User OAuth Token（以 `xoxb-` 开头） |
 | `app_token` | string | 是 | Socket Mode App-Level Token（以 `xapp-` 开头） |
 | `allow_from` | array | 否 | 用户 ID 白名单（空数组 = 允许所有用户） |
-| `group_trigger` | object | 否 | 群聊触发设置（见[通用通道字段](./#通用通道字段)） |
+| `group_trigger` | object | 否 | 群聊触发设置（见[通用通道字段](../#通用通道字段)） |
 | `typing` | object | 否 | 输入状态指示器配置（`enabled`） |
 | `placeholder` | object | 否 | 占位消息配置（`enabled`、`text`） |
 | `reasoning_channel_id` | string | 否 | 将推理过程输出到单独的频道 |

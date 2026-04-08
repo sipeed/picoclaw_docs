@@ -73,7 +73,7 @@ The bot will connect to the homeserver and start listening for messages. If `joi
 | `device_id` | string | No | Optional Matrix device ID |
 | `join_on_invite` | bool | No | Auto-join rooms when invited (default: false) |
 | `allow_from` | array | No | Whitelist of Matrix user IDs (empty = allow all) |
-| `group_trigger` | object | No | Group trigger settings (see [Common Channel Fields](./#common-channel-fields)) |
+| `group_trigger` | object | No | Group trigger settings (see [Common Channel Fields](../#common-channel-fields)) |
 | `placeholder` | object | No | Placeholder message config (`enabled`, `text`) |
 | `reasoning_channel_id` | string | No | Route reasoning output to a separate room |
 

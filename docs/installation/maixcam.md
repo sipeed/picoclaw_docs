@@ -95,8 +95,8 @@ Then open `http://<device-ip>:18800` in a browser on the same LAN.
 Below is a simple hands-on example showing how to use PicoClaw with MaixCAM for AI vision development:
 
 1. **Basic setup**: First configure the model and chat channel in the Web UI or TUI. The example below uses `Discord` and the `glm-4.7` model:
-   - Channel configuration: see [Discord configuration guide](../channels/discord#配置-discord-channel).
-   - Model configuration: see [Model configuration guide](../configuration/model-list).
+   - Channel configuration: see [Discord configuration guide](../channels/discord.md#4-configure).
+   - Model configuration: see [Model configuration guide](../configuration/model-list.md).
 
 2. **Generate capture script**: In Discord, talk to PicoClaw and ask it to write and run a MaixPy capture script:
 

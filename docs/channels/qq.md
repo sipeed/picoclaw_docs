@@ -63,7 +63,7 @@ picoclaw gateway
 | `app_id` | string | Yes | QQ bot AppID |
 | `app_secret` | string | Yes | QQ bot AppSecret |
 | `allow_from` | array | No | QQ user ID whitelist (empty = allow all) |
-| `group_trigger` | object | No | Group chat trigger settings (see [Common Channel Fields](./#common-channel-fields)) |
+| `group_trigger` | object | No | Group chat trigger settings (see [Common Channel Fields](../#common-channel-fields)) |
 | `reasoning_channel_id` | string | No | Route reasoning output to a separate chat |
 
 ## How It Works

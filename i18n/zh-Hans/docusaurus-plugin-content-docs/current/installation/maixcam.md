@@ -95,8 +95,8 @@ picoclaw-launcher -no-browser -public
 以下是一个简单的实战示例，展示如何在 MaixCAM 上结合 PicoClaw 进行 AI 视觉开发：
 
 1. **基础配置**：首先在 Web UI 或 TUI 中配置好模型和聊天通道。以下以 `Discord` 和 `glm-4.7` 模型为例：
-   - 聊天通道配置：参考 [Discord 配置说明](../channels/discord#配置-discord-channel)。
-   - 模型配置：参考 [模型配置说明](../configuration/model-list)。
+   - 聊天通道配置：参考 [Discord 配置说明](../channels/discord.md#4-配置)。
+   - 模型配置：参考 [模型配置说明](../configuration/model-list.md)。
 
 2. **生成抓图脚本**：在 Discord 中与 PicoClaw 对话，要求其编写并执行 MaixPy 的抓图脚本：
 

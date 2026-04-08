@@ -97,7 +97,7 @@ picoclaw gateway
 | `encrypt_key` | string | No | Event callback encryption key |
 | `verification_token` | string | No | Event verification token |
 | `allow_from` | array | No | User open ID whitelist (empty = allow all) |
-| `group_trigger` | object | No | Group chat trigger settings (see [Common Channel Fields](./#common-channel-fields)) |
+| `group_trigger` | object | No | Group chat trigger settings (see [Common Channel Fields](../#common-channel-fields)) |
 | `placeholder` | object | No | Placeholder message config (`enabled`, `text`) |
 | `random_reaction_emoji` | array | No | Custom emoji list for message reactions (empty = default "Pin") |
 | `reasoning_channel_id` | string | No | Route reasoning output to a separate chat |

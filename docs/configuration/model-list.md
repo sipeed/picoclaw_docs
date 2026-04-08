@@ -130,7 +130,7 @@ model_list:
 | `proxy` | string | No | HTTP/SOCKS proxy for this model's API calls |
 | `user_agent` | string | No | Custom `User-Agent` header for API requests |
 | `request_timeout` | int | No | Request timeout in seconds (default: 120) |
-| `rpm` | int | No | Rate limit — requests per minute (see [Rate Limiting](../rate-limiting)) |
+| `rpm` | int | No | Rate limit — requests per minute (see [Rate Limiting](../rate-limiting.md)) |
 
 :::warning `api_key` in `config.json`
 For config schema version `2`, `model_list[].api_key` in `config.json` is ignored. Use `.security.yml` with `api_keys` for model credentials. Legacy `api_key` values are only merged during V0/V1 migration.
@@ -305,7 +305,7 @@ In a complete schema v2 config file, keep top-level `"version": 2`.
 }
 ```
 
-See the full [Migration Guide](../migration/model-list-migration) for details.
+See the full [Migration Guide](../migration/model-list-migration.md) for details.
 
 ## Voice Transcription
 

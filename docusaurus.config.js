@@ -9,6 +9,11 @@ const config = {
 
   url: 'https://docs.picoclaw.io',
   baseUrl: '/',
+  // Emit canonical URLs and a sitemap that match what GitHub Pages actually
+  // serves (path/index.html). Without this, GitHub Pages 301-redirects
+  // /docs/foo to /docs/foo/, which Google Search Console flags as
+  // "Page with redirect".
+  trailingSlash: true,
 
   organizationName: 'sipeed',
   projectName: 'picoclaw_docs',

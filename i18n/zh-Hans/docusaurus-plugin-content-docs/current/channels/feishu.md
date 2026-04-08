@@ -97,7 +97,7 @@ picoclaw gateway
 | `encrypt_key` | string | 否 | 事件回调加密密钥 |
 | `verification_token` | string | 否 | 事件验证令牌 |
 | `allow_from` | array | 否 | 用户 open ID 白名单（空数组 = 允许所有用户） |
-| `group_trigger` | object | 否 | 群聊触发设置（见[通用通道字段](./#通用通道字段)） |
+| `group_trigger` | object | 否 | 群聊触发设置（见[通用通道字段](../#通用通道字段)） |
 | `placeholder` | object | 否 | 占位消息配置（`enabled`、`text`） |
 | `random_reaction_emoji` | array | 否 | 自定义消息表情列表（空 = 默认使用 "Pin"） |
 | `reasoning_channel_id` | string | 否 | 将推理过程输出到单独的聊天 |
