@@ -33,6 +33,7 @@ const sidebars = {
       items: [
         'configuration/model-list',
         'configuration/security-sandbox',
+        'configuration/security-reference',
         'configuration/heartbeat',
         'configuration/tools',
         'configuration/config-reference',

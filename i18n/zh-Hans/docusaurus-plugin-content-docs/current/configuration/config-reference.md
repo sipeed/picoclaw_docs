@@ -152,33 +152,11 @@ title: 完整配置参考
     },
     "wecom": {
       "enabled": false,
-      "token": "YOUR_TOKEN",
-      "encoding_aes_key": "YOUR_43_CHAR_ENCODING_AES_KEY",
-      "webhook_url": "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=YOUR_KEY",
-      "webhook_path": "/webhook/wecom",
+      "bot_id": "YOUR_BOT_ID",
+      "secret": "YOUR_SECRET",
+      "websocket_url": "wss://openws.work.weixin.qq.com",
+      "send_thinking_message": true,
       "allow_from": [],
-      "reply_timeout": 5,
-      "reasoning_channel_id": ""
-    },
-    "wecom_app": {
-      "enabled": false,
-      "corp_id": "YOUR_CORP_ID",
-      "corp_secret": "YOUR_CORP_SECRET",
-      "agent_id": 1000002,
-      "token": "YOUR_TOKEN",
-      "encoding_aes_key": "YOUR_43_CHAR_ENCODING_AES_KEY",
-      "webhook_path": "/webhook/wecom-app",
-      "allow_from": [],
-      "reply_timeout": 5,
-      "reasoning_channel_id": ""
-    },
-    "wecom_aibot": {
-      "enabled": false,
-      "token": "YOUR_TOKEN",
-      "encoding_aes_key": "YOUR_43_CHAR_ENCODING_AES_KEY",
-      "webhook_path": "/webhook/wecom-aibot",
-      "max_steps": 10,
-      "welcome_message": "你好！我是你的 AI 助手，有什么可以帮你的吗？",
       "reasoning_channel_id": ""
     },
     "matrix": {
@@ -390,14 +368,17 @@ title: 完整配置参考
 
 ### .security.yml 文件
 
-PicoClaw 支持专用的 `.security.yml` 文件来存储敏感凭证（API 密钥、令牌、密钥）。此文件应添加到 `.gitignore` 中，以防止意外提交密钥。
+PicoClaw 支持专用的 `.security.yml` 文件来存储敏感凭证（API 密钥、令牌、密钥）。该文件与当前生效的 `config.json` 位于同一目录（如果使用 `PICOCLAW_CONFIG` 指定了自定义配置路径，也遵循该目录）。
 
 ### 密钥优先级顺序
 
-解析凭证时，PicoClaw 使用以下优先级顺序：
+解析凭证时，PicoClaw 按以下顺序应用值：
 
-1. **.security.yml**：若同名字段同时存在，`.security.yml` 会覆盖 `config.json`
-2. **config.json**：当 `.security.yml` 未提供该凭证时作为兜底
+1. **环境变量**：最高优先级（`env.Parse` 在文件加载后执行）
+2. **.security.yml**：覆盖 `config.json` 中同路径字段
+3. **config.json**：基础值
 
 对于 schema V2 的 `model_list`，`config.json` 中的 `api_key` 会被忽略，请使用 `.security.yml` + `api_keys`。
+
+关于 `.security.yml` 的字段路径、映射规则和完整示例，请参考[`.security.yml 配置参考`](./security-reference.md)。
 

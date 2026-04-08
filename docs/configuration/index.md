@@ -99,7 +99,7 @@ You can also override this with the environment variable `PICOCLAW_LOG_LEVEL`.
 
 ## Security Configuration
 
-PicoClaw supports separating sensitive data (API keys, tokens, secrets) from your main configuration by storing them in a `.security.yml` file. See [Security Sandbox](./security-sandbox.md) for workspace restrictions and [Credential Encryption](../credential-encryption.md) for encrypting API keys.
+PicoClaw supports separating sensitive data (API keys, tokens, secrets) from your main configuration by storing them in a `.security.yml` file. See [`.security.yml Reference`](./security-reference.md) for field mapping and overlay rules, [Security Sandbox](./security-sandbox.md) for workspace restrictions, and [Credential Encryption](../credential-encryption.md) for encrypted secret formats.
 
 Key benefits:
 - **Security**: Sensitive data is never in your main config file
@@ -117,6 +117,7 @@ See the [Full Config Reference](./config-reference.md) for the complete bindings
 
 - [Model Configuration (model_list)](./model-list.md) — add LLM providers
 - [Security Sandbox](./security-sandbox.md) — workspace restrictions and `.security.yml`
+- [`.security.yml` Reference](./security-reference.md) — field-by-field mapping and precedence
 - [Heartbeat](./heartbeat.md) — periodic tasks
 - [Tools Configuration](./tools.md) — web search, exec, cron
 - [Credential Encryption](../credential-encryption.md) — encrypt API keys with `enc://`

@@ -135,7 +135,7 @@ For `model_list` in schema `2`, `config.json` `api_key` is ignored. Use `.securi
 chmod 600 ~/.picoclaw/.security.yml
 ```
 
-See [Credential Encryption](../credential-encryption.md) for details on encrypting values in `.security.yml`.
+See [`.security.yml` Reference](./security-reference.md) for field-by-field mapping and merge rules, and [Credential Encryption](../credential-encryption.md) for details on encrypted value formats.
 
 ## Safe Paths
 

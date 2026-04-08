@@ -135,7 +135,7 @@ export PICOCLAW_AGENTS_DEFAULTS_RESTRICT_TO_WORKSPACE=false
 chmod 600 ~/.picoclaw/.security.yml
 ```
 
-详见[凭证加密](../credential-encryption.md)了解如何加密 `.security.yml` 中的值。
+详见[`.security.yml 配置参考`](./security-reference.md)了解字段映射与合并规则，以及[凭证加密](../credential-encryption.md)了解加密值格式。
 
 ## 安全路径
 

@@ -152,33 +152,11 @@ For day-to-day model management, Web UI is recommended. Use manual JSON editing 
     },
     "wecom": {
       "enabled": false,
-      "token": "YOUR_TOKEN",
-      "encoding_aes_key": "YOUR_43_CHAR_ENCODING_AES_KEY",
-      "webhook_url": "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=YOUR_KEY",
-      "webhook_path": "/webhook/wecom",
+      "bot_id": "YOUR_BOT_ID",
+      "secret": "YOUR_SECRET",
+      "websocket_url": "wss://openws.work.weixin.qq.com",
+      "send_thinking_message": true,
       "allow_from": [],
-      "reply_timeout": 5,
-      "reasoning_channel_id": ""
-    },
-    "wecom_app": {
-      "enabled": false,
-      "corp_id": "YOUR_CORP_ID",
-      "corp_secret": "YOUR_CORP_SECRET",
-      "agent_id": 1000002,
-      "token": "YOUR_TOKEN",
-      "encoding_aes_key": "YOUR_43_CHAR_ENCODING_AES_KEY",
-      "webhook_path": "/webhook/wecom-app",
-      "allow_from": [],
-      "reply_timeout": 5,
-      "reasoning_channel_id": ""
-    },
-    "wecom_aibot": {
-      "enabled": false,
-      "token": "YOUR_TOKEN",
-      "encoding_aes_key": "YOUR_43_CHAR_ENCODING_AES_KEY",
-      "webhook_path": "/webhook/wecom-aibot",
-      "max_steps": 10,
-      "welcome_message": "Hello! I'm your AI assistant. How can I help you today?",
       "reasoning_channel_id": ""
     },
     "matrix": {
@@ -390,13 +368,16 @@ Supported by: Slack, Matrix.
 
 ### .security.yml File
 
-PicoClaw now supports a dedicated `.security.yml` file for storing sensitive credentials like API keys. This file is intended to be added to `.gitignore` to prevent accidental commit of secrets.
+PicoClaw supports a dedicated `.security.yml` file for sensitive credentials (API keys, tokens, secrets). It is loaded from the same directory as the active `config.json` (including custom paths set by `PICOCLAW_CONFIG`).
 
 ### Key Priority Order
 
-When resolving credentials, PicoClaw uses the following priority order:
+When resolving credentials, PicoClaw applies values in this order:
 
-1. **.security.yml**: Credentials in `.security.yml` override same-key values from `config.json`
-2. **config.json**: Used as fallback when `.security.yml` does not provide that credential
+1. **Environment variables**: Highest priority (`env.Parse` runs after file loading)
+2. **.security.yml**: Overrides same-path values from `config.json`
+3. **config.json**: Base values
 
 For `model_list` in schema V2, `api_key` in `config.json` is ignored; use `.security.yml` + `api_keys`.
+
+For field-by-field `.security.yml` paths, mapping rules, and complete examples, see [`.security.yml Reference`](./security-reference.md).
