@@ -75,7 +75,6 @@ Add in `config.json`:
     {
       "model_name": "gpt-4o-mini",
       "model": "openrouter/openai/gpt-4o-mini",
-      "api_keys": ["YOUR_OPENROUTER_API_KEY"],
       "custom_headers": {
         "HTTP-Referer": "http://localhost",
         "X-Title": "PicoClaw"
@@ -83,8 +82,7 @@ Add in `config.json`:
     },
     {
       "model_name": "claude-3-haiku",
-      "model": "openrouter/anthropic/claude-3-haiku",
-      "api_keys": ["YOUR_OPENROUTER_API_KEY"]
+      "model": "openrouter/anthropic/claude-3-haiku"
     }
   ],
   "agents": {
@@ -93,6 +91,18 @@ Add in `config.json`:
     }
   }
 }
+```
+
+Store API keys in `~/.picoclaw/.security.yml`:
+
+```yaml
+model_list:
+  gpt-4o-mini:
+    api_keys:
+      - "YOUR_OPENROUTER_API_KEY"
+  claude-3-haiku:
+    api_keys:
+      - "YOUR_OPENROUTER_API_KEY"
 ```
 
 For production, keep keys in `~/.picoclaw/.security.yml` and keep `config.json` focused on model structure.

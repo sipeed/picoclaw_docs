@@ -56,20 +56,18 @@ PicoClaw 提供了 WebUI 界面，您可以在 WebUI 中轻松配置模型，无
 
 ### 方式二：编辑配置文件
 
-在 `config.json` 中添加 OpenAI 模型（schema v2 使用 `api_keys`）：
+在 `config.json` 中添加 OpenAI 模型（schema v2 将模型结构与凭证分离）：
 
 ```json
 {
   "model_list": [
     {
       "model_name": "gpt-4o-mini",
-      "model": "openai/gpt-4o-mini",
-      "api_keys": ["YOUR_OPENAI_API_KEY_HERE"]
+      "model": "openai/gpt-4o-mini"
     },
     {
       "model_name": "gpt-4o",
-      "model": "openai/gpt-4o",
-      "api_keys": ["YOUR_OPENAI_API_KEY_HERE"]
+      "model": "openai/gpt-4o"
     }
   ],
   "agents": {
@@ -78,6 +76,18 @@ PicoClaw 提供了 WebUI 界面，您可以在 WebUI 中轻松配置模型，无
     }
   }
 }
+```
+
+在 `~/.picoclaw/.security.yml` 中存放 API Key：
+
+```yaml
+model_list:
+  gpt-4o-mini:
+    api_keys:
+      - "YOUR_OPENAI_API_KEY_HERE"
+  gpt-4o:
+    api_keys:
+      - "YOUR_OPENAI_API_KEY_HERE"
 ```
 
 生产环境建议将真实密钥放在 `~/.picoclaw/.security.yml`，`config.json` 主要用于维护模型结构。

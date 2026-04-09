@@ -63,14 +63,12 @@ Add in `config.json`:
     {
       "model_name": "deepseek-chat",
       "model": "openai/deepseek-ai/DeepSeek-V3",
-      "api_base": "https://api.siliconflow.cn/v1",
-      "api_keys": ["YOUR_SILICONFLOW_API_KEY"]
+      "api_base": "https://api.siliconflow.cn/v1"
     },
     {
       "model_name": "deepseek-coder",
       "model": "openai/deepseek-ai/DeepSeek-Coder-V2-Instruct",
-      "api_base": "https://api.siliconflow.cn/v1",
-      "api_keys": ["YOUR_SILICONFLOW_API_KEY"]
+      "api_base": "https://api.siliconflow.cn/v1"
     }
   ],
   "agents": {
@@ -79,6 +77,18 @@ Add in `config.json`:
     }
   }
 }
+```
+
+Store API keys in `~/.picoclaw/.security.yml`:
+
+```yaml
+model_list:
+  deepseek-chat:
+    api_keys:
+      - "YOUR_SILICONFLOW_API_KEY"
+  deepseek-coder:
+    api_keys:
+      - "YOUR_SILICONFLOW_API_KEY"
 ```
 
 For production, keep keys in `~/.picoclaw/.security.yml` and keep `config.json` focused on model structure.

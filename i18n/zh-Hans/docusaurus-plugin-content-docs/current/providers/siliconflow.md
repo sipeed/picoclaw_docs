@@ -63,14 +63,12 @@ PicoClaw 提供了 WebUI 界面，您可以在 WebUI 中轻松配置模型，无
     {
       "model_name": "deepseek-chat",
       "model": "openai/deepseek-ai/DeepSeek-V3",
-      "api_base": "https://api.siliconflow.cn/v1",
-      "api_keys": ["YOUR_SILICONFLOW_API_KEY"]
+      "api_base": "https://api.siliconflow.cn/v1"
     },
     {
       "model_name": "deepseek-coder",
       "model": "openai/deepseek-ai/DeepSeek-Coder-V2-Instruct",
-      "api_base": "https://api.siliconflow.cn/v1",
-      "api_keys": ["YOUR_SILICONFLOW_API_KEY"]
+      "api_base": "https://api.siliconflow.cn/v1"
     }
   ],
   "agents": {
@@ -79,6 +77,18 @@ PicoClaw 提供了 WebUI 界面，您可以在 WebUI 中轻松配置模型，无
     }
   }
 }
+```
+
+在 `~/.picoclaw/.security.yml` 中存放 API Key：
+
+```yaml
+model_list:
+  deepseek-chat:
+    api_keys:
+      - "YOUR_SILICONFLOW_API_KEY"
+  deepseek-coder:
+    api_keys:
+      - "YOUR_SILICONFLOW_API_KEY"
 ```
 
 生产环境建议将真实密钥放在 `~/.picoclaw/.security.yml`，`config.json` 主要用于维护模型结构。

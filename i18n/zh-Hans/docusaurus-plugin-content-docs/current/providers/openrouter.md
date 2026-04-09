@@ -75,7 +75,6 @@ PicoClaw 提供了 WebUI 界面，您可以在 WebUI 中轻松配置模型，无
     {
       "model_name": "gpt-4o-mini",
       "model": "openrouter/openai/gpt-4o-mini",
-      "api_keys": ["YOUR_OPENROUTER_API_KEY"],
       "custom_headers": {
         "HTTP-Referer": "http://localhost",
         "X-Title": "PicoClaw"
@@ -83,8 +82,7 @@ PicoClaw 提供了 WebUI 界面，您可以在 WebUI 中轻松配置模型，无
     },
     {
       "model_name": "claude-3-haiku",
-      "model": "openrouter/anthropic/claude-3-haiku",
-      "api_keys": ["YOUR_OPENROUTER_API_KEY"]
+      "model": "openrouter/anthropic/claude-3-haiku"
     }
   ],
   "agents": {
@@ -93,6 +91,18 @@ PicoClaw 提供了 WebUI 界面，您可以在 WebUI 中轻松配置模型，无
     }
   }
 }
+```
+
+在 `~/.picoclaw/.security.yml` 中存放 API Key：
+
+```yaml
+model_list:
+  gpt-4o-mini:
+    api_keys:
+      - "YOUR_OPENROUTER_API_KEY"
+  claude-3-haiku:
+    api_keys:
+      - "YOUR_OPENROUTER_API_KEY"
 ```
 
 生产环境建议将真实密钥放在 `~/.picoclaw/.security.yml`，`config.json` 主要用于维护模型结构。
