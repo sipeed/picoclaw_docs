@@ -1,0 +1,78 @@
+# PicoClaw
+
+> PicoClaw é um assistente pessoal de IA ultra-leve escrito em Go. Roda em hardware de $10 com menos de 10MB de RAM e boot em menos de 1 segundo. Suporta 14 canais de chat (Telegram, Discord, Slack, etc.), 19+ provedores de LLM, e funcionalidades avançadas como hooks, steering, MCP e tarefas assíncronas.
+
+Lembre-se:
+
+- PicoClaw é um binário Go único e autocontido. Arquiteturas suportadas: x86_64, ARM64, ARMv6, RISC-V, LoongArch e MIPS.
+- Toda configuração fica em `~/.picoclaw/config.json`. Qualquer campo pode ser sobrescrito via variável de ambiente `PICOCLAW_<SECAO>_<CHAVE>`.
+- O campo `model_list` configura provedores LLM usando o formato `protocolo/modelo` (ex: `openai/gpt-4o`, `anthropic/claude-sonnet-4-20250514`).
+- Ferramentas web (`web_fetch`) fazem HTTP GET simples sem executar JavaScript. Fallback via Firecrawl se configurado.
+- O modo `picoclaw gateway` inicia o servidor HTTP para receber mensagens dos canais de chat.
+- O modo `picoclaw onboard` inicializa o workspace e gera a configuração padrão.
+- Segurança: por padrão, o sandbox restringe acesso a arquivos e comandos ao workspace. Mais de 30 padrões de comandos perigosos são bloqueados.
+
+## Documentacao
+
+- [Introducao](https://docs.picoclaw.io/): Visao geral do PicoClaw, recursos principais, comparativo com OpenClaw e NanoBot, e arquitetura
+- [Primeiros Passos](https://docs.picoclaw.io/getting-started): Guia de 2 minutos com `picoclaw onboard`, configuracao de API keys e primeiro uso
+- [Instalacao](https://docs.picoclaw.io/installation): Binarios pre-compilados para 11 plataformas, instalacao via script ou manual
+- [Instalacao - LicheeRV-Nano](https://docs.picoclaw.io/installation/licheervnano): Guia especifico para placa RISC-V LicheeRV-Nano
+- [Instalacao - MaixCAM](https://docs.picoclaw.io/installation/maixcam): Guia especifico para camera IA MaixCAM
+- [Instalacao - macOS](https://docs.picoclaw.io/installation/macos): Guia de instalacao para macOS (ARM64 e x86_64)
+
+## Configuracao
+
+- [Visao Geral](https://docs.picoclaw.io/configuration): Estrutura do config.json — agents, model_list, channels, tools, heartbeat, gateway, devices
+- [Lista de Modelos](https://docs.picoclaw.io/configuration/model-list): Configuracao de 19+ provedores LLM com formato protocolo/modelo, balanceamento de carga e fallback
+- [Sandbox de Seguranca](https://docs.picoclaw.io/configuration/security-sandbox): Restricao de workspace, ferramentas protegidas e bloqueio de comandos perigosos
+- [Heartbeat](https://docs.picoclaw.io/configuration/heartbeat): Tarefas periodicas e execucao assincrona com subagentes
+- [Ferramentas](https://docs.picoclaw.io/configuration/tools): Configuracao de web search (Brave, DuckDuckGo, Perplexity, Tavily, GLM), MCP, exec, cron e skills
+- [Referencia Completa](https://docs.picoclaw.io/configuration/config-reference): Exemplo anotado com 270+ linhas cobrindo todos os campos do config.json
+- [Criptografia de Credenciais](https://docs.picoclaw.io/credential-encryption): Criptografia AES-256-GCM de API keys com frase-senha e chave SSH
+- [Filtragem de Dados Sensiveis](https://docs.picoclaw.io/sensitive-data-filtering): Redacao automatica de segredos nos resultados de ferramentas via .security.yml
+- [Exec](https://docs.picoclaw.io/configuration/exec): Configuracao detalhada de execucao de comandos, padroes de bloqueio e permissao
+
+## Canais de Chat
+
+- [Visao Geral](https://docs.picoclaw.io/channels): Lista dos 14 canais suportados com nivel de dificuldade e notas
+- [Telegram](https://docs.picoclaw.io/channels/telegram): Canal recomendado. Facil configuracao, transcricao de voz com Groq Whisper, suporte a proxy
+- [Discord](https://docs.picoclaw.io/channels/discord): Bot token + intents, gatilho de grupo, links de mensagem
+- [Slack](https://docs.picoclaw.io/channels/slack): Socket Mode sem IP publico, indicador de digitacao, mensagens placeholder
+- [QQ](https://docs.picoclaw.io/channels/qq): API oficial QQ Bot (AppID + AppSecret), modo sandbox para testes
+- [DingTalk](https://docs.picoclaw.io/channels/dingtalk): Stream Mode via WebSocket, chat privado e em grupo
+- [WeCom Bot](https://docs.picoclaw.io/channels/wecom-bot): Chat em grupo via webhook, opcao mais simples do WeCom
+- [WeCom App](https://docs.picoclaw.io/channels/wecom-app): App auto-construido, chat privado e mensagens proativas
+- [WeCom AI Bot](https://docs.picoclaw.io/channels/wecom-aibot): Bot IA oficial com protocolo streaming pull
+- [Feishu](https://docs.picoclaw.io/channels/feishu): Plataforma empresarial ByteDance, modo WebSocket, cards interativos
+- [LINE](https://docs.picoclaw.io/channels/line): Webhook HTTPS obrigatorio (ngrok/tunel), citacao de mensagens
+- [OneBot](https://docs.picoclaw.io/channels/onebot): Compativel com NapCat e Go-CQHTTP, servidor WebSocket reverso
+- [Matrix](https://docs.picoclaw.io/channels/matrix): Protocolo aberto e descentralizado, indicador de digitacao, suporte a midia
+- [MaixCAM](https://docs.picoclaw.io/channels/maixcam): Protocolo TCP socket para cameras IA de borda, eventos de deteccao de pessoa
+- [WeChat](https://docs.picoclaw.io/channels/weixin): Conta pessoal via API iLink com autenticacao por QR code
+
+## Provedores de LLM
+
+- [Visao Geral](https://docs.picoclaw.io/providers): Tabela de 19+ provedores com links para obter API keys
+- [Antigravity (Google)](https://docs.picoclaw.io/providers/antigravity): Google Cloud Code Assist via OAuth, acesso gratuito a modelos Gemini
+- [Uso do Antigravity](https://docs.picoclaw.io/providers/antigravity-usage): Guia pratico de uso do provedor Antigravity
+
+## Avancado
+
+- [Sistema de Hooks](https://docs.picoclaw.io/hooks): Observadores, interceptadores de LLM e ferramentas, aprovadores de ferramentas com JSON-RPC 2.0
+- [Steering](https://docs.picoclaw.io/steering): Injecao dinamica de mensagens entre chamadas de ferramentas para redirecionar o agente
+- [Tarefas Assincronas (Spawn)](https://docs.picoclaw.io/spawn-tasks): Delegacao de tarefas para subagentes independentes com contexto proprio
+
+## Implantacao
+
+- [Docker](https://docs.picoclaw.io/docker): Deploy via Docker Compose com perfis (gateway, launcher, agent)
+- [Compatibilidade de Hardware](https://docs.picoclaw.io/hardware-compatibility): Arquiteturas suportadas (x86, ARM, RISC-V, LoongArch, MIPS), requisitos minimos: 10MB RAM, 20MB armazenamento, 0.6GHz
+
+## Opcional
+
+- [Resolucao de Problemas](https://docs.picoclaw.io/troubleshooting): Erros comuns — modelo nao encontrado, falhas de web search, conflitos no Telegram, acesso ao gateway
+- [Migracao de model_list](https://docs.picoclaw.io/migration/model-list-migration): Migracao da configuracao legada "providers" para o novo formato "model_list" com prefixos de protocolo
+- [Design: Refatoracao de Provedores](https://docs.picoclaw.io/design/provider-refactoring): Documento de arquitetura sobre o design baseado em protocolos
+- [Contribuicao](https://docs.picoclaw.io/contributing): Diretrizes para contribuir, nota sobre desenvolvimento assistido por IA
+- [Roadmap](https://docs.picoclaw.io/roadmap): 6 fases planejadas — otimizacao, seguranca, conectividade, capacidades, experiencia do dev, engenharia
+- [Changelog](https://docs.picoclaw.io/changelog): Historico completo de versoes (v0.0.1 ate v0.2.4)
