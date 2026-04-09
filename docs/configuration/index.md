@@ -118,6 +118,7 @@ See the [Full Config Reference](./config-reference.md) for the complete bindings
 - [Model Configuration (model_list)](./model-list.md) — add LLM providers
 - [Security Sandbox](./security-sandbox.md) — workspace restrictions and `.security.yml`
 - [`.security.yml` Reference](./security-reference.md) — field-by-field mapping and precedence
+- [Token Authentication](./token_authentication.md) — gateway API and web login access tokens
 - [Heartbeat](./heartbeat.md) — periodic tasks
 - [Tools Configuration](./tools.md) — web search, exec, cron
 - [Credential Encryption](../credential-encryption.md) — encrypt API keys with `enc://`

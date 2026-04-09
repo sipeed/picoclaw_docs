@@ -34,6 +34,7 @@ const sidebars = {
         'configuration/model-list',
         'configuration/security-sandbox',
         'configuration/security-reference',
+        'configuration/token_authentication',
         'configuration/heartbeat',
         'configuration/tools',
         'configuration/config-reference',
