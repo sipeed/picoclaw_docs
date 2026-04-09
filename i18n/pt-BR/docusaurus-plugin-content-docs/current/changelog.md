@@ -9,6 +9,72 @@ Todas as mudanças notáveis do PicoClaw são documentadas aqui.
 
 ---
 
+## v0.2.6
+
+*Lançado: 2026-04-08*
+
+### Destaques
+
+- **Isolamento de Subprocessos**: Novo runtime `pkg/isolation` coloca processos filhos (ferramenta exec, providers CLI, hooks de processo, servidores MCP stdio) em sandbox usando `bwrap` no Linux e token restrito + Job Object no Windows (#2423)
+- **Memória de Curto Prazo Seahorse (LCM)**: Novo engine de memória persistente em SQLite por agente, com recuperação full-text FTS5, sumarização hierárquica e ferramentas `short_grep` / `short_expand` (#2285)
+- **Sistema de Hooks Aprimorado**: Nova ação `respond` permite que hooks `before_tool` retornem resultados de ferramentas diretamente, habilitando injeção de ferramentas plugin, cache de resultados e mock de ferramentas. Specs upstream completas adicionadas (#2215)
+- **Canal Microsoft Teams**: Novo canal `teams_webhook` somente saída posta Adaptive Cards no Teams via webhooks de fluxo do Power Automate, com roteamento multi-destino e conversão automática de tabelas markdown (#2244)
+- **Cabeçalhos HTTP Customizados em Providers**: Providers LLM baseados em HTTP agora aceitam um campo `custom_headers` por entrada de modelo para injetar cabeçalhos arbitrários em toda requisição (#2402)
+- **Armazenamento de Artefatos MCP**: Resultados de texto grandes vindos de ferramentas MCP agora são persistidos como artefatos em vez de inflar o contexto (#2308)
+
+### Funcionalidades
+
+#### Canais
+- **Teams Webhook**: Novo canal somente saída via webhooks de fluxo do Power Automate; suporta múltiplos destinos nomeados selecionáveis por mensagem; renderiza mensagens como Adaptive Cards com suporte nativo a tabelas Markdown (#2244)
+- **Feishu**: Enriquecimento de contexto em respostas agora cobre também respostas a cards e arquivos, com cache de mensagens de 30s e limite de 600 caracteres (#2144)
+
+#### Núcleo & Agente
+- **Isolamento de Subprocessos**: Novo runtime `pkg/isolation` com config `enabled` e `expose_paths` num bloco de topo `isolation`. Linux usa `bwrap` para isolamento de filesystem e namespace IPC; Windows usa token restrito + integridade baixa + Job Object. macOS ainda não implementado (#2423)
+- **Engine de Memória de Curto Prazo Seahorse**: Store SQLite por agente em `<workspace>/sessions/seahorse.db` com indexação FTS5 sobre resumos e mensagens; sumarização hierárquica em duas camadas (folha + condensada); registra automaticamente as ferramentas `short_grep` e `short_expand` quando ativo (#2285)
+- **Ação `respond` em Hook**: Nova `HookActionRespond` permite que um hook `before_tool` retorne um `HookResult` diretamente, pulando a execução da ferramenta; specs upstream completas `hook-json-protocol.md` e `plugin-tool-injection.md` adicionadas; **ignora as verificações de `approve_tool`**, então confie no hook adequadamente (#2215)
+- **Provider por Candidato em Fallbacks**: `model_fallbacks` agora suporta config independente de provider por candidato (#2143)
+
+#### Providers
+- **Cabeçalhos HTTP Customizados**: Novo campo `custom_headers` em `ModelConfig` para providers HTTP — injetado em toda requisição, útil para proxies de auth, cabeçalhos de observabilidade, roteamento específico de fornecedor (#2402)
+
+#### MCP
+- **Armazenamento de Artefatos**: Resultados de texto grandes de ferramentas MCP são persistidos no armazenamento de artefatos e referenciados por handle, evitando inflar o contexto (#2308)
+- **Transporte de Comando Isolado**: Servidores MCP `stdio` agora passam pelo caminho unificado de inicialização com isolamento
+
+#### Ferramentas & Memória
+- **Ferramenta LOCOMO Membench**: Novo utilitário de benchmark sob `pkg/membench` para avaliar engines de memória de conversa longa (#2353)
+- **`write_file`**: Esclarecida a semântica de escape de JSON aninhado e adicionados testes (#2320)
+
+#### Web UI
+- **URL do WebSocket**: Agora é derivada de `window.location` no browser em vez de ser hardcoded pelo backend, corrigindo cenários de proxy reverso e acesso remoto (#2405)
+- **Fluxo HTTP do Launcher**: Endpoints HTTP padrão `/login` / `/setup` / `/logout` para o dashboard, corrigido o lock de PID do Windows para WebSocket (#2339)
+
+### Correções de Bugs
+
+- **WebUI**: Corrigida a falha do WebUI em conectar ao gateway iniciado pelo próprio WebUI (#2267)
+- **Gateway**: Endurecidos detecção de PID vivo, validação de propriedade e estado do proxy WebSocket (#2403, #2422)
+- **Ferramentas**: A ferramenta `message` não suprime mais a resposta ao chat de origem (#2180)
+- **Docker**: Adicionada a flag `-console` e acesso de rede aberto para o launcher (#2314); imagens self-built agora rodam como root para paridade com as imagens de release (#2435)
+- **CLI**: Corrigido `v` duplicado na linha de versão do banner de help (#2316)
+- **Seahorse**: Desabilitado o context manager em FreeBSD/ARM e outras plataformas não suportadas (#2417, #2384); semântica de rank BM25 corrigida nos comentários (#2360)
+- **Testes**: Pula `TestPrepareCommand_AppliesUserEnv` em sistemas operacionais não suportados (#2434)
+
+### Build & Ops
+
+- **Dependências**: `modernc.org/sqlite` 1.47.0 → 1.48.0 (#2289); `github.com/pion/rtp` 1.8.7 → 1.10.1 (#2290)
+- **Assets**: Imagem do QR code do WeChat atualizada (#2385)
+- **Docs**: Tradução do README para coreano adicionada
+
+### Documentação
+
+Esta release vem acompanhada das seguintes atualizações no site de docs:
+- Novos: [Canal Microsoft Teams (Webhook)](./channels/teams-webhook.md), [Isolamento de Subprocessos](./configuration/isolation.md)
+- Atualizados: [Sistema de Hooks](./hooks.md), [Compactação de Contexto](./context-compression.md), [Login com Token](./configuration/token_authentication.md), [Canal Feishu](./channels/feishu.md), [Referência de Configuração](./configuration/config-reference.md)
+
+### Changelog completo
+- [GitHub v0.2.5...v0.2.6](https://github.com/sipeed/picoclaw/compare/v0.2.5...v0.2.6)
+---
+
 ## v0.2.5
 
 *Lançado: 2026-04-03*
@@ -123,6 +189,59 @@ Todas as mudanças notáveis do PicoClaw são documentadas aqui.
 
 ### Changelog completo
 - [GitHub v0.2.3...v0.2.4](https://github.com/sipeed/picoclaw/compare/v0.2.3...v0.2.4)
+---
+
+## v0.2.3
+
+*Lançado: 2026-03-17*
+
+### Destaques
+
+- **UI da System Tray**: Suporte a tray de desktop em todas as plataformas (macOS, Linux, FreeBSD)
+- **Controles do Exec**: Configurações de exec configuráveis com gating de comandos cron
+- **Web Gateway**: Hot reload e sincronização de estado por polling para gerenciamento do gateway
+- **SpawnStatusTool**: Nova ferramenta para reportar status de subagentes
+
+### Funcionalidades
+
+- Configurações de execução de comandos cron expostas na web UI
+- WebSocket roteado pela porta do servidor web para ingresso unificado
+- Helpers do gateway refatorados com health check via `server.pid`
+
+### Correções de Bugs
+
+- **GLM**: Corrigido tratamento de input `nil` em blocos `tool_use` para o provider GLM
+- **Gateway**: Não inicia mais automaticamente quando o servidor não está rodando
+- **Workspace**: Normalizadas as verificações de path da whitelist para roots permitidos com symlink
+
+### Changelog completo
+- [GitHub v0.2.2...v0.2.3](https://github.com/sipeed/picoclaw/compare/v0.2.2...v0.2.3)
+---
+
+## v0.2.2
+
+*Lançado: 2026-03-11*
+
+### Destaques
+
+- **Transcrição de Voz**: Transcrição de áudio Echo voice para Discord, Slack e Telegram
+- **UI de Gerenciamento de Agentes**: Nova web UI para gerenciamento de agentes e integração com o launcher
+- **Endurecimento de Segurança**: Caminhos de exec não autenticados foram endurecidos
+
+### Funcionalidades
+
+- Suporte à config de exec `allow_remote` na página de settings web
+- Sanitização de caracteres de barra em chaves de sessão de tópicos de fórum
+- Refatorada a análise de metadados markdown do loader de skills
+
+### Correções de Bugs
+
+- **Gateway**: Corrigida a resolução do path do binário do gateway e a passagem da flag `--config`
+- **Migração**: Pula arquivos meta JSON durante a migração de sessões
+- **Slack**: Corrigidas mensagens duplicadas em threads
+
+### Changelog completo
+- [GitHub v0.2.1...v0.2.2](https://github.com/sipeed/picoclaw/compare/v0.2.1...v0.2.2)
 ---
 
 ## v0.2.1

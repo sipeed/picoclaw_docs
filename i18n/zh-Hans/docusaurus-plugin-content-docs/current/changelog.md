@@ -9,6 +9,72 @@ PicoClaw 的所有重要更新记录。
 
 ---
 
+## v0.2.6
+
+*发布日期：2026-04-08*
+
+### 核心亮点
+
+- **子进程隔离**：全新 `pkg/isolation` 运行时把子进程（exec 工具、CLI 类 provider、进程型 hook、MCP stdio server）放进沙箱执行 —— Linux 用 `bwrap`，Windows 用受限 token + Job Object (#2423)
+- **Seahorse 短时记忆引擎（LCM）**：按 Agent 隔离的 SQLite 持久化存储，支持 FTS5 全文检索、分层摘要、新增 `short_grep` / `short_expand` 工具 (#2285)
+- **Hook 系统增强**：新增 `respond` 动作，让 `before_tool` hook 可以直接返回工具结果，支持插件式工具注入、结果缓存、工具 mock；上游补齐了完整的协议文档 (#2215)
+- **Microsoft Teams 通道**：新增 `teams_webhook` 仅输出通道，通过 Power Automate 工作流 webhook 把 Adaptive Card 推送到 Teams，支持多目标路由和 Markdown 表格自动转换 (#2244)
+- **HTTP Provider 自定义请求头**：HTTP 类 LLM Provider 在每条 model 配置中新增 `custom_headers` 字段，可向每次请求注入任意 HTTP 头 (#2402)
+- **MCP 工件存储**：MCP 工具的超大文本结果改为以工件形式存储，避免污染上下文 (#2308)
+
+### 新特性与增强
+
+#### 渠道与即时通讯 (Channels)
+- **Teams Webhook**：通过 Power Automate 工作流 webhook 实现的全新仅输出通道；支持注册多个命名 webhook 目标，按消息选择投递目标；消息渲染为 Adaptive Card，原生支持 Markdown 表格 (#2244)
+- **飞书**：引用回复上下文补全现在也覆盖卡片和文件类回复，30 秒消息缓存，600 字符上限 (#2144)
+
+#### 核心架构与 Agent
+- **子进程隔离**：新增 `pkg/isolation` 运行时，顶层配置块 `isolation` 提供 `enabled` 与 `expose_paths` 两个字段。Linux 通过 `bwrap` 实现文件系统和 IPC 命名空间隔离；Windows 使用受限 token + 低完整性级别 + Job Object；macOS 暂未实现 (#2423)
+- **Seahorse 短时记忆引擎**：每个 Agent 一份 SQLite 存储，路径为 `<workspace>/sessions/seahorse.db`，对摘要和消息建立 FTS5 索引；两层分级摘要（叶子 + condensed）；引擎激活时自动注册 `short_grep` 和 `short_expand` 工具 (#2285)
+- **Hook `respond` 动作**：新的 `HookActionRespond` 让 `before_tool` hook 直接返回 `HookResult`，跳过工具执行；上游补齐了完整的 `hook-json-protocol.md` 和 `plugin-tool-injection.md` 规范；**会绕过 `approve_tool` 检查**，因此请只授权给可信 hook (#2215)
+- **故障转移 Provider 按候选独立**：`model_fallbacks` 支持每个候选独立配置 provider (#2143)
+
+#### 模型与服务 (Providers)
+- **自定义 HTTP 头**：`ModelConfig` 新增 `custom_headers` 字段（HTTP 类 provider 可用），会注入到每次请求中，常用于鉴权代理、可观测性头、厂商专用路由 (#2402)
+
+#### MCP
+- **工件存储**：MCP 工具的超大文本结果会被持久化到工件存储，并以引用方式暴露给上下文，避免膨胀 (#2308)
+- **隔离 Command Transport**：MCP `stdio` server 改走统一的隔离启动入口
+
+#### 工具与记忆
+- **LOCOMO Membench 工具**：`pkg/membench` 下新增的基准测试工具，用于评估长对话记忆引擎 (#2353)
+- **`write_file`**：澄清了嵌套 JSON 的转义语义，并补齐相关测试 (#2320)
+
+#### Web UI
+- **WebSocket URL**：浏览器端改为从 `window.location` 解析 WebSocket URL，不再依赖后端硬编码，修复反向代理和远程访问场景 (#2405)
+- **Launcher HTTP 流程**：控制台新增标准 `/login` / `/setup` / `/logout` HTTP 接口，并修复 Windows 下 WebSocket 的 PID 锁问题 (#2339)
+
+### 修复与优化
+
+- **WebUI**：修复 WebUI 无法连接到由 WebUI 自己启动的网关 (#2267)
+- **网关**：加固 PID 存活检测、所有权校验和 WebSocket 代理状态 (#2403, #2422)
+- **工具**：`message` 工具不再丢失对原始聊天的回复 (#2180)
+- **Docker**：launcher 增加 `-console` 标志和开放网络访问 (#2314)；自构建镜像改为以 root 运行，与 release 镜像保持一致 (#2435)
+- **CLI**：修复 help 横幅版本号中重复出现 `v` (#2316)
+- **Seahorse**：在 FreeBSD/ARM 及其他不支持平台禁用上下文管理器 (#2417, #2384)；纠正 BM25 排名注释中的语义错误 (#2360)
+- **测试**：在不支持的操作系统上跳过 `TestPrepareCommand_AppliesUserEnv` (#2434)
+
+### 构建与运维
+
+- **依赖**：`modernc.org/sqlite` 1.47.0 → 1.48.0 (#2289)；`github.com/pion/rtp` 1.8.7 → 1.10.1 (#2290)
+- **资源**：更新微信 QR code 图片 (#2385)
+- **文档**：新增韩语 README 翻译
+
+### 文档
+
+本次发布同步上线了以下文档站更新：
+- 新增：[Microsoft Teams（Webhook）通道](./channels/teams-webhook.md)、[子进程隔离](./configuration/isolation.md)
+- 更新：[Hook 系统](./hooks.md)、[上下文压缩](./context-compression.md)、[Token 认证登录](./configuration/token_authentication.md)、[飞书通道](./channels/feishu.md)、[完整配置参考](./configuration/config-reference.md)
+
+### 完整更新日志
+- [GitHub v0.2.5...v0.2.6](https://github.com/sipeed/picoclaw/compare/v0.2.5...v0.2.6)
+---
+
 ## v0.2.5
 
 *发布日期：2026-04-03*
@@ -123,6 +189,59 @@ PicoClaw 的所有重要更新记录。
 
 ### 完整更新日志
 - [GitHub v0.2.3...v0.2.4](https://github.com/sipeed/picoclaw/compare/v0.2.3...v0.2.4)
+---
+
+## v0.2.3
+
+*发布日期：2026-03-17*
+
+### 核心亮点
+
+- **系统托盘 UI**：全平台桌面托盘支持（macOS、Linux、FreeBSD）
+- **执行控制**：可配置的 exec 设置，支持 cron 命令权限管控
+- **Web 网关**：热重载和轮询状态同步
+- **SpawnStatusTool**：新增子 Agent 状态上报工具
+
+### 新特性与增强
+
+- Web UI 中可配置 cron 命令执行设置
+- WebSocket 通过 Web 服务器端口代理，统一入口
+- 重构网关辅助模块，新增 `server.pid` 健康检查
+
+### 修复与优化
+
+- **GLM**：修复 tool_use 块中的 nil input 处理
+- **网关**：服务器未运行时不再自动启动
+- **工作区**：符号链接白名单路径检查规范化
+
+### 完整更新日志
+- [GitHub v0.2.2...v0.2.3](https://github.com/sipeed/picoclaw/compare/v0.2.2...v0.2.3)
+---
+
+## v0.2.2
+
+*发布日期：2026-03-11*
+
+### 核心亮点
+
+- **语音转写**：Echo 语音转文字功能，覆盖 Discord、Slack、Telegram
+- **Agent 管理 UI**：新增 Web 端 Agent 管理界面和 Launcher 集成
+- **安全加固**：加固未认证的工具执行路径
+
+### 新特性与增强
+
+- Web 设置中新增 exec `allow_remote` 配置项
+- 会话 key 中斜杠字符的清洗处理
+- 重构技能加载器的 Markdown 元数据解析
+
+### 修复与优化
+
+- **网关**：修复二进制路径解析和 `--config` 标志传递
+- **迁移**：会话迁移时跳过 meta JSON 文件
+- **Slack**：修复线程中的重复消息
+
+### 完整更新日志
+- [GitHub v0.2.1...v0.2.2](https://github.com/sipeed/picoclaw/compare/v0.2.1...v0.2.2)
 ---
 
 ## v0.2.1

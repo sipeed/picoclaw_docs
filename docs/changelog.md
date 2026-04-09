@@ -9,6 +9,72 @@ All notable changes to PicoClaw are documented here.
 
 ---
 
+## v0.2.6
+
+*Released: 2026-04-08*
+
+### Highlights
+
+- **Subprocess Isolation**: New `pkg/isolation` runtime sandboxes child processes (exec tool, CLI providers, process hooks, MCP stdio servers) using `bwrap` on Linux and a restricted token + Job Object on Windows (#2423)
+- **Seahorse Short-Term Memory (LCM)**: New per-agent SQLite-backed memory engine with FTS5 full-text retrieval, hierarchical summarization, and `short_grep` / `short_expand` tools (#2285)
+- **Enhanced Hooks System**: New `respond` action lets `before_tool` hooks return tool results directly, enabling plugin-tool injection, result caching, and tool mocking. Comprehensive new upstream protocol docs (#2215)
+- **Microsoft Teams Channel**: New `teams_webhook` output-only channel posts Adaptive Cards to Teams via Power Automate workflow webhooks, with multi-target routing and automatic markdown table conversion (#2244)
+- **Custom HTTP Headers for Providers**: HTTP-based LLM providers now accept a `custom_headers` field per model entry to inject arbitrary headers into every request (#2402)
+- **MCP Artifact Storage**: Oversized text results from MCP tools are now persisted as artifacts instead of bloating the context (#2308)
+
+### Features
+
+#### Channels
+- **Teams Webhook**: New output-only channel via Power Automate workflow webhooks; supports multiple named webhook targets selectable per message; renders messages as Adaptive Cards with native Markdown table support (#2244)
+- **Feishu**: Reply context enrichment now also covers card and file replies, with a 30s message cache and 600-character cap (#2144)
+
+#### Core & Agent
+- **Subprocess Isolation**: New `pkg/isolation` runtime with `enabled` and `expose_paths` config under a top-level `isolation` block. Linux uses `bwrap` for filesystem and IPC namespace isolation; Windows uses restricted token + low integrity + Job Object. macOS not yet implemented (#2423)
+- **Seahorse Short-Term Memory Engine**: SQLite-backed per-agent store at `<workspace>/sessions/seahorse.db` with FTS5 indexing on summaries and messages; two-tier hierarchical summarization (leaf + condensed); auto-registers `short_grep` and `short_expand` tools when active (#2285)
+- **Hook `respond` Action**: New `HookActionRespond` lets a `before_tool` hook return a `HookResult` directly, skipping tool execution; comprehensive `hook-json-protocol.md` and `plugin-tool-injection.md` upstream specs added; **bypasses `approve_tool` checks** so trust hooks accordingly (#2215)
+- **Per-candidate Provider for Fallbacks**: `model_fallbacks` now supports independent provider config per candidate (#2143)
+
+#### Providers
+- **Custom HTTP Headers**: New `custom_headers` field on `ModelConfig` for HTTP providers — injected into every request, useful for auth proxies, observability headers, vendor-specific routing (#2402)
+
+#### MCP
+- **Artifact Storage**: Oversized text results from MCP tools are persisted to artifact storage and referenced by handle, preventing context bloat (#2308)
+- **Isolated Command Transport**: MCP `stdio` servers now go through the unified isolation startup path
+
+#### Tools & Memory
+- **LOCOMO Membench Tool**: New benchmark utility under `pkg/membench` for evaluating long-conversation memory engines (#2353)
+- **`write_file`**: Clarified nested-JSON escape semantics and added tests (#2320)
+
+#### Web UI
+- **WebSocket URL**: Now derived from `window.location` in the browser instead of being hardcoded by the backend, fixing reverse-proxy and remote access scenarios (#2405)
+- **Launcher HTTP Flow**: Standard `/login` / `/setup` / `/logout` HTTP endpoints for the dashboard, fixed Windows PID lock for WebSocket (#2339)
+
+### Bug Fixes
+
+- **WebUI**: Fixed WebUI being unable to connect to the gateway started by WebUI itself (#2267)
+- **Gateway**: Hardened PID liveness handling, ownership validation, and WebSocket proxy state (#2403, #2422)
+- **Tools**: `message` tool no longer suppresses reply to the originating chat (#2180)
+- **Docker**: Added `-console` flag and open network access for launcher (#2314); self-built images now run as root for parity with release images (#2435)
+- **CLI**: Fixed duplicate `v` in CLI help banner version line (#2316)
+- **Seahorse**: Disabled context manager on FreeBSD/ARM and other unsupported platforms (#2417, #2384); corrected BM25 rank semantics in comments (#2360)
+- **Tests**: Skip `TestPrepareCommand_AppliesUserEnv` on unsupported operating systems (#2434)
+
+### Build & Ops
+
+- **Dependencies**: `modernc.org/sqlite` bumped from 1.47.0 to 1.48.0 (#2289); `github.com/pion/rtp` bumped from 1.8.7 to 1.10.1 (#2290)
+- **Assets**: Updated WeChat QR code image (#2385)
+- **Docs**: Korean README translation added
+
+### Documentation
+
+This release ships with new docs site coverage for all the major features above:
+- New: [Microsoft Teams (Webhook) Channel](./channels/teams-webhook.md), [Subprocess Isolation](./configuration/isolation.md)
+- Updated: [Hook System](./hooks.md), [Context Compression](./context-compression.md), [Token Authentication](./configuration/token_authentication.md), [Feishu Channel](./channels/feishu.md), [Config Reference](./configuration/config-reference.md)
+
+### Full changelog
+- [GitHub v0.2.5...v0.2.6](https://github.com/sipeed/picoclaw/compare/v0.2.5...v0.2.6)
+---
+
 ## v0.2.5
 
 *Released: 2026-04-03*
@@ -123,6 +189,59 @@ All notable changes to PicoClaw are documented here.
 
 ### Full changelog
 - [GitHub v0.2.3...v0.2.4](https://github.com/sipeed/picoclaw/compare/v0.2.3...v0.2.4)
+---
+
+## v0.2.3
+
+*Released: 2026-03-17*
+
+### Highlights
+
+- **System Tray UI**: Desktop tray support across all platforms (macOS, Linux, FreeBSD)
+- **Exec Controls**: Configurable exec settings with cron command gating
+- **Web Gateway**: Hot reload and polling state sync for gateway management
+- **SpawnStatusTool**: New tool for reporting subagent statuses
+
+### Features
+
+- Configurable cron command execution settings exposed in the web UI
+- WebSocket proxied through the web server port for unified ingress
+- Refactored gateway helpers with `server.pid` health check
+
+### Bug Fixes
+
+- **GLM**: Fixed `nil` input handling in `tool_use` blocks for GLM provider
+- **Gateway**: No longer auto-starts when the server is not running
+- **Workspace**: Normalized whitelist path checks for symlinked allowed roots
+
+### Full changelog
+- [GitHub v0.2.2...v0.2.3](https://github.com/sipeed/picoclaw/compare/v0.2.2...v0.2.3)
+---
+
+## v0.2.2
+
+*Released: 2026-03-11*
+
+### Highlights
+
+- **Voice Transcription**: Echo voice audio transcription for Discord, Slack, and Telegram
+- **Agent Management UI**: New web UI for agent management and launcher integration
+- **Security Hardening**: Hardened unauthenticated tool-exec paths
+
+### Features
+
+- Exec `allow_remote` config support in the web settings page
+- Session key sanitization for slash characters in forum topic keys
+- Refactored skill loader markdown metadata parsing
+
+### Bug Fixes
+
+- **Gateway**: Fixed gateway binary path resolution and `--config` flag passing
+- **Migration**: Skip meta JSON files during session migration
+- **Slack**: Fixed double messages in threads
+
+### Full changelog
+- [GitHub v0.2.1...v0.2.2](https://github.com/sipeed/picoclaw/compare/v0.2.1...v0.2.2)
 ---
 
 ## v0.2.1
