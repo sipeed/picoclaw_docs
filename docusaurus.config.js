@@ -26,7 +26,7 @@ const config = {
 
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'zh-Hans'],
+    locales: ['en', 'zh-Hans', 'pt-BR'],
     localeConfigs: {
       en: {
         label: 'English',
@@ -41,6 +41,11 @@ const config = {
         // the default path from htmlLang ?? locale, which would otherwise
         // make it "zh-CN" and silently ignore i18n/zh-Hans/.
         path: 'zh-Hans',
+      },
+      'pt-BR': {
+        label: 'Português (Brasil)',
+        direction: 'ltr',
+        htmlLang: 'pt-BR',
       },
     },
   },
@@ -141,7 +146,7 @@ config.themes = [
     /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
     ({
       hashed: true,
-      language: ['en', 'zh'],
+      language: ['en', 'zh', 'pt'],
       indexBlog: false,
       docsRouteBasePath: '/docs',
     }),

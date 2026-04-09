@@ -1,0 +1,54 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.mainSidebar.doc.Introduction": {
+    "message": "Introdução",
+    "description": "The label for the doc item Introduction in sidebar mainSidebar, linking to the doc intro"
+  },
+  "sidebar.mainSidebar.doc.Getting Started": {
+    "message": "Começar agora",
+    "description": "The label for the doc item Getting Started in sidebar mainSidebar, linking to the doc getting-started"
+  },
+  "sidebar.mainSidebar.doc.Installation": {
+    "message": "Instalação",
+    "description": "The label for the doc item Installation in sidebar mainSidebar, linking to the doc installation"
+  },
+  "sidebar.mainSidebar.category.Configuration": {
+    "message": "Configuração",
+    "description": "The label for category Configuration in sidebar mainSidebar"
+  },
+  "sidebar.mainSidebar.category.Chat Channels": {
+    "message": "Canais de chat",
+    "description": "The label for category Chat Channels in sidebar mainSidebar"
+  },
+  "sidebar.mainSidebar.category.Providers": {
+    "message": "Provedores",
+    "description": "The label for category Providers in sidebar mainSidebar"
+  },
+  "sidebar.mainSidebar.category.Advanced": {
+    "message": "Avançado",
+    "description": "The label for category Advanced in sidebar mainSidebar"
+  },
+  "sidebar.mainSidebar.category.Deployment": {
+    "message": "Implantação",
+    "description": "The label for category Deployment in sidebar mainSidebar"
+  },
+  "sidebar.mainSidebar.doc.Troubleshooting": {
+    "message": "Solução de problemas",
+    "description": "The label for the doc item Troubleshooting in sidebar mainSidebar, linking to the doc troubleshooting"
+  },
+  "sidebar.mainSidebar.category.Migration": {
+    "message": "Guia de migração",
+    "description": "The label for category Migration in sidebar mainSidebar"
+  },
+  "sidebar.mainSidebar.category.Development": {
+    "message": "Desenvolvimento",
+    "description": "The label for category Development in sidebar mainSidebar"
+  },
+  "sidebar.mainSidebar.doc.Changelog": {
+    "message": "Changelog",
+    "description": "The label for the doc item Changelog in sidebar mainSidebar, linking to the doc changelog"
+  }
+}
