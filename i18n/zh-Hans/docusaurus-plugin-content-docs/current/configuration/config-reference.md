@@ -311,6 +311,7 @@ title: 完整配置参考
 | `thinking_level` | string | 否 | 扩展思考级别：`off`、`low`、`medium`、`high`、`xhigh` 或 `adaptive` |
 | `fallbacks` | array | 否 | 故障转移备用模型名 |
 | `extra_body` | object | 否 | 注入 API 请求体的额外字段 |
+| `custom_headers` | object | 否 | 注入到该 provider 每次请求的额外 HTTP 头（仅 HTTP 类 provider 有效） |
 
 :::note Schema V2 中 API Key 行为
 在配置 schema V2 中，`config.json` 的 `model_list[].api_key` 会被忽略。请使用 `api_keys`，并优先将真实密钥写入 `.security.yml`。从 V0/V1 迁移时，旧的 `api_key` 与 `api_keys` 会自动合并为 `api_keys`。API 密钥支持 `SecureString` 格式：明文、`enc://<base64>`、`file://<path>`。详见[凭证加密](../credential-encryption.md)。

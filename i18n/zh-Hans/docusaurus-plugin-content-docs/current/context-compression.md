@@ -76,6 +76,39 @@ seahorse 引擎本身在 `pkg/seahorse/short_constants.go` 还暴露了若干内
 
 压缩引擎不绑定任何特定提供商。它接收一个 `complete(ctx, prompt, opts)` 回调，由 Agent 当前所配置的模型提供。任何 OpenAI 兼容、Anthropic、Gemini 或本地模型都可以作为摘要器使用——通常就是 Agent 自己正在用的那个模型。
 
-## 展开摘要
+## 持久化 store 与检索
 
-每个摘要都关联了它所替换的原始消息。PicoClaw 的 `short_expand` 工具允许 Agent 从摘要回溯到对应的原始消息范围。这正是该压缩机制"有损但可恢复"的关键：上下文中变短了，但完整历史仍然保留在 store 中。
+Seahorse 引擎的底层是一个**按 Agent 隔离的 SQLite store**，路径为 `<workspace>/sessions/seahorse.db`。所有消息（无论是原始消息还是摘要）和所有摘要都会被持久化到这里，并对摘要和消息正文建立 FTS5 全文索引。这就是为什么即使压缩已经把上下文里能看到的内容缩小了，Agent 依然能搜到历史。
+
+只要 seahorse 上下文管理器处于启用状态，下面两个 seahorse 工具就会被自动注册到 Agent 的工具注册表里：
+
+### `short_grep`
+
+在持久化 store 中按内容搜索摘要和消息。
+
+```text
+short_grep(pattern, scope?, role?, last?, since?, before?, all_conversations?, limit?)
+```
+
+- `pattern` —— 支持单词匹配、`AND` / `OR` / `NOT` 运算符，以及 `%模糊%` 通配符
+- `scope` —— `summary`、`message`，或 `both`（默认）
+- `role` —— 按 `user` / `assistant` 过滤消息
+- `last` —— 相对时间窗口（`6h`、`7d`、`2w`、`1m`）
+- `since` / `before` —— ISO 8601 绝对时间边界
+- `all_conversations` —— 跨会话搜索
+
+返回结果包含 FTS5 BM25 排名（数值越小/越负 = 越相关），以及摘要的 `depth` 字段：depth 0 表示叶子层（最贴近原始消息），更高的 depth 是覆盖更长时间跨度的 condensed summary。
+
+### `short_expand`
+
+按 ID 恢复完整的消息内容。Agent 通常在 `short_grep` 返回片段后调用 `short_expand` 拿到完整文本。
+
+```text
+short_expand(message_ids: ["10", "25", ...])
+```
+
+返回字段包括完整文本和结构化 parts（text、tool_use 参数、media URI）。`tool_result` 载荷被有意省略，因为它们可能非常大 —— 如果真的需要，请重新运行对应的工具。
+
+### 为什么要单独存一份
+
+压缩只是缩小了 LLM **看到**的内容，但绝不会真的丢弃信息。SQLite store + 检索工具把对话历史变成了一个可搜索的归档：Agent 可以用 `short_grep` 搜过去的决策，用 `short_expand` 找回原始消息，并只为它真正需要的那一小段内容付出 context token 成本。

@@ -310,7 +310,8 @@ When enabled, PicoClaw scores each incoming message against structural features 
 | `workspace` | string | No | Per-model workspace override |
 | `thinking_level` | string | No | Extended thinking level: `off`, `low`, `medium`, `high`, `xhigh`, or `adaptive` |
 | `fallbacks` | array | No | Fallback model names for failover |
-| `extra_body` | object | No | Additional fields to inject into API request body |
+| `extra_body` | object | No | Additional fields to inject into the API request body |
+| `custom_headers` | object | No | Additional HTTP headers to inject into every request to this provider (HTTP-based providers only) |
 
 :::note API Key Behavior in Schema V2
 In config schema V2, `model_list[].api_key` in `config.json` is ignored. Use `api_keys` and prefer storing real credentials in `.security.yml`. During V0/V1 migration, legacy `api_key` and `api_keys` are merged into `api_keys` automatically. API keys can use `SecureString` formats: plaintext, `enc://<base64>`, or `file://<path>`. See [Credential Encryption](../credential-encryption.md).

@@ -133,3 +133,14 @@ Entradas vazias ou apenas com espaços em branco na lista `random_reaction_emoji
 - As mensagens são recebidas via assinatura do evento `im.message.receive_v1`
 - As respostas são enviadas no formato **Interactive Card JSON 2.0** com suporte a Markdown
 - Em chats de grupo, o bot detecta @menções via o `open_id` do bot
+
+### Enriquecimento de contexto em respostas
+
+Quando um usuário **responde** a uma mensagem anterior (incluindo mensagens do bot, cards e mensagens de arquivo/imagem), o PicoClaw automaticamente busca a mensagem original e prefixa um pequeno bloco de contexto antes do texto do usuário. Isso dá ao agente o fio da conversa que ele precisa para entender respostas curtas como "sim, pode fazer" ou "manda aquilo pro bob".
+
+- A mensagem original é buscada via API do Feishu e armazenada em cache por 30 segundos (`messageCacheTTL`)
+- O contexto injetado é limitado a **600 caracteres** (`maxReplyContextLen`)
+- Respostas a cards e arquivos também são enriquecidas, não apenas texto puro
+- A busca tem um timeout de 5 segundos — se falhar, a mensagem é processada sem o enriquecimento
+
+Esse comportamento é automático e não tem opções de configuração.

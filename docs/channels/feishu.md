@@ -133,3 +133,14 @@ Empty or whitespace-only entries in the `random_reaction_emoji` list are automat
 - Messages are received via the `im.message.receive_v1` event subscription
 - Responses are sent as **Interactive Card JSON 2.0** format with Markdown support
 - In group chats, the bot detects @mentions via the bot's `open_id`
+
+### Reply context enrichment
+
+When a user **replies** to an earlier message (including bot messages, cards, and file/image messages), PicoClaw automatically fetches the original message and prepends a short context block before the user's text. This gives the agent the conversational thread it needs to make sense of short replies like "yes do it" or "send that to bob".
+
+- The original message is looked up via the Feishu API and cached for 30 seconds (`messageCacheTTL`)
+- The injected context is capped at **600 characters** (`maxReplyContextLen`)
+- Card and file replies are also enriched, not just plain text
+- The lookup is bounded by a 5-second timeout — if it fails, the message is processed without enrichment
+
+This is automatic and has no configuration knobs.

@@ -24,6 +24,75 @@ O PicoClaw expõe um sistema de hooks que permite observar eventos, interceptar 
 - **after_tool** — disparado após uma ferramenta ser executada. Interceptors podem reescrever o resultado.
 - **approve_tool** — disparado antes da execução de uma ferramenta (depois de before_tool). Aprovadores retornam allow ou deny.
 
+## Ações de Hook
+
+Interceptors retornam um `HookDecision` cujo `action` controla o restante do fluxo:
+
+| Ação | Estágios Aplicáveis | Efeito |
+| --- | --- | --- |
+| `continue` | Todos os interceptors | Passa adiante sem modificações |
+| `modify` | `before_llm`, `after_llm`, `before_tool`, `after_tool` | Modifica requisição/resposta e continua |
+| `respond` | `before_tool` | Retorna o resultado da ferramenta diretamente, **pulando a execução real da ferramenta** |
+| `deny_tool` | `before_tool` | Nega a execução da ferramenta, retorna mensagem de erro |
+| `abort_turn` | Todos os interceptors | Aborta o turno atual |
+| `hard_abort` | Todos os interceptors | Força a parada de todo o loop do agente |
+
+### A Ação `respond`
+
+`respond` permite que um hook `before_tool` forneça o resultado da ferramenta diretamente, fazendo com que o corpo real da ferramenta nunca execute. Use para:
+
+1. **Injeção de ferramenta plugin** — implementar ferramentas a partir de um hook sem registrá-las no registro de ferramentas
+2. **Cache de resultados** — atalho para chamadas de ferramentas repetidas com resultados em cache
+3. **Mock de ferramenta** — retornar resultados pré-definidos para testes
+
+Quando um hook retorna `respond` com um `HookResult`, o loop do agente:
+
+1. Pula a execução real da ferramenta
+2. Usa o resultado fornecido pelo hook como se a ferramenta tivesse executado
+3. Continua o turno normalmente com esse resultado
+
+:::caution Segurança
+`respond` **ignora as verificações de `approve_tool`**. Um hook pode retornar resultados para qualquer ferramenta — incluindo as sensíveis como `bash` — sem passar pelo pipeline de aprovação. Restrinja hooks com capacidade de `respond` aos que você confia, e prefira `deny_tool` para bloquear chamadas inseguras.
+:::
+
+Exemplo Go in-process:
+
+```go
+func (h *MyHook) BeforeTool(
+    ctx context.Context,
+    call *agent.ToolCallHookRequest,
+) (*agent.ToolCallHookRequest, agent.HookDecision, error) {
+    if call.Tool == "my_plugin_tool" {
+        next := call.Clone()
+        next.HookResult = &tools.ToolResult{
+            ForLLM:  "Plugin tool executed successfully",
+            Silent:  false,
+            IsError: false,
+        }
+        return next, agent.HookDecision{Action: agent.HookActionRespond}, nil
+    }
+    return call, agent.HookDecision{Action: agent.HookActionContinue}, nil
+}
+```
+
+Exemplo de process-hook (Python, JSON-RPC sobre stdio):
+
+```python
+def handle_before_tool(id, params):
+    if params.get("name") == "my_plugin_tool":
+        _respond(id, {
+            "decision": {"action": "respond"},
+            "hook_result": {
+                "for_llm": "Plugin tool executed successfully",
+                "is_error": False,
+            },
+        })
+        return
+    _respond(id, {"decision": {"action": "continue"}})
+```
+
+Para o esquema completo dos campos JSON-RPC e os padrões de injeção de ferramenta plugin que isso habilita, veja as specs upstream em [`docs/hooks/hook-json-protocol.md`](https://github.com/sipeed/picoclaw/blob/main/docs/hooks/hook-json-protocol.md) e [`docs/hooks/plugin-tool-injection.md`](https://github.com/sipeed/picoclaw/blob/main/docs/hooks/plugin-tool-injection.md).
+
 ## Ordem de Execução
 
 1. **Hooks in-process** são executados primeiro.
@@ -229,8 +298,7 @@ O sistema de hooks é mais adequado para:
 
 Ainda não suportado:
 
-- Hooks externos enviando mensagens de volta para a conversa.
-- Suspender a execução para aprovação human-in-the-loop.
+- Suspender a execução indefinidamente para aprovação human-in-the-loop (use `approval_timeout_ms` e um process hook para aprovação síncrona).
 - Interceptação completa em nível de mensagem (apenas requisição/resposta do LLM e chamada/resultado de ferramenta são interceptáveis).
 
 ## Solução de Problemas

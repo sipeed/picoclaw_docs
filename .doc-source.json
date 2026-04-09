@@ -1,7 +1,7 @@
 {
   "source_repo": "https://github.com/sipeed/picoclaw",
-  "source_commit": "bd56e10bb8e4cea22409ba83c19aef0295b8a9a7",
-  "generated_at": "2026-04-03T00:00:00+08:00",
+  "source_commit": "5e44a994",
+  "generated_at": "2026-04-09T16:30:00+08:00",
   "docs": {
     "docs/intro.md": {
       "source_files": ["README.md", "assets/arch.jpg"]
@@ -46,7 +46,7 @@
       "source_files": ["pkg/channels/dingtalk/dingtalk.go", "pkg/channels/dingtalk/init.go"]
     },
     "docs/channels/feishu.md": {
-      "source_files": ["pkg/channels/feishu/feishu_64.go", "pkg/channels/feishu/feishu_32.go", "pkg/channels/feishu/common.go", "pkg/channels/feishu/init.go"]
+      "source_files": ["pkg/channels/feishu/feishu_64.go", "pkg/channels/feishu/feishu_32.go", "pkg/channels/feishu/common.go", "pkg/channels/feishu/feishu_reply.go", "pkg/channels/feishu/init.go"]
     },
     "docs/channels/wecom.md": {
       "source_files": ["pkg/channels/wecom/wecom.go", "docs/channels/wecom/README.md", "docs/channels/wecom/README.zh.md"]
@@ -72,6 +72,18 @@
     "docs/channels/weixin.md": {
       "source_files": ["pkg/channels/weixin/weixin.go", "pkg/channels/weixin/api.go", "pkg/channels/weixin/auth.go", "pkg/channels/weixin/state.go", "docs/channels/weixin/README.md", "docs/channels/weixin/README.zh.md"]
     },
+    "docs/channels/teams-webhook.md": {
+      "source_files": ["pkg/channels/teams_webhook/teams_webhook.go", "pkg/channels/teams_webhook/init.go", "pkg/config/config.go"]
+    },
+    "docs/configuration/isolation.md": {
+      "source_files": ["pkg/isolation/README.md", "pkg/isolation/README_CN.md", "pkg/isolation/runtime.go", "pkg/isolation/platform_linux.go", "pkg/isolation/platform_windows.go", "pkg/config/config.go"]
+    },
+    "docs/configuration/token_authentication.md": {
+      "source_files": ["pkg/channels/pico/pico.go", "pkg/config/config.go", "web/backend/launcherconfig/config.go", "web/backend/main.go"]
+    },
+    "docs/context-compression.md": {
+      "source_files": ["pkg/seahorse/short_engine.go", "pkg/seahorse/short_compaction.go", "pkg/seahorse/short_assembler.go", "pkg/seahorse/short_retrieval.go", "pkg/seahorse/short_constants.go", "pkg/seahorse/store.go", "pkg/seahorse/tool_grep.go", "pkg/seahorse/tool_expand.go", "pkg/agent/context_seahorse.go"]
+    },
     "docs/providers/index.md": {
       "source_files": ["pkg/providers/factory.go", "pkg/providers/factory_provider.go", "pkg/providers/http_provider.go", "pkg/providers/openai_compat/provider.go", "pkg/providers/anthropic/provider.go", "docs/providers.md"]
     },
@@ -82,7 +94,7 @@
       "source_files": ["pkg/providers/antigravity_provider.go", "docs/ANTIGRAVITY_USAGE.md"]
     },
     "docs/hooks.md": {
-      "source_files": ["docs/hooks/README.md", "pkg/agent/hooks.go", "pkg/config/config.go"]
+      "source_files": ["docs/hooks/README.md", "docs/hooks/hook-json-protocol.md", "docs/hooks/plugin-tool-injection.md", "pkg/agent/hooks.go", "pkg/agent/hook_process.go", "pkg/config/config.go"]
     },
     "docs/steering.md": {
       "source_files": ["docs/steering.md", "pkg/agent/steering.go", "pkg/config/config.go"]

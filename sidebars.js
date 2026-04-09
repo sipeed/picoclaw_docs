@@ -34,6 +34,7 @@ const sidebars = {
         'configuration/model-list',
         'configuration/security-sandbox',
         'configuration/security-reference',
+        'configuration/isolation',
         'configuration/token_authentication',
         'configuration/heartbeat',
         'configuration/tools',
@@ -65,6 +66,7 @@ const sidebars = {
         'channels/maixcam',
         'channels/vk',
         'channels/weixin',
+        'channels/teams-webhook',
       ],
     },
     {

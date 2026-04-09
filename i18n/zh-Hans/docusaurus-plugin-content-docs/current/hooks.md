@@ -24,6 +24,75 @@ PicoClaw 提供了一套 Hook 系统，允许你观察事件、拦截 LLM 和工
 - **after_tool** — 在工具执行之后触发。拦截器可以改写结果。
 - **approve_tool** — 在工具执行之前（before_tool 之后）触发。审批者返回允许或拒绝。
 
+## Hook 动作
+
+拦截器返回一个 `HookDecision`，其中的 `action` 字段决定后续流程：
+
+| 动作 | 适用阶段 | 效果 |
+| --- | --- | --- |
+| `continue` | 所有拦截器 | 不修改，直接放行 |
+| `modify` | `before_llm`、`after_llm`、`before_tool`、`after_tool` | 修改请求/响应后继续 |
+| `respond` | `before_tool` | 直接返回工具结果，**跳过实际的工具执行** |
+| `deny_tool` | `before_tool` | 拒绝工具执行，返回错误信息 |
+| `abort_turn` | 所有拦截器 | 中止当前轮次 |
+| `hard_abort` | 所有拦截器 | 强制停止整个 Agent 循环 |
+
+### `respond` 动作
+
+`respond` 允许 `before_tool` hook 直接提供工具结果，从而**让真正的工具实现根本不会被执行**。典型用途：
+
+1. **插件式工具注入**：通过 hook 实现工具，不需要在工具注册表里登记
+2. **结果缓存**：对重复的工具调用直接返回缓存结果
+3. **工具 mock**：在测试场景下返回固定结果
+
+当 hook 返回 `respond` + 一份 `HookResult` 时，Agent 主循环会：
+
+1. 跳过真正的工具执行
+2. 把 hook 提供的结果当成工具结果使用
+3. 用这个结果继续当前轮次
+
+:::caution 安全风险
+`respond` 会**绕过 `approve_tool` 检查**。Hook 可以为任何工具（包括 `bash` 这类敏感工具）直接返回结果，而无需经过审批环节。请只把 `respond` 能力授予可信的 hook，对不安全的调用优先用 `deny_tool`。
+:::
+
+进程内 Go hook 示例：
+
+```go
+func (h *MyHook) BeforeTool(
+    ctx context.Context,
+    call *agent.ToolCallHookRequest,
+) (*agent.ToolCallHookRequest, agent.HookDecision, error) {
+    if call.Tool == "my_plugin_tool" {
+        next := call.Clone()
+        next.HookResult = &tools.ToolResult{
+            ForLLM:  "Plugin tool executed successfully",
+            Silent:  false,
+            IsError: false,
+        }
+        return next, agent.HookDecision{Action: agent.HookActionRespond}, nil
+    }
+    return call, agent.HookDecision{Action: agent.HookActionContinue}, nil
+}
+```
+
+进程型 hook 示例（Python，stdio 上的 JSON-RPC）：
+
+```python
+def handle_before_tool(id, params):
+    if params.get("name") == "my_plugin_tool":
+        _respond(id, {
+            "decision": {"action": "respond"},
+            "hook_result": {
+                "for_llm": "Plugin tool executed successfully",
+                "is_error": False,
+            },
+        })
+        return
+    _respond(id, {"decision": {"action": "continue"}})
+```
+
+完整的 JSON-RPC 字段定义和「插件式工具注入」的最佳实践，参见上游文档 [`docs/hooks/hook-json-protocol.md`](https://github.com/sipeed/picoclaw/blob/main/docs/hooks/hook-json-protocol.md) 和 [`docs/hooks/plugin-tool-injection.md`](https://github.com/sipeed/picoclaw/blob/main/docs/hooks/plugin-tool-injection.md)。
+
 ## 执行顺序
 
 1. **进程内 Hook**（in-process）优先执行。
@@ -229,8 +298,7 @@ Hook 系统最适合以下场景：
 
 尚不支持的功能：
 
-- 外部 Hook 向对话中发送消息。
-- 暂停执行以等待人工审批。
+- 无限期暂停执行以等待人工审批（请用 `approval_timeout_ms` 加进程 hook 实现同步审批）。
 - 完整的消息级拦截（目前仅支持 LLM 请求/响应和工具调用/结果的拦截）。
 
 ## 故障排查

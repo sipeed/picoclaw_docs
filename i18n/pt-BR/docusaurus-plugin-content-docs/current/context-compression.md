@@ -76,6 +76,39 @@ O próprio engine seahorse também expõe algumas constantes internas em `pkg/se
 
 O engine de compactação não é acoplado a um provider específico. Ele recebe um callback `complete(ctx, prompt, opts)`, que é ligado ao modelo configurado para o agent. Qualquer modelo compatível com OpenAI, Anthropic, Gemini ou local pode ser usado como sumarizador — normalmente o mesmo modelo que o agent já está executando.
 
-## Expandindo um resumo
+## Store persistente e recuperação
 
-Cada resumo está ligado às mensagens originais que ele substituiu. A ferramenta `short_expand` do PicoClaw permite que o agent navegue de um resumo de volta para sua faixa de origem quando mais detalhes são necessários. É isso que torna o compactador lossy-mas-recuperável: a conversa fica mais curta no contexto, mas o histórico completo continua no store.
+O engine seahorse é apoiado por um **store SQLite por agent** em `<workspace>/sessions/seahorse.db`. Toda mensagem — original ou resumida — e todo resumo são persistidos lá, com indexação full-text FTS5 sobre os corpos de resumos e mensagens. É isso que permite ao agent pesquisar o histórico mesmo depois que a compactação encolheu a visão dentro do contexto.
+
+Duas ferramentas seahorse são registradas automaticamente no registro de ferramentas do agent sempre que o context manager seahorse está ativo:
+
+### `short_grep`
+
+Pesquisa resumos e mensagens por conteúdo no store persistente.
+
+```text
+short_grep(pattern, scope?, role?, last?, since?, before?, all_conversations?, limit?)
+```
+
+- `pattern` — suporta correspondência por palavra, operadores `AND` / `OR` / `NOT`, e wildcards `%fuzzy%`
+- `scope` — `summary`, `message`, ou `both` (padrão)
+- `role` — filtra mensagens por `user` / `assistant`
+- `last` — janela relativa de tempo (`6h`, `7d`, `2w`, `1m`)
+- `since` / `before` — limites absolutos em ISO 8601
+- `all_conversations` — pesquisa além da conversa atual
+
+Os resultados incluem ranks BM25 do FTS5 (mais negativo = melhor correspondência) e um campo `depth` em resumos: depth 0 significa nível folha (mais próximo das mensagens brutas), depths maiores são resumos condensados cobrindo períodos mais longos.
+
+### `short_expand`
+
+Recupera o conteúdo completo da mensagem por ID. O agent normalmente chama `short_expand` depois que `short_grep` retorna apenas um snippet.
+
+```text
+short_expand(message_ids: ["10", "25", ...])
+```
+
+Retorna o texto completo mais partes estruturadas (text, argumentos de tool_use, URIs de mídia). Os payloads de `tool_result` são intencionalmente omitidos porque podem ser grandes — re-execute a ferramenta original se você realmente precisar do resultado.
+
+### Por que um store separado
+
+A compactação encolhe o que o LLM **vê**, mas nunca descarta informação. O store SQLite + ferramentas de recuperação transformam o histórico da conversa em um arquivo pesquisável: o agent pode dar `short_grep` em decisões passadas, `short_expand` para recuperar o turno original, e só pagar tokens de contexto pelo recorte que realmente precisa.

@@ -76,6 +76,39 @@ The seahorse engine itself also exposes a few internal constants in `pkg/seahors
 
 The compaction engine does not bind to a specific provider. It receives a `complete(ctx, prompt, opts)` callback, which is wired up to whichever model is configured for the agent. Any OpenAI-compatible, Anthropic, Gemini, or local model can be used as the summarizer — typically the same model the agent is already running.
 
-## Expanding a summary
+## Persistent store and retrieval
 
-Each summary is linked to the original messages it replaced. PicoClaw's `short_expand` tool lets the agent walk back from a summary to its source range when more detail is needed. This is what makes the compactor lossy-but-recoverable: the conversation is shorter in context, but the full history is still in the store.
+The seahorse engine is backed by a per-agent **SQLite store** at `<workspace>/sessions/seahorse.db`. Every message — original or summarized — and every summary is persisted there, with FTS5 full-text indexing on summary and message bodies. This is what lets the agent search history even after compaction has shrunk the in-context view.
+
+Two seahorse tools are auto-registered with the agent's tool registry whenever the seahorse context manager is active:
+
+### `short_grep`
+
+Search summaries and messages for matching content across the persistent store.
+
+```text
+short_grep(pattern, scope?, role?, last?, since?, before?, all_conversations?, limit?)
+```
+
+- `pattern` — supports word matching, `AND` / `OR` / `NOT`, and `%fuzzy%` wildcards
+- `scope` — `summary`, `message`, or `both` (default)
+- `role` — filter messages by `user` / `assistant`
+- `last` — relative time window (`6h`, `7d`, `2w`, `1m`)
+- `since` / `before` — ISO 8601 absolute time bounds
+- `all_conversations` — search beyond the current conversation
+
+Results include FTS5 BM25 ranks (lower / more negative = better match) and a `depth` field on summaries: depth 0 means leaf-level (closest to raw messages), higher depths are condensed summaries covering longer time spans.
+
+### `short_expand`
+
+Recover full message content by ID. The agent typically calls `short_expand` after `short_grep` returns just a snippet.
+
+```text
+short_expand(message_ids: ["10", "25", ...])
+```
+
+Returns the full text plus structured parts (text, tool_use arguments, media URIs). `tool_result` payloads are intentionally omitted because they can be large — re-run the original tool if you actually need the result.
+
+### Why a separate store
+
+Compaction shrinks what the LLM **sees**, but never throws information away. The SQLite store + retrieval tools turn the conversation history into a searchable archive: the agent can `short_grep` for past decisions, `short_expand` to recover the original turn, and only pay context tokens for the slice it actually needs.

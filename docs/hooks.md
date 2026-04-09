@@ -24,6 +24,75 @@ PicoClaw exposes a hook system that lets you observe events, intercept LLM and t
 - **after_tool** — fired after a tool executes. Interceptors may rewrite the result.
 - **approve_tool** — fired before a tool executes (after before_tool). Approvers return allow or deny.
 
+## Hook Actions
+
+Interceptors return a `HookDecision` whose `action` controls the rest of the flow:
+
+| Action | Applicable Stages | Effect |
+| --- | --- | --- |
+| `continue` | All interceptors | Pass through without modification |
+| `modify` | `before_llm`, `after_llm`, `before_tool`, `after_tool` | Modify request/response and continue |
+| `respond` | `before_tool` | Return a tool result directly, **skipping the actual tool execution** |
+| `deny_tool` | `before_tool` | Deny tool execution, return an error message |
+| `abort_turn` | All interceptors | Abort the current turn |
+| `hard_abort` | All interceptors | Force-stop the entire agent loop |
+
+### The `respond` Action
+
+`respond` lets a `before_tool` hook supply the tool result directly, so the actual tool body never runs. Use it for:
+
+1. **Plugin tool injection** — implement tools from a hook without registering them in the tool registry
+2. **Result caching** — short-circuit repeated tool calls with cached results
+3. **Tool mocking** — return canned results for tests
+
+When a hook returns `respond` with a `HookResult`, the agent loop:
+
+1. Skips the real tool execution
+2. Uses the hook-provided result as if the tool had executed
+3. Continues the turn normally with that result
+
+:::caution Security
+`respond` **bypasses `approve_tool` checks**. A hook can return results for any tool — including sensitive ones like `bash` — without going through the approval pipeline. Restrict `respond`-capable hooks to ones you trust, and prefer `deny_tool` for blocking unsafe calls.
+:::
+
+Go in-process example:
+
+```go
+func (h *MyHook) BeforeTool(
+    ctx context.Context,
+    call *agent.ToolCallHookRequest,
+) (*agent.ToolCallHookRequest, agent.HookDecision, error) {
+    if call.Tool == "my_plugin_tool" {
+        next := call.Clone()
+        next.HookResult = &tools.ToolResult{
+            ForLLM:  "Plugin tool executed successfully",
+            Silent:  false,
+            IsError: false,
+        }
+        return next, agent.HookDecision{Action: agent.HookActionRespond}, nil
+    }
+    return call, agent.HookDecision{Action: agent.HookActionContinue}, nil
+}
+```
+
+Process-hook example (Python, JSON-RPC over stdio):
+
+```python
+def handle_before_tool(id, params):
+    if params.get("name") == "my_plugin_tool":
+        _respond(id, {
+            "decision": {"action": "respond"},
+            "hook_result": {
+                "for_llm": "Plugin tool executed successfully",
+                "is_error": False,
+            },
+        })
+        return
+    _respond(id, {"decision": {"action": "continue"}})
+```
+
+For the full JSON-RPC field schema and the plugin-tool-injection patterns this enables, see the upstream specs in [`docs/hooks/hook-json-protocol.md`](https://github.com/sipeed/picoclaw/blob/main/docs/hooks/hook-json-protocol.md) and [`docs/hooks/plugin-tool-injection.md`](https://github.com/sipeed/picoclaw/blob/main/docs/hooks/plugin-tool-injection.md).
+
 ## Execution Order
 
 1. **In-process hooks** run first.
@@ -229,8 +298,7 @@ The hook system is best suited for:
 
 Not yet supported:
 
-- External hooks sending messages back into the conversation.
-- Suspending execution for human-in-the-loop approval.
+- Suspending execution indefinitely for human-in-the-loop approval (use `approval_timeout_ms` and a process hook for synchronous approval).
 - Full message-level interception (only LLM request/response and tool call/result are hookable).
 
 ## Troubleshooting

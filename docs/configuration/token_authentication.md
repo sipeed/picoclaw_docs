@@ -137,39 +137,66 @@ const ws = new WebSocket('ws://localhost:18790/pico?token=your-secure-token-here
 
 ## Web Launcher Dashboard Token
 
-The Web Launcher Dashboard uses Token-based login authentication.
+The Web Launcher Dashboard exposes a standard HTTP login / setup / logout flow guarded by a single token. The same token also signs the dashboard session cookies.
 
 ![set token](/img/configuration/login.png)
 
-### Default Behavior
+### Token Resolution Order
 
-By default, the launcher Token is **randomly generated on each startup** and changes after restart.
+At startup the launcher resolves the dashboard token from these sources, in priority order:
 
-Ways to view the Token:
+1. **`PICOCLAW_LAUNCHER_TOKEN` environment variable** — highest priority. When set, this value is used and **not** echoed to logs.
+2. **`launcher_token` field in `launcher-config.json`** — persisted across restarts. This is the default once you set a custom token through the dashboard or by editing the file.
+3. **Random token (fallback)** — only used when neither of the above is present. PicoClaw generates a 256-bit random token, **persists it to `launcher-config.json`**, and reuses it on the next start.
 
-- **Console mode** (`-console`): Check terminal output at startup
-- **Tray/GUI mode**: Use "Copy Console Token" from the tray menu
+The source of the active token is reported as one of `env`, `config`, or `random` in the launcher logs at startup, so the token persists across restarts unless you explicitly rotate it.
+
+### Viewing the Token
+
+- **Console mode** (`-console`): the token (or its source) is printed at startup
+- **Tray/GUI mode**: use "Copy Console Token" from the tray menu
 - **Log file**: `$PICOCLAW_HOME/logs/launcher.log`
+- **launcher-config.json**: read the `launcher_token` field directly
 
 ### Setting a Fixed Token
 
-Set a fixed Token via environment variable:
+Two ways:
+
+**Environment variable** (overrides everything else, not persisted):
 
 ```bash
 export PICOCLAW_LAUNCHER_TOKEN="your-fixed-launcher-token"
 ```
 
-Once set, the Token remains fixed and won't be displayed in startup logs.
+**`launcher-config.json`** (persisted):
 
-### Login Methods
+```json
+{
+  "port": 18800,
+  "launcher_token": "your-fixed-launcher-token"
+}
+```
 
-1. **Manual input**: Enter the Token on the login page
-2. **URL parameter**: Visit `http://localhost:18791?token=your-token` for automatic login
+### Login Flow
 
-> **Security Notes**:
-> - Session cookie is valid for approximately 7 days after login
-> - Login endpoint has brute-force protection (rate limit per minute)
-> - All responses include `Referrer-Policy: no-referrer` to reduce token leakage via Referer header
+The dashboard exposes three HTTP endpoints:
+
+| Endpoint | Method | Purpose |
+| --- | --- | --- |
+| `/login` | POST | Authenticate with the launcher token, get a session cookie |
+| `/setup` | POST | First-run flow to register a custom token before the dashboard becomes available |
+| `/logout` | POST | Invalidate the current session |
+
+You can sign in by:
+
+1. **Manual input** — enter the token on the login page
+2. **URL parameter** — visit `http://localhost:18800?token=your-token` for automatic login
+
+> **Security notes**:
+> - Session cookies are HMAC-signed with a fresh 256-bit key generated **per process startup**, so all existing sessions are invalidated when the launcher restarts
+> - Session cookies are valid for approximately 7 days after login
+> - The login endpoint has brute-force protection (rate limit per minute)
+> - All responses include `Referrer-Policy: no-referrer` to reduce token leakage via the Referer header
 
 ---
 

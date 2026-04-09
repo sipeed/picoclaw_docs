@@ -315,6 +315,7 @@ Quando habilitado, o PicoClaw pontua cada mensagem recebida com base em caracter
 | `thinking_level` | string | Não | Nível de extended thinking: `off`, `low`, `medium`, `high`, `xhigh`, ou `adaptive` |
 | `fallbacks` | array | Não | Nomes de modelos de fallback para failover |
 | `extra_body` | object | Não | Campos adicionais a injetar no corpo da requisição da API |
+| `custom_headers` | object | Não | Cabeçalhos HTTP adicionais a injetar em toda requisição a este provider (apenas providers baseados em HTTP) |
 
 :::note Comportamento de API Key no Schema V2
 Na versão V2 do schema de configuração, `model_list[].api_key` em `config.json` é ignorado. Use `api_keys` e prefira armazenar credenciais reais em `.security.yml`. Durante a migração de V0/V1, os campos legados `api_key` e `api_keys` são mesclados automaticamente em `api_keys`. As chaves de API podem usar formatos `SecureString`: texto puro, `enc://<base64>`, ou `file://<path>`. Consulte [Credential Encryption](../credential-encryption.md).

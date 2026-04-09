@@ -137,39 +137,66 @@ const ws = new WebSocket('ws://localhost:18790/pico?token=your-secure-token-here
 
 ## Web 启动器控制台 Token
 
-Web 启动器控制台（Launcher Dashboard）使用 Token 进行登录认证。
+Web 启动器控制台（Launcher Dashboard）通过一套标准 HTTP 登录 / 初始化 / 退出流程进行身份认证，整个流程由一个 token 守护，同一个 token 也用于签名控制台的会话 Cookie。
 
 ![set token](/img/configuration/login.png)
 
-### 默认行为
+### Token 解析顺序
 
-默认情况下，启动器 Token 在**每次启动时随机生成**，重启后会变化。
+启动时，启动器按以下优先级解析控制台 token：
 
-查看 Token 的方式：
+1. **`PICOCLAW_LAUNCHER_TOKEN` 环境变量** —— 最高优先级。设置后会被使用，并且**不会**回显到日志。
+2. **`launcher-config.json` 中的 `launcher_token` 字段** —— 跨重启持久化。一旦你通过控制台或手工编辑该文件设置了自定义 token，默认就走这一项。
+3. **随机 token（兜底）** —— 仅在前两者都没有时才会触发。PicoClaw 会生成一个 256-bit 随机 token，**写回 `launcher-config.json`**，并在下次启动时复用同一个值。
 
-- **控制台模式**（`-console`）：查看启动时的终端输出
-- **托盘/GUI 模式**：使用托盘菜单中的「复制控制台口令」
+启动器日志在启动时会标明当前 token 的来源（`env` / `config` / `random`），所以**除非你显式轮换，否则 token 会跨重启保持不变**。
+
+### 查看 Token
+
+- **控制台模式**（`-console`）：启动时打印 token 或它的来源
+- **托盘 / GUI 模式**：使用托盘菜单的「复制控制台口令」
 - **日志文件**：`$PICOCLAW_HOME/logs/launcher.log`
+- **launcher-config.json**：直接读 `launcher_token` 字段
 
 ### 设置固定 Token
 
-通过环境变量设置固定 Token：
+两种方式：
+
+**环境变量**（覆盖其他来源，不会持久化）：
 
 ```bash
 export PICOCLAW_LAUNCHER_TOKEN="your-fixed-launcher-token"
 ```
 
-设置后，Token 将固定不变，启动日志中不会显示具体 Token 值。
+**`launcher-config.json`**（持久化）：
 
-### 登录方式
+```json
+{
+  "port": 18800,
+  "launcher_token": "your-fixed-launcher-token"
+}
+```
 
-1. **手动输入**：在登录页面输入 Token
-2. **URL 参数**：访问 `http://localhost:18791?token=your-token` 自动登录
+### 登录流程
+
+控制台暴露三个 HTTP 接口：
+
+| 接口 | 方法 | 用途 |
+| --- | --- | --- |
+| `/login` | POST | 用 launcher token 登录，换取会话 Cookie |
+| `/setup` | POST | 首次运行流程：在控制台可用之前注册一个自定义 token |
+| `/logout` | POST | 注销当前会话 |
+
+登录方式：
+
+1. **手动输入**：在登录页面输入 token
+2. **URL 参数**：访问 `http://localhost:18800?token=your-token` 自动登录
 
 > **安全说明**：
-> - 登录后的会话 Cookie 默认约 7 天有效
+> - 会话 Cookie 由**每次进程启动时新生成的 256-bit 密钥** HMAC 签名，所以每次启动器重启，所有已有会话都会失效
+> - 会话 Cookie 默认约 7 天有效
 > - 登录接口有暴力尝试限制（每分钟尝试次数上限）
-> - 全站响应携带 `Referrer-Policy: no-referrer`，减轻 Token 经 Referer 头泄露的风险
+> - 所有响应都带 `Referrer-Policy: no-referrer`，减轻 token 经 Referer 头泄露的风险
 
 ---
 
