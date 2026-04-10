@@ -1,3 +1,8 @@
+---
+id: Claude (Anthropic)-api
+title: Claude (Anthropic)  API
+---
+
 # Claude (Anthropic)  配置指南
 
 ## 概述
