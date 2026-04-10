@@ -1,3 +1,8 @@
+---
+id: nim (NVIDIA)-api
+title: Nim (NVIDIA) API
+---
+
 # NVIDIA NIM 配置指南
 
 ## 概述
