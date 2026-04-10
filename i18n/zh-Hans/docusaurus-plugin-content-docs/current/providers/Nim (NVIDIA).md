@@ -1,6 +1,6 @@
 ---
-id: nim (NVIDIA)-api
-title: Nim (NVIDIA) API
+id: NVIDIA-api
+title: Nim(NVIDIA) API
 ---
 
 # NVIDIA NIM 配置指南
@@ -13,7 +13,7 @@ title: Nim (NVIDIA) API
 
 官方 API 文档：https://docs.nvidia.com/nim/
 
-------
+---
 
 ## 获取 API Key
 
@@ -31,9 +31,9 @@ title: Nim (NVIDIA) API
 
 > ⚠️ **注意**：API Key 仅显示一次，请立即保存，切勿泄露。
 
-------
+---
 
-![image-20260410164719609](./OpenAI/image-20260410164719609.png)
+![image-20260410164719609](/img/providers/nim1.png)
 
 ## 配置 PicoClaw
 
@@ -54,7 +54,7 @@ title: Nim (NVIDIA) API
 
 打开 PicoClaw WebUI，进入左侧导航 **模型** 页面，点击右上角「添加模型」：
 
-![image-20260410164756785](./OpenAI/image-20260410164756785.png)
+![image-20260410164756785](/img/providers/nim2.png)
 
 |     字段     |                   填写内容                    |
 | :----------: | :-------------------------------------------: |
@@ -92,7 +92,7 @@ model_list:
       - "nvapi-your-nvidia-api-key"
 ```
 
-------
+---
 
 ## 注意事项
 
@@ -101,4 +101,3 @@ model_list:
 - API Key 以 `nvapi-` 开头，务必在官方 API Keys 页面生成。
 - 生产环境请将 API Key 存放在 `.security.yml`，避免明文写入 `config.json`。
 - 免费额度有限，高频使用建议关注账户剩余调用次数。
-

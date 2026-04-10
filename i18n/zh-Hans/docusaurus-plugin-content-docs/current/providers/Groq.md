@@ -1,5 +1,5 @@
 ---
-id: grop-api  
+id: grop-api
 title: Grop API
 ---
 
@@ -11,7 +11,7 @@ Groq 是主打**超低延迟、极速推理**的 AI 推理平台，依托自研 
 
 官方文档：https://console.groq.com/docs/quickstart
 
-------
+---
 
 ## 获取 API Key
 
@@ -29,9 +29,9 @@ Groq 是主打**超低延迟、极速推理**的 AI 推理平台，依托自研 
 
 > ⚠️ **注意**：API Key 仅显示一次，请立即保存，避免泄露。
 
-------
+---
 
-![image-20260410163359795](./grop/image-20260410163359795.png)
+![image-20260410163359795](/img/providers/grop1.png)
 
 ## 配置 PicoClaw
 
@@ -52,7 +52,7 @@ Groq 是主打**超低延迟、极速推理**的 AI 推理平台，依托自研 
 
 打开 PicoClaw WebUI，进入左侧导航 **模型** 页面，点击右上角「添加模型」：
 
-![image-20260410163514016](./grop/image-20260410163514016.png)
+![image-20260410163514016](/img/providers/grop2.png)
 
 |     字段     |                     填写内容                     |
 | :----------: | :----------------------------------------------: |
@@ -92,7 +92,7 @@ model_list:
       - "your-groq-api-key"
 ```
 
-------
+---
 
 ## 注意事项
 

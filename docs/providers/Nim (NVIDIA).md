@@ -1,9 +1,6 @@
 ---
-
-id: nim (NVIDIA)-api
-
-title: Nim (NVIDIA) API
-
+id: NVIDIA-api
+title: Nim(NVIDIA) API
 ---
 
 # NVIDIA NIM API Configuration Guide
@@ -16,15 +13,15 @@ Official Site: https://build.nvidia.com/
 
 Official API Docs: https://docs.nvidia.com/nim/
 
-------
+---
 
 ## Get API Key
 
 ### Step 1: Access Platform
 
- Go to[Try NVIDIA NIM APIs](https://build.nvidia.com/) 
+Go to[Try NVIDIA NIM APIs](https://build.nvidia.com/)
 
- (NVIDIA Build platform), register and log in.
+(NVIDIA Build platform), register and log in.
 
 ### Step 2: Create API Key
 
@@ -34,9 +31,9 @@ Official API Docs: https://docs.nvidia.com/nim/
 
 > ⚠️ **Note**: API Key is displayed only once — save immediately and do not share.
 
-------
+---
 
-![image-20260410164719609](./OpenAI/image-20260410164719609.png)
+![image-20260410164719609](/img/providers/nim1.png)
 
 ## Configure PicoClaw
 
@@ -57,7 +54,7 @@ Official API Docs: https://docs.nvidia.com/nim/
 
 Open PicoClaw WebUI → go to **Models** → click **Add Model** in the top-right corner.
 
-![image-20260410164756785](./OpenAI/image-20260410164756785.png)
+![image-20260410164756785](/img/providers/nim2.png)
 
 |      Field       |                       Fill Content                        |
 | :--------------: | :-------------------------------------------------------: |
@@ -95,7 +92,7 @@ model_list:
       - "nvapi-your-nvidia-api-key"
 ```
 
-------
+---
 
 ## Notes
 
@@ -104,4 +101,3 @@ model_list:
 - API Key starts with `nvapi-` — must be generated on the official API Keys page.
 - For production, store API Key in `.security.yml` — avoid plaintext in `config.json`.
 - Free quota is limited; monitor remaining calls for frequent use.
-

@@ -1,9 +1,6 @@
 ---
-
 id: grop-api
-
 title: Grop API
-
 ---
 
 # Groq API Configuration Guide
@@ -14,7 +11,7 @@ Groq is an AI inference platform focused on **ultra-low latency and lightning-fa
 
 Official Docs: https://console.groq.com/docs/quickstart
 
-------
+---
 
 ## Get API Key
 
@@ -32,9 +29,9 @@ register and log in.
 
 > ⚠️ **Note**: API Key is shown only once — save it immediately and keep it secure.。
 
-------
+---
 
-![image-20260410163359795](./grop/image-20260410163359795.png)
+![image-20260410163359795](/img/providers/grop1.png)
 
 ## Configure PicoClaw
 
@@ -53,7 +50,7 @@ register and log in.
 
 Open PicoClaw WebUI → go to **Models** → click **Add Model** in the top-right corner.
 
-![image-20260410163514016](./grop/image-20260410163514016.png)
+![image-20260410163514016](/img/providers/grop2.png)
 
 |      Field       |                        Fill Content                        |
 | :--------------: | :--------------------------------------------------------: |
@@ -93,7 +90,7 @@ model_list:
       - "your-groq-api-key"
 ```
 
-------
+---
 
 ## Notes
 

@@ -1,9 +1,6 @@
 ---
-
-id: Claude (Anthropic)-api
-
-title: Claude (Anthropic)  API
-
+id: Anthropic-api
+title: Claude(Anthropic) API
 ---
 
 # Claude (Anthropic) API Configuration Guide
@@ -19,14 +16,14 @@ Official Docs: https://docs.anthropic.com/en/api/getting-started>
 
 Claude subscription plans are designed for developers, providing high-frequency usage within fixed quotas. Ideal for daily coding, long context, and code understanding tasks.
 
-![image-20260409215655752](./Anthropic/image-20260409215655752.png)
+![image-20260409215655752](/img/providers/Claude(Anthropic)1.png)
 ## Get API Key
 
 1. Go to the Anthropic Console
 2. Register, log in, and activate a subscription plan (Pro / Max 5× / Max 20×)
 3. Go to API Keys in the console to get your **subscription-exclusive API Key**
 
-![image-20260409215733096](./Anthropic/image-20260409215733096.png)
+![image-20260409215733096](/img/providers/Claude(Anthropic)2.png)
 
 ### Plan Usage (Coding Scenario Reference)
 |  Plan   | Monthly Price |                    Use Case                     |
@@ -48,7 +45,7 @@ Claude subscription plans are designed for developers, providing high-frequency 
 
 Open PicoClaw WebUI → go to **Models** in the left sidebar → click **Add Model** in the top-right corner.
 
-![image-20260409221239555](./Anthropic/image-20260409221239555.png)
+![image-20260409221239555](/img/providers/Claude(Anthropic)3.png)
 |      Field       |                       Fill Content                        |
 | :--------------: | :-------------------------------------------------------: |
 |   Model Alias    |              Custom name, e.g., `anthropic`               |
