@@ -1,3 +1,8 @@
+---
+id: grop-api  
+title: Grop API
+---
+
 # Groq 配置指南
 
 ## 概述
