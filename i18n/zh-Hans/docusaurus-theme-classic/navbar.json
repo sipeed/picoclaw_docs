@@ -1,0 +1,22 @@
+{
+  "title": {
+    "message": "PicoClaw",
+    "description": "The title in the navbar"
+  },
+  "item.label.Docs": {
+    "message": "文档",
+    "description": "Navbar item with label Docs"
+  },
+  "item.label.Website": {
+    "message": "官网",
+    "description": "Navbar item with label Website"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  },
+  "logo.alt": {
+    "message": "PicoClaw Logo",
+    "description": "The alt text of navbar logo"
+  }
+}

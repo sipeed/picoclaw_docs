@@ -1,0 +1,142 @@
+{
+  "source_repo": "https://github.com/sipeed/picoclaw",
+  "source_commit": "5e44a994",
+  "generated_at": "2026-04-09T16:30:00+08:00",
+  "docs": {
+    "docs/intro.md": {
+      "source_files": ["README.md", "assets/arch.jpg"]
+    },
+    "docs/getting-started.md": {
+      "source_files": ["README.md", "cmd/picoclaw/internal/onboard/command.go", "pkg/config/defaults.go", "config/config.example.json"]
+    },
+    "docs/installation.md": {
+      "source_files": ["README.md", "Makefile", "docker/Dockerfile", "docker/docker-compose.yml", ".goreleaser.yaml"]
+    },
+    "docs/configuration/index.md": {
+      "source_files": ["pkg/config/config.go", "pkg/config/config_struct.go", "pkg/config/defaults.go", "config/config.example.json", "docs/configuration.md"]
+    },
+    "docs/configuration/config-reference.md": {
+      "source_files": ["pkg/config/config.go", "pkg/config/config_struct.go", "pkg/config/defaults.go", "config/config.example.json"]
+    },
+    "docs/configuration/model-list.md": {
+      "source_files": ["pkg/config/config.go", "pkg/config/config_struct.go", "pkg/providers/factory.go", "pkg/providers/factory_provider.go", "config/config.example.json"]
+    },
+    "docs/configuration/tools.md": {
+      "source_files": ["pkg/config/config.go", "pkg/tools/registry.go", "pkg/tools/types.go", "pkg/tools/web.go", "pkg/tools/shell.go", "pkg/tools/filesystem.go", "pkg/tools/mcp_tool.go", "pkg/tools/cron.go", "pkg/tools/spawn.go", "pkg/tools/reaction.go", "pkg/mcp/manager.go", "docs/tools_configuration.md"]
+    },
+    "docs/configuration/heartbeat.md": {
+      "source_files": ["pkg/heartbeat/service.go", "pkg/config/config.go"]
+    },
+    "docs/configuration/security-sandbox.md": {
+      "source_files": ["pkg/tools/shell.go", "pkg/tools/filesystem.go", "pkg/config/config.go", "docs/security_configuration.md"]
+    },
+    "docs/channels/index.md": {
+      "source_files": ["pkg/channels/manager.go", "pkg/channels/base.go", "pkg/channels/registry.go", "pkg/channels/interfaces.go"]
+    },
+    "docs/channels/telegram.md": {
+      "source_files": ["pkg/channels/telegram/telegram.go", "pkg/channels/telegram/telegram_commands.go", "pkg/channels/telegram/init.go"]
+    },
+    "docs/channels/discord.md": {
+      "source_files": ["pkg/channels/discord/discord.go", "pkg/channels/discord/init.go"]
+    },
+    "docs/channels/slack.md": {
+      "source_files": ["pkg/channels/slack/slack.go", "pkg/channels/slack/init.go"]
+    },
+    "docs/channels/dingtalk.md": {
+      "source_files": ["pkg/channels/dingtalk/dingtalk.go", "pkg/channels/dingtalk/init.go"]
+    },
+    "docs/channels/feishu.md": {
+      "source_files": ["pkg/channels/feishu/feishu_64.go", "pkg/channels/feishu/feishu_32.go", "pkg/channels/feishu/common.go", "pkg/channels/feishu/feishu_reply.go", "pkg/channels/feishu/init.go"]
+    },
+    "docs/channels/wecom.md": {
+      "source_files": ["pkg/channels/wecom/wecom.go", "docs/channels/wecom/README.md", "docs/channels/wecom/README.zh.md"]
+    },
+    "docs/channels/qq.md": {
+      "source_files": ["pkg/channels/qq/qq.go", "pkg/channels/qq/init.go"]
+    },
+    "docs/channels/onebot.md": {
+      "source_files": ["pkg/channels/onebot/onebot.go", "pkg/channels/onebot/init.go"]
+    },
+    "docs/channels/line.md": {
+      "source_files": ["pkg/channels/line/line.go", "pkg/channels/line/init.go"]
+    },
+    "docs/channels/maixcam.md": {
+      "source_files": ["pkg/channels/maixcam/maixcam.go", "pkg/channels/maixcam/init.go"]
+    },
+    "docs/channels/matrix.md": {
+      "source_files": ["pkg/channels/matrix/matrix.go", "pkg/channels/matrix/init.go", "docs/channels/matrix/README.md", "docs/channels/matrix/README.zh.md"]
+    },
+    "docs/channels/vk.md": {
+      "source_files": ["pkg/channels/vk/vk.go", "pkg/channels/vk/init.go", "docs/channels/vk/README.md"]
+    },
+    "docs/channels/weixin.md": {
+      "source_files": ["pkg/channels/weixin/weixin.go", "pkg/channels/weixin/api.go", "pkg/channels/weixin/auth.go", "pkg/channels/weixin/state.go", "docs/channels/weixin/README.md", "docs/channels/weixin/README.zh.md"]
+    },
+    "docs/channels/teams-webhook.md": {
+      "source_files": ["pkg/channels/teams_webhook/teams_webhook.go", "pkg/channels/teams_webhook/init.go", "pkg/config/config.go"]
+    },
+    "docs/configuration/isolation.md": {
+      "source_files": ["pkg/isolation/README.md", "pkg/isolation/README_CN.md", "pkg/isolation/runtime.go", "pkg/isolation/platform_linux.go", "pkg/isolation/platform_windows.go", "pkg/config/config.go"]
+    },
+    "docs/configuration/token_authentication.md": {
+      "source_files": ["pkg/channels/pico/pico.go", "pkg/config/config.go", "web/backend/launcherconfig/config.go", "web/backend/main.go"]
+    },
+    "docs/context-compression.md": {
+      "source_files": ["pkg/seahorse/short_engine.go", "pkg/seahorse/short_compaction.go", "pkg/seahorse/short_assembler.go", "pkg/seahorse/short_retrieval.go", "pkg/seahorse/short_constants.go", "pkg/seahorse/store.go", "pkg/seahorse/tool_grep.go", "pkg/seahorse/tool_expand.go", "pkg/agent/context_seahorse.go"]
+    },
+    "docs/providers/index.md": {
+      "source_files": ["pkg/providers/factory.go", "pkg/providers/factory_provider.go", "pkg/providers/http_provider.go", "pkg/providers/openai_compat/provider.go", "pkg/providers/anthropic/provider.go", "docs/providers.md"]
+    },
+    "docs/providers/antigravity.md": {
+      "source_files": ["pkg/providers/antigravity_provider.go", "docs/ANTIGRAVITY_AUTH.md"]
+    },
+    "docs/providers/antigravity-usage.md": {
+      "source_files": ["pkg/providers/antigravity_provider.go", "docs/ANTIGRAVITY_USAGE.md"]
+    },
+    "docs/hooks.md": {
+      "source_files": ["docs/hooks/README.md", "docs/hooks/hook-json-protocol.md", "docs/hooks/plugin-tool-injection.md", "pkg/agent/hooks.go", "pkg/agent/hook_process.go", "pkg/config/config.go"]
+    },
+    "docs/steering.md": {
+      "source_files": ["docs/steering.md", "pkg/agent/steering.go", "pkg/config/config.go"]
+    },
+    "docs/spawn-tasks.md": {
+      "source_files": ["docs/spawn-tasks.md", "pkg/tools/spawn.go", "pkg/heartbeat/service.go"]
+    },
+    "docs/cron.md": {
+      "source_files": ["docs/cron.md", "pkg/tools/cron.go", "pkg/cron/service.go"]
+    },
+    "docs/credential-encryption.md": {
+      "source_files": ["docs/credential_encryption.md", "pkg/credential/encrypt.go", "pkg/credential/decrypt.go"]
+    },
+    "docs/sensitive-data-filtering.md": {
+      "source_files": ["docs/sensitive_data_filtering.md", "pkg/tools/result.go", "pkg/config/security.go"]
+    },
+    "docs/troubleshooting.md": {
+      "source_files": ["docs/troubleshooting.md"]
+    },
+    "docs/docker.md": {
+      "source_files": ["docs/docker.md", "docker/docker-compose.yml", "docker/Dockerfile"]
+    },
+    "docs/hardware-compatibility.md": {
+      "source_files": ["docs/hardware-compatibility.md", ".goreleaser.yaml"]
+    },
+    "docs/design/provider-refactoring.md": {
+      "source_files": ["docs/design/provider-refactoring.md", "pkg/providers/factory.go", "pkg/providers/fallback.go"]
+    },
+    "docs/migration/model-list-migration.md": {
+      "source_files": ["docs/migration/model-list-migration.md", "pkg/migrate/config.go", "pkg/migrate/migrate.go"]
+    },
+    "docs/contributing.md": {
+      "source_files": ["CONTRIBUTING.md", "CONTRIBUTING.zh.md", "Makefile"]
+    },
+    "docs/roadmap.md": {
+      "source_files": ["ROADMAP.md"]
+    },
+    "docs/changelog.md": {
+      "source_files": ["CHANGELOG.md"]
+    },
+    "docs/rate-limiting.md": {
+      "source_files": ["docs/rate-limiting.md", "pkg/providers/ratelimiter.go", "pkg/providers/fallback.go", "pkg/agent/model_resolution.go"]
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.mainSidebar.doc.Introduction": {
+    "message": "简介",
+    "description": "The label for the doc item Introduction in sidebar mainSidebar, linking to the doc intro"
+  },
+  "sidebar.mainSidebar.doc.Getting Started": {
+    "message": "快速开始",
+    "description": "The label for the doc item Getting Started in sidebar mainSidebar, linking to the doc getting-started"
+  },
+  "sidebar.mainSidebar.category.Installation": {
+    "message": "安装",
+    "description": "The label for the category Installation in sidebar mainSidebar"
+  },
+  "sidebar.mainSidebar.category.Configuration": {
+    "message": "配置",
+    "description": "The label for category Configuration in sidebar mainSidebar"
+  },
+  "sidebar.mainSidebar.category.Chat Channels": {
+    "message": "聊天通道",
+    "description": "The label for category Chat Channels in sidebar mainSidebar"
+  },
+  "sidebar.mainSidebar.category.Providers": {
+    "message": "提供商",
+    "description": "The label for category Providers in sidebar mainSidebar"
+  },
+  "sidebar.mainSidebar.category.Migration": {
+    "message": "迁移指南",
+    "description": "The label for category Migration in sidebar mainSidebar"
+  },
+  "sidebar.mainSidebar.category.Development": {
+    "message": "开发",
+    "description": "The label for category Development in sidebar mainSidebar"
+  }
+}

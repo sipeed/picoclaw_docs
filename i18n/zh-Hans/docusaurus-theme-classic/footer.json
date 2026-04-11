@@ -1,0 +1,62 @@
+{
+  "link.item.label.Getting Started": {
+    "message": "快速开始",
+    "description": "The label of footer link with label=Getting Started linking to /docs/getting-started"
+  },
+  "link.item.label.Configuration": {
+    "message": "配置",
+    "description": "The label of footer link with label=Configuration linking to /docs/configuration"
+  },
+  "link.item.label.Chat Channels": {
+    "message": "聊天通道",
+    "description": "The label of footer link with label=Chat Channels linking to /docs/channels"
+  },
+  "link.item.label.Discord": {
+    "message": "Discord",
+    "description": "The label of footer link with label=Discord linking to https://discord.gg/V4sAZ9XWpN"
+  },
+  "link.item.label.GitHub Issues": {
+    "message": "GitHub Issues",
+    "description": "The label of footer link with label=GitHub Issues linking to https://github.com/sipeed/picoclaw/issues"
+  },
+  "link.item.label.GitHub Discussions": {
+    "message": "GitHub 讨论区",
+    "description": "The label of footer link with label=GitHub Discussions linking to https://github.com/sipeed/picoclaw/discussions"
+  },
+  "link.item.label.Roadmap": {
+    "message": "路线图",
+    "description": "The label of footer link with label=Roadmap linking to /docs/roadmap"
+  },
+  "link.item.label.Contributing": {
+    "message": "参与贡献",
+    "description": "The label of footer link with label=Contributing linking to /docs/contributing"
+  },
+  "link.item.label.Releases": {
+    "message": "版本发布",
+    "description": "The label of footer link with label=Releases linking to https://github.com/sipeed/picoclaw/releases"
+  },
+  "link.title.Docs": {
+    "message": "文档",
+    "description": "The title of the footer links column with title=Docs in the footer"
+  },
+  "link.title.Community": {
+    "message": "社区",
+    "description": "The title of the footer links column with title=Community in the footer"
+  },
+  "link.title.More": {
+    "message": "更多",
+    "description": "The title of the footer links column with title=More in the footer"
+  },
+  "link.item.label.Sipeed GitHub": {
+    "message": "Sipeed GitHub",
+    "description": "Footer link to Sipeed GitHub"
+  },
+  "link.item.label.Sipeed Twitter": {
+    "message": "Sipeed 推特",
+    "description": "Footer link to Sipeed Twitter"
+  },
+  "copyright": {
+    "message": "Copyright © 2026 Sipeed. Built with Docusaurus.",
+    "description": "The footer copyright"
+  }
+}

@@ -1,0 +1,56 @@
+/**
+ * PicoClaw brand colors — Go blue / teal accent
+ * Generated from the Go language brand palette
+ */
+:root {
+  --ifm-color-primary: #00ADD8;
+  --ifm-color-primary-dark: #009ec3;
+  --ifm-color-primary-darker: #0095b8;
+  --ifm-color-primary-darkest: #007b98;
+  --ifm-color-primary-light: #0fbce7;
+  --ifm-color-primary-lighter: #1ac4ef;
+  --ifm-color-primary-lightest: #3fd0f5;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #3fd0f5;
+  --ifm-color-primary-dark: #1ac4ef;
+  --ifm-color-primary-darker: #0fbce7;
+  --ifm-color-primary-darkest: #0095b8;
+  --ifm-color-primary-light: #65d9f7;
+  --ifm-color-primary-lighter: #7adff8;
+  --ifm-color-primary-lightest: #a8ecfb;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+/* Hero section */
+.heroBanner {
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 2rem;
+  }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.navbar__title {
+  background: linear-gradient(90deg, #20567c 50%, #da5b4a 50%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
