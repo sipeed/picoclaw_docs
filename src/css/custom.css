@@ -48,9 +48,15 @@
   flex-wrap: wrap;
 }
 
-.navbar__title {
-  background: linear-gradient(90deg, #20567c 50%, #da5b4a 50%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.navbar__title .brand-pico {
+  color: #20567c;
+}
+.navbar__title .brand-claw {
+  color: #da5b4a;
+}
+[data-theme='dark'] .navbar__title .brand-pico {
+  color: #5ba3c9;
+}
+[data-theme='dark'] .navbar__title .brand-claw {
+  color: #e8806f;
 }

@@ -50,6 +50,11 @@ const config = {
     },
   },
 
+  clientModules: [
+    require.resolve('./src/clientModules/localeRedirect.js'),
+    require.resolve('./src/clientModules/brandColor.js'),
+  ],
+
   presets: [
     [
       'classic',
@@ -70,6 +75,9 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      colorMode: {
+        respectPrefersColorScheme: true,
+      },
       image: 'img/logo.webp',
       navbar: {
         title: 'PicoClaw',
