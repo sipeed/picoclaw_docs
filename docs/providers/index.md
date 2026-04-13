@@ -50,6 +50,18 @@ For a smoother and more intuitive setup experience, we recommend using Web UI as
 | **GitHub Copilot** | Copilot bridge models | — |
 | **Claude CLI / Codex CLI** | Local CLI model bridges | Local CLI auth |
 
+## Local Model Selection Note
+
+For local deployment (such as LM Studio, Ollama, and vLLM), model capability is generally positively correlated with parameter count. Use the ranges below as practical engineering guidance:
+
+- **Below 5B**: usually not suitable for agentic workflows and often fails to meet baseline task-completion needs.
+- **5B to 10B**: generally weak performance, with clear difficulty on non-trivial tasks.
+- **10B to 20B**: usable in limited cases, but reliability and task coverage are often insufficient.
+- **20B to 30B**: better usability for general tasks, but complex workflows may still be unstable.
+- **Around or above 30B**: recommended when feasible, usually with better usability and stability.
+
+For implementation details, see [LM Studio API Guide](./lmstudio.md) and [Model Configuration](../configuration/model-list.md).
+
 ## Quick Setup
 
 ```json

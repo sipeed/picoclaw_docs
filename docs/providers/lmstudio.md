@@ -108,6 +108,18 @@ LM Studio local inference does not have per-token cloud billing. Costs mainly co
 - Larger models or higher parallel settings increase latency
 - LAN/remote access also depends on network stability
 
+## Local Model Selection Note
+
+For local deployment (such as LM Studio, Ollama, and vLLM), model capability is generally positively correlated with parameter count. The ranges below can be used as practical engineering guidance:
+
+- **Below 5B**: usually not suitable for agentic workflows and often fails to meet baseline task-completion needs.
+- **5B to 10B**: generally weak performance, with clear difficulty on non-trivial tasks.
+- **10B to 20B**: usable in limited cases, but reliability and task coverage are often insufficient.
+- **20B to 30B**: better usability for general tasks, but complex workflows may still be unstable.
+- **Around or above 30B**: recommended when feasible, usually with better usability and stability.
+
+> Note: Outcomes still vary with model architecture, training quality, quantization level, context window, toolchain setup, and hardware performance.
+
 ---
 
 ## Common Issues

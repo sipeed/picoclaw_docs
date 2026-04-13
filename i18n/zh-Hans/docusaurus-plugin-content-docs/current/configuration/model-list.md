@@ -64,6 +64,18 @@ PicoClaw 采用**以模型为中心**的配置方式。只需指定 `vendor/mode
 
 另外也支持别名，例如：`qwen-international`、`dashscope-intl`、`dashscope-us`、`alibaba-coding`、`qwen-coding`、`alibaba-coding-anthropic`、`copilot`、`claudecli`、`codexcli`。
 
+## 本地模型选型提示
+
+对于 LM Studio、Ollama、vLLM 等本地部署场景，模型能力通常与参数规模正相关。以下区间可作为工程经验参考：
+
+- **小于 5B**：通常不适用于 Agent 工作流，往往难以满足任务完成的基本要求。
+- **5B - 10B**：整体表现偏弱，处理非简单任务时容易出现明显困难。
+- **10B - 20B**：可在有限场景下使用，但稳定性与任务覆盖能力通常不足。
+- **20B - 30B**：一般任务可用性有所提升，但复杂流程仍可能不稳定。
+- **接近或高于 30B**：在条件允许时优先推荐，通常可获得更好的可用性与稳定性。
+
+可结合 [LM Studio API 配置指南](../providers/lmstudio.md) 作为本地部署示例参考。
+
 ## 通过自定义 API Base 接入任意兼容模型
 
 不局限于上表中的提供商。使用 `openai/` 或 `anthropic/` 前缀，并配合第三方 `api_base`，即可接入任意 OpenAI 兼容或 Anthropic 兼容模型。

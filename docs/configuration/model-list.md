@@ -64,6 +64,18 @@ This enables **multi-agent support** with flexible provider selection:
 
 Protocol aliases are also supported, for example: `qwen-international`/`dashscope-intl`, `dashscope-us`, `alibaba-coding`, `qwen-coding`, `alibaba-coding-anthropic`, `copilot`, `claudecli`, and `codexcli`.
 
+## Local Model Selection Note
+
+For local deployment (such as LM Studio, Ollama, and vLLM), model capability is generally positively correlated with parameter count. Use size ranges as practical engineering guidance:
+
+- **Below 5B**: usually not suitable for agentic workflows and often fails to meet baseline task-completion needs.
+- **5B to 10B**: generally weak performance, with clear difficulty on non-trivial tasks.
+- **10B to 20B**: usable in limited cases, but reliability and task coverage are often insufficient.
+- **20B to 30B**: better usability for general tasks, but complex workflows may still be unstable.
+- **Around or above 30B**: recommended when feasible, usually with better usability and stability.
+
+See [LM Studio API Guide](../providers/lmstudio.md) for a practical local setup example.
+
 ## Any Compatible Model via Custom API Base
 
 You are not limited to the vendors listed above. You can use `openai/` or `anthropic/` with a third-party `api_base` to connect any OpenAI-compatible or Anthropic-compatible model.
