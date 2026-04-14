@@ -28,11 +28,7 @@ picoclaw-launcher
 - 配置网络搜索（建议首次使用前就配置，见下一节）
 - 在 Launcher 中启动 Gateway
 
-4. 开始对话：
-
-```bash
-picoclaw agent
-```
+![WebUI](/img/picoclaw-launcher.png)
 
 ## 网络搜索配置
 
@@ -42,8 +38,9 @@ picoclaw agent
 ### 方式 A：在 WebUI 中配置（推荐）
 
 在 Launcher WebUI 的工具配置中启用 Web Search 提供商：
-- `Brave Search`（推荐主用，免费额度可用）
-- `DuckDuckGo`（无 Key 回退）
+- [`Baidu Search`](https://www.baidu.com/)（单日 1000 次免费查询，更偏向国内内容）
+- [`Brave Search`](https://brave.com/search/api)（推荐主用，免费额度可用）
+- [`DuckDuckGo`](https://duckduckgo.com/)（无 Key 回退）
 
 ### 方式 B：`config.json` + `.security.yml`（schema v2 默认）
 
@@ -78,6 +75,7 @@ web:
 ```
 
 申请 Key：
+- [Baidu Search](https://www.baidu.com/)（单日 1000 次免费查询，更偏向国内内容）
 - [Brave Search API](https://brave.com/search/api)（每月 2000 次免费查询）
 - [Tavily API](https://tavily.com)（每月 1000 次免费查询）
 
@@ -136,32 +134,28 @@ model_list:
 | 命令 | 描述 |
 | --- | --- |
 | `picoclaw onboard` | 初始化配置和工作目录 |
-| `picoclaw agent -m "..."` | 单次对话 |
+| `picoclaw agent -m "你好"` | 单次对话 |
 | `picoclaw agent` | 交互式对话模式 |
 | `picoclaw gateway` | 启动网关（用于聊天应用） |
 | `picoclaw status` | 显示状态 |
 | `picoclaw cron list` | 列出所有定时任务 |
 | `picoclaw cron add ...` | 添加定时任务 |
 
-## 可视化启动器（Launcher）
-
-发布包当前以 Web 启动器作为主路径：
-
-### Web 启动器（`picoclaw-launcher`）
+## Web UI（`picoclaw-launcher`）
 
 双击 `picoclaw-launcher`（Windows 上为 `picoclaw-launcher.exe`）会打开 `http://localhost:18800`。
 
-`picoclaw-launcher-tui` 属于 legacy 路径，正在逐步舍弃，建议优先使用 `picoclaw-launcher`。
+`picoclaw-launcher-tui`已经停止维护，正在逐步舍弃，建议优先使用 `picoclaw-launcher`。
 
-### `picoclaw-launcher` 参数说明
+### Web UI `picoclaw-launcher` 参数说明
 
 | 参数 | 作用 | 示例 |
 | --- | --- | --- |
 | `-console` | 终端模式运行（不启用托盘 GUI），并在启动输出中打印登录提示/令牌来源 | `picoclaw-launcher -console` |
 | `-public` | 监听 `0.0.0.0`，允许局域网设备访问 WebUI | `picoclaw-launcher -public` |
 | `-no-browser` | 启动时不自动打开浏览器 | `picoclaw-launcher -no-browser` |
-| `-port <port>` | 指定端口（默认 `18800`） | `picoclaw-launcher -port 19999` |
-| `-lang <en|zh>` | 指定 UI 语言 | `picoclaw-launcher -lang zh` |
+| `-port &lt;port&gt;` | 指定端口（默认 `18800`） | `picoclaw-launcher -port 19999` |
+| `-lang &lt;en|zh&gt;` | 指定 UI 语言 | `picoclaw-launcher -lang zh` |
 | `[config.json]` | 可选：指定配置文件路径 | `picoclaw-launcher ./config.json` |
 
 常见组合：
@@ -205,8 +199,9 @@ termux-chroot ./picoclaw onboard
 
 启用网络搜索：
 
-1. **方式一（推荐）**：在 [https://brave.com/search/api](https://brave.com/search/api) 免费获取 API Key（每月 2000 次查询）。
-2. **方式二（无需信用卡）**：使用 **DuckDuckGo** 回退（无需 Key）。
+1. **方式一（国内内容优先）**：使用 [**Baidu Search**](https://www.baidu.com/)（单日 1000 次免费查询）。
+2. **方式二（推荐）**：在 [https://brave.com/search/api](https://brave.com/search/api) 免费获取 API Key（每月 2000 次查询）。
+3. **方式三（无需信用卡）**：使用 [**DuckDuckGo**](https://duckduckgo.com/) 回退（无需 Key）。
 
 ### 内容过滤错误
 
@@ -223,7 +218,8 @@ termux-chroot ./picoclaw onboard
 | **OpenRouter** | 每月 20 万 token | 多模型聚合（Claude、GPT-4 等） |
 | **火山引擎 CodingPlan** | 9.9 元/首月 | 适合国内用户，多种 SOTA 模型（豆包、DeepSeek 等） |
 | **智谱 AI** | 每月 20 万 token | 适合国内用户 |
-| **Brave Search** | 每月 2000 次查询 | 网络搜索功能 |
-| **Tavily** | 每月 1000 次查询 | AI Agent 搜索优化 |
+| [**Baidu Search**](https://www.baidu.com/) | 单日 1000 次查询 | 更偏向国内内容 |
+| [**Brave Search**](https://brave.com/search/api) | 每月 2000 次查询 | 网络搜索功能 |
+| [**Tavily**](https://tavily.com) | 每月 1000 次查询 | AI Agent 搜索优化 |
 | **Groq** | 提供免费层级 | 极速推理（Llama、Mixtral） |
 | **Cerebras** | 提供免费层级 | 极速推理（Llama、Qwen） |

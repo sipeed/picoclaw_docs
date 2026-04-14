@@ -28,11 +28,7 @@ picoclaw-launcher
 - Configure web search (recommended before first real chat; see next section)
 - Start Gateway from the launcher dashboard
 
-4. Start chatting:
-
-```bash
-picoclaw agent
-```
+![WebUI](/img/picoclaw-launcher.png)
 
 ## Web Search Setup
 
@@ -42,8 +38,9 @@ Configure one search engine during initial setup.
 ### Option A: WebUI configuration (recommended)
 
 In Launcher WebUI, open tool settings and enable web search provider(s):
-- `Brave Search` (best default; free tier available)
-- `DuckDuckGo` fallback (no key required)
+- [`Brave Search`](https://brave.com/search/api) (best default; free tier available)
+- [`DuckDuckGo`](https://duckduckgo.com/) fallback (no key required)
+- [`Baidu Search`](https://www.baidu.com/) (1000 free queries/day; better for Mainland China content)
 
 ### Option B: `config.json` + `.security.yml` (schema v2 default)
 
@@ -80,6 +77,7 @@ web:
 Get keys:
 - [Brave Search API](https://brave.com/search/api) (2000 free queries/month)
 - [Tavily API](https://tavily.com) (1000 free queries/month)
+- [Baidu Search](https://www.baidu.com/) (1000 free queries/day; better for Mainland China content)
 
 ## Model Setup (If You Prefer JSON)
 
@@ -136,32 +134,28 @@ See [`.security.yml Reference`](./configuration/security-reference.md) for secre
 | Command | Description |
 | --- | --- |
 | `picoclaw onboard` | Initialize config and workspace |
-| `picoclaw agent -m "..."` | One-shot chat |
+| `picoclaw agent -m "hello"` | One-shot chat |
 | `picoclaw agent` | Interactive chat mode |
 | `picoclaw gateway` | Start the gateway (for chat apps) |
 | `picoclaw status` | Show status |
 | `picoclaw cron list` | List all scheduled jobs |
 | `picoclaw cron add ...` | Add a scheduled job |
 
-## Launcher (Visual Setup)
-
-The release package uses the Web launcher as the primary setup path:
-
-### Web Launcher (`picoclaw-launcher`)
+## Web UI (`picoclaw-launcher`)
 
 Double-click `picoclaw-launcher` (or `picoclaw-launcher.exe` on Windows) to open WebUI at `http://localhost:18800`.
 
-`picoclaw-launcher-tui` is a legacy path and is being phased out. Prefer `picoclaw-launcher`.
+`picoclaw-launcher-tui` is no longer maintained and is being phased out. Prefer `picoclaw-launcher`.
 
-### `picoclaw-launcher` parameters
+### Web UI `picoclaw-launcher` parameters
 
 | Parameter | Description | Example |
 | --- | --- | --- |
 | `-console` | Run in terminal mode (no tray GUI), prints login hint/token source in console startup output | `picoclaw-launcher -console` |
 | `-public` | Listen on `0.0.0.0`, allow LAN devices to access WebUI | `picoclaw-launcher -public` |
 | `-no-browser` | Do not auto-open browser on startup | `picoclaw-launcher -no-browser` |
-| `-port <port>` | Specify launcher port (default `18800`) | `picoclaw-launcher -port 19999` |
-| `-lang <en|zh>` | Set launcher UI language | `picoclaw-launcher -lang zh` |
+| `-port &lt;port&gt;` | Specify launcher port (default `18800`) | `picoclaw-launcher -port 19999` |
+| `-lang &lt;en|zh&gt;` | Set launcher UI language | `picoclaw-launcher -lang zh` |
 | `[config.json]` | Optional positional config path | `picoclaw-launcher ./config.json` |
 
 Common combinations:
@@ -206,7 +200,8 @@ This is normal if you have not configured a search API key yet.
 To enable web search:
 
 1. **Option 1 (Recommended)**: Get a free API key at [https://brave.com/search/api](https://brave.com/search/api) (2000 free queries/month).
-2. **Option 2 (No Credit Card)**: Use **DuckDuckGo** fallback (no key required).
+2. **Option 2 (No Credit Card)**: Use [**DuckDuckGo**](https://duckduckgo.com/) fallback (no key required).
+3. **Option 3 (For Mainland China content)**: Use [**Baidu Search**](https://www.baidu.com/) (1000 free queries/day).
 
 ### Content filtering errors
 
@@ -223,7 +218,8 @@ Only one `picoclaw gateway` instance should run at a time. Stop any other instan
 | **OpenRouter** | 200K tokens/month | Multiple models (Claude, GPT-4, etc.) |
 | **Volcengine CodingPlan** | ¥9.9/first month | Best for Chinese users, multiple SOTA models (Doubao, DeepSeek, etc.) |
 | **Zhipu** | 200K tokens/month | For Chinese users |
-| **Brave Search** | 2000 queries/month | Web search functionality |
-| **Tavily** | 1000 queries/month | AI Agent optimized search |
+| [**Brave Search**](https://brave.com/search/api) | 2000 queries/month | Web search functionality |
+| [**Tavily**](https://tavily.com) | 1000 queries/month | AI Agent optimized search |
+| [**Baidu Search**](https://www.baidu.com/) | 1000 queries/day | Better coverage for Mainland China content |
 | **Groq** | Free tier | Fast inference (Llama, Mixtral) |
 | **Cerebras** | Free tier | Fast inference (Llama, Qwen) |

@@ -28,11 +28,7 @@ picoclaw-launcher
 - Configure busca web (recomendado antes do primeiro uso real; veja a próxima seção)
 - Inicie o Gateway no painel do launcher
 
-4. Comece a conversar:
-
-```bash
-picoclaw agent
-```
+![WebUI](/img/picoclaw-launcher.png)
 
 ## Configuração de busca web
 
@@ -42,8 +38,9 @@ Configure pelo menos um mecanismo de busca na configuração inicial.
 ### Opção A: configurar no WebUI (recomendado)
 
 No Launcher WebUI, abra as configurações de ferramentas e habilite os provedores de busca:
-- `Brave Search` (melhor padrão; possui cota gratuita)
-- fallback `DuckDuckGo` (não exige chave)
+- [`Brave Search`](https://brave.com/search/api) (melhor padrão; possui cota gratuita)
+- fallback [`DuckDuckGo`](https://duckduckgo.com/) (não exige chave)
+- [`Baidu Search`](https://www.baidu.com/) (1000 consultas grátis/dia; melhor para conteúdo da China continental)
 
 ### Opção B: `config.json` + `.security.yml` (padrão no schema v2)
 
@@ -80,6 +77,7 @@ web:
 Obtenha chaves:
 - [Brave Search API](https://brave.com/search/api) (2000 consultas grátis/mês)
 - [Tavily API](https://tavily.com) (1000 consultas grátis/mês)
+- [Baidu Search](https://www.baidu.com/) (1000 consultas grátis/dia; melhor para conteúdo da China continental)
 
 ## Configuração de modelos (se preferir JSON)
 
@@ -136,32 +134,28 @@ Veja [Referência do `.security.yml`](./configuration/security-reference.md) par
 | Comando | Descrição |
 | --- | --- |
 | `picoclaw onboard` | Inicializa configuração e workspace |
-| `picoclaw agent -m "..."` | Chat de uma rodada |
+| `picoclaw agent -m "olá"` | Chat de uma rodada |
 | `picoclaw agent` | Modo interativo |
 | `picoclaw gateway` | Inicia o gateway (para apps de chat) |
 | `picoclaw status` | Mostra status |
 | `picoclaw cron list` | Lista tarefas agendadas |
 | `picoclaw cron add ...` | Adiciona tarefa agendada |
 
-## Launcher (configuração visual)
-
-O pacote de release usa o launcher Web como caminho principal:
-
-### Launcher Web (`picoclaw-launcher`)
+## Web UI (`picoclaw-launcher`)
 
 Dê duplo clique em `picoclaw-launcher` (ou `picoclaw-launcher.exe` no Windows) para abrir o WebUI em `http://localhost:18800`.
 
-`picoclaw-launcher-tui` é um caminho legado e está sendo descontinuado gradualmente. Prefira `picoclaw-launcher`.
+`picoclaw-launcher-tui` não é mais mantido e está sendo descontinuado gradualmente. Prefira `picoclaw-launcher`.
 
-### Parâmetros do `picoclaw-launcher`
+### Parâmetros do Web UI `picoclaw-launcher`
 
 | Parâmetro | Descrição | Exemplo |
 | --- | --- | --- |
 | `-console` | Executa no terminal (sem GUI de bandeja) e mostra dica de login/origem do token no startup | `picoclaw-launcher -console` |
 | `-public` | Escuta em `0.0.0.0` e permite acesso via LAN ao WebUI | `picoclaw-launcher -public` |
 | `-no-browser` | Não abre o navegador automaticamente ao iniciar | `picoclaw-launcher -no-browser` |
-| `-port <port>` | Define porta do launcher (padrão `18800`) | `picoclaw-launcher -port 19999` |
-| `-lang <en|zh>` | Define idioma da interface | `picoclaw-launcher -lang zh` |
+| `-port &lt;port&gt;` | Define porta do launcher (padrão `18800`) | `picoclaw-launcher -port 19999` |
+| `-lang &lt;en|zh&gt;` | Define idioma da interface | `picoclaw-launcher -lang zh` |
 | `[config.json]` | Caminho opcional para arquivo de configuração | `picoclaw-launcher ./config.json` |
 
 Combinações comuns:
@@ -206,7 +200,8 @@ Isso é normal se você ainda não configurou uma chave de API de busca.
 Para habilitar a busca web:
 
 1. **Opção 1 (recomendada)**: pegue uma chave gratuita em [https://brave.com/search/api](https://brave.com/search/api) (2000 consultas grátis/mês).
-2. **Opção 2 (sem cartão de crédito)**: use fallback **DuckDuckGo** (sem chave).
+2. **Opção 2 (sem cartão de crédito)**: use fallback [**DuckDuckGo**](https://duckduckgo.com/) (sem chave).
+3. **Opção 3 (para conteúdo da China continental)**: use [**Baidu Search**](https://www.baidu.com/) (1000 consultas grátis/dia).
 
 ### Erros de filtragem de conteúdo
 
@@ -223,7 +218,8 @@ Apenas uma instância de `picoclaw gateway` pode rodar por vez. Pare outras inst
 | **OpenRouter** | 200K tokens/mês | Vários modelos (Claude, GPT-4 etc.) |
 | **Volcengine CodingPlan** | ¥9.9 no primeiro mês | Melhor para usuários chineses, vários modelos SOTA (Doubao, DeepSeek etc.) |
 | **Zhipu** | 200K tokens/mês | Para usuários chineses |
-| **Brave Search** | 2000 consultas/mês | Busca na web |
-| **Tavily** | 1000 consultas/mês | Busca otimizada para agentes de IA |
+| [**Brave Search**](https://brave.com/search/api) | 2000 consultas/mês | Busca na web |
+| [**Tavily**](https://tavily.com) | 1000 consultas/mês | Busca otimizada para agentes de IA |
+| [**Baidu Search**](https://www.baidu.com/) | 1000 consultas/dia | Melhor cobertura para conteúdo da China continental |
 | **Groq** | Camada gratuita | Inferência rápida (Llama, Mixtral) |
 | **Cerebras** | Camada gratuita | Inferência rápida (Llama, Qwen) |
