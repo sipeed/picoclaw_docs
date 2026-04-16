@@ -5,174 +5,93 @@ title: Começar agora
 
 # Começar agora
 
-Coloque o PicoClaw para rodar em 2 minutos.
+Inicie o PicoClaw em 2 minutos.
 
-:::tip Chaves de API
-Defina sua chave de API em `~/.picoclaw/config.json`. Onde obter chaves: [Volcengine (CodingPlan)](https://console.volcengine.com) (LLM) · [OpenRouter](https://openrouter.ai/keys) (LLM) · [Zhipu](https://open.bigmodel.cn/usercenter/proj-mgmt/apikeys) (LLM). Busca na web é **opcional** — pegue uma chave gratuita em [Tavily API](https://tavily.com) (1000 consultas grátis/mês) ou [Brave Search API](https://brave.com/search/api) (2000 consultas grátis/mês).
+:::tip Lembrete
+Primeiro, obtenha e confirme que sua API Key está funcionando. Para a lista de modelos suportados, veja [Configuração de Modelos](./configuration/model-list.md). A busca na web é **opcional**: você pode obter [Tavily API](https://tavily.com) grátis (1000 consultas/mês) ou [Brave Search API](https://brave.com/search/api) grátis (2000 consultas/mês).
 :::
 
-## Passo 1: Inicializar
+## Configurar com WebUI (`picoclaw-launcher`)
+
+Para a maioria dos usuários, recomendamos concluir a configuração pelo **Launcher WebUI**, em vez de editar arquivos manualmente primeiro.
+
+1. Inicie o launcher WebUI diretamente (sem pré-inicialização), com o comando:
 
 ```bash
-picoclaw onboard
+picoclaw-launcher
 ```
 
-Esse comando cria seu workspace em `~/.picoclaw/` e gera um arquivo de configuração padrão.
+Ou dê duplo clique em `picoclaw-launcher` (`picoclaw-launcher.exe` no Windows).
 
-## Passo 2: Configurar
+<div style={{textAlign: 'center'}}>
+  <img src="/img/launcher.png" alt="picoclaw-launcher icon" width="120" />
+</div>
 
-Edite `~/.picoclaw/config.json`:
+> `picoclaw-launcher-tui` não é mais mantido e está sendo descontinuado gradualmente. Prefira `picoclaw-launcher`.
 
-```json
-{
-  "agents": {
-    "defaults": {
-      "workspace": "~/.picoclaw/workspace",
-      "model_name": "gpt-5.4",
-      "max_tokens": 32768,
-      "max_tool_iterations": 50
-    }
-  },
-  "model_list": [
-    {
-      "model_name": "ark-code-latest",
-      "model": "volcengine/ark-code-latest",
-      "api_key": "sk-your-api-key"
-    },
-    {
-      "model_name": "gpt-5.4",
-      "model": "openai/gpt-5.4",
-      "api_key": "your-api-key"
-    },
-    {
-      "model_name": "claude-sonnet-4.6",
-      "model": "anthropic/claude-sonnet-4-6",
-      "api_key": "your-anthropic-key"
-    }
-  ]
-}
-```
+2. Abra `http://localhost:18800` e conclua na interface:
+- Adicione pelo menos um modelo LLM e defina como padrão
+- Configure a busca web (atualmente via arquivo de configuração; veja [Configuração de Busca Web](./configuration/web-search-setup.md))
+- Inicie o Gateway no Launcher
 
-Veja [Configuração de modelos](./configuration/model-list.md) para todos os provedores suportados.
+![WebUI](/img/picoclaw-launcher.png)
 
-## Passo 3: Conversar
+Para mais campos de modelo e o arquivo de configuração completo, veja [Configuração de Modelos](./configuration/model-list.md).
 
-```bash
-# Chat de uma única rodada
-picoclaw agent -m "Quanto é 2+2?"
+Após concluir a configuração, você já pode usar o PicoClaw.
+![WebUI](/img/Hello.png)
 
-# Modo interativo
-picoclaw agent
-```
+## Habilitar Busca na Web
 
-Pronto! Você já tem um assistente de IA funcionando.
+Se a busca na web não estiver habilitada, muitos cenários reais (buscar informações mais recentes, encontrar links, verificar fatos) ficam claramente limitados.
+Recomendamos habilitar pelo menos um mecanismo de busca na configuração inicial.
 
-## Referência da CLI
+Na versão atual, a busca na web precisa ser configurada via arquivo (`config.json` + `.security.yml`) e o WebUI ainda não possui entrada correspondente. Veja [Configuração de Busca na Web](./configuration/web-search-setup.md).
 
-| Comando | Descrição |
-| --- | --- |
-| `picoclaw onboard` | Inicializa configuração e workspace |
-| `picoclaw agent -m "..."` | Chat de uma única rodada |
-| `picoclaw agent` | Modo de chat interativo |
-| `picoclaw gateway` | Inicia o gateway (para apps de chat) |
-| `picoclaw status` | Mostra o status |
-| `picoclaw cron list` | Lista todos os jobs agendados |
-| `picoclaw cron add ...` | Adiciona um job agendado |
+## Referência de Comandos CLI
 
-## Launcher (configuração visual)
-
-Não quer editar JSON na mão? O pacote de release inclui dois launchers — basta dar duplo clique para executar:
-
-### Launcher web (`picoclaw-launcher`)
-
-Dê duplo clique em `picoclaw-launcher` (ou `picoclaw-launcher.exe` no Windows). Ele abre uma UI de configuração no navegador em `http://localhost:18800`.
-
-A partir da interface você pode:
-- **Adicionar modelos** — gerenciamento de modelos no estilo de cartões, definir modelo principal, sem chave de API = desabilitado
-- **Configurar canais** — formulários para Telegram, Discord, Slack, WeCom etc.
-- **Login OAuth** — login com um clique para OpenAI, Anthropic, Google Antigravity
-- **Iniciar/parar gateway** — gerencie o processo `picoclaw gateway` diretamente
-
-Para permitir acesso a partir de outros dispositivos da LAN (por exemplo, configurar pelo celular):
-
-```bash
-./picoclaw-launcher -public
-```
-
-### Launcher TUI (`picoclaw-launcher-tui`)
-
-Para ambientes headless (SSH, dispositivos embarcados), execute `picoclaw-launcher-tui` no terminal. Ele oferece uma interface por menu para seleção de modelo, configuração de canais, iniciar agente/gateway e visualizar logs.
+Para comandos CLI e parâmetros de `picoclaw-launcher`, veja [Comandos e Parâmetros CLI](./configuration/cli-parameters.md).
 
 ## Tarefas agendadas
 
-O PicoClaw suporta lembretes e tarefas recorrentes através da ferramenta `cron`:
+O PicoClaw suporta lembretes e tarefas recorrentes via ferramenta `cron`:
 
-- **Uma única vez**: "Me lembre em 10 minutos"
+- **Uma vez**: "Me lembre em 10 minutos"
 - **Recorrente**: "Me lembre a cada 2 horas"
-- **Expressões cron**: "Me lembre todo dia às 9h"
+- **Expressão cron**: "Me lembre diariamente às 9h"
 
 Os jobs são armazenados em `~/.picoclaw/workspace/cron/` e processados automaticamente.
 
-## Rodar no Android (Termux)
-
-Dê uma segunda vida ao seu celular antigo como assistente de IA:
-
-```bash
-wget https://github.com/sipeed/picoclaw/releases/latest/download/picoclaw_Linux_arm64.tar.gz
-tar xzf picoclaw_Linux_arm64.tar.gz
-pkg install proot
-termux-chroot ./picoclaw onboard
-```
-
-![PicoClaw rodando no Termux](https://github.com/sipeed/picoclaw/raw/main/assets/termux.jpg)
-
 ## Solução de problemas
 
-### A busca na web diz "API key configuration issue"
+### A busca web mostra "API key configuration issue"
 
-Isso é normal se você ainda não configurou uma chave de API de busca. O PicoClaw fornecerá links úteis para busca manual.
+Isso é normal se você ainda não configurou uma chave de API de busca.
 
-Para habilitar busca na web:
+Para habilitar a busca web:
 
-1. **Opção 1 (recomendada)**: Pegue uma chave gratuita em [https://brave.com/search/api](https://brave.com/search/api) (2000 consultas grátis/mês) para os melhores resultados.
-2. **Opção 2 (sem cartão de crédito)**: Se você não tiver uma chave, usamos **DuckDuckGo** automaticamente como fallback (não requer chave).
-
-Adicione a chave em `~/.picoclaw/config.json` se for usar o Brave:
-
-```json
-{
-  "tools": {
-    "web": {
-      "brave": {
-        "enabled": false,
-        "api_key": "YOUR_BRAVE_API_KEY",
-        "max_results": 5
-      },
-      "duckduckgo": {
-        "enabled": true,
-        "max_results": 5
-      }
-    }
-  }
-}
-```
+1. **Opção 1 (recomendada)**: pegue uma chave gratuita em [https://brave.com/search/api](https://brave.com/search/api) (2000 consultas grátis/mês).
+2. **Opção 2 (sem cartão de crédito)**: use [**DuckDuckGo**](https://duckduckgo.com/) fallback (sem chave).
+3. **Opção 3 (prioridade para conteúdo da China continental)**: use [**Baidu Search**](https://www.baidu.com/) (1000 consultas grátis/dia).
 
 ### Erros de filtragem de conteúdo
 
-Alguns provedores (como o Zhipu) têm filtragem de conteúdo. Tente reformular sua pergunta ou usar outro modelo.
+Alguns provedores (como Zhipu) têm filtragem de conteúdo. Tente reformular sua pergunta ou usar outro modelo.
 
 ### Bot do Telegram "Conflict: terminated by other getUpdates"
 
-Apenas uma instância de `picoclaw gateway` pode rodar por vez. Pare quaisquer outras instâncias.
+Apenas uma instância de `picoclaw gateway` pode rodar por vez. Pare outras instâncias.
 
 ## Comparativo de chaves de API
 
 | Serviço | Camada gratuita | Caso de uso |
 | --- | --- | --- |
-| **OpenRouter** | 200K tokens/mês | Múltiplos modelos (Claude, GPT-4 etc.) |
+| **OpenRouter** | 200K tokens/mês | Vários modelos (Claude, GPT-4 etc.) |
 | **Volcengine CodingPlan** | ¥9.9 no primeiro mês | Melhor para usuários chineses, vários modelos SOTA (Doubao, DeepSeek etc.) |
 | **Zhipu** | 200K tokens/mês | Para usuários chineses |
-| **Brave Search** | 2000 consultas/mês | Funcionalidade de busca na web |
-| **Tavily** | 1000 consultas/mês | Busca otimizada para AI Agent |
+| [**Brave Search**](https://brave.com/search/api) | 2000 consultas/mês | Busca na web |
+| [**Tavily**](https://tavily.com) | 1000 consultas/mês | Busca otimizada para agentes de IA |
+| [**Baidu Search**](https://www.baidu.com/) | 1000 consultas/dia | Melhor cobertura para conteúdo da China continental |
 | **Groq** | Camada gratuita | Inferência rápida (Llama, Mixtral) |
 | **Cerebras** | Camada gratuita | Inferência rápida (Llama, Qwen) |
+

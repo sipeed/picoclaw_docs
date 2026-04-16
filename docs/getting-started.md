@@ -7,101 +7,50 @@ title: Getting Started
 
 Get PicoClaw running in 2 minutes.
 
-:::tip API Keys
-Set your API Key in `~/.picoclaw/config.json`. Get API Keys: [Volcengine (CodingPlan)](https://console.volcengine.com) (LLM) · [OpenRouter](https://openrouter.ai/keys) (LLM) · [Zhipu](https://open.bigmodel.cn/usercenter/proj-mgmt/apikeys) (LLM). Web search is **optional** — get a free [Tavily API](https://tavily.com) (1000 free queries/month) or [Brave Search API](https://brave.com/search/api) (2000 free queries/month).
+:::tip Reminder
+Please get and verify your API key first. For supported models, see [Model Configuration](./configuration/model-list.md). Web search is **optional**. You can get a free [Tavily API](https://tavily.com) (1,000 free queries/month) or [Brave Search API](https://brave.com/search/api) (2,000 free queries/month).
 :::
 
-## Step 1: Initialize
+## Configure with WebUI (`picoclaw-launcher`)
+
+For most users, we recommend configuring through **Launcher WebUI** instead of editing config files first.
+
+1. Start the WebUI launcher directly (no pre-initialization required) via command line:
 
 ```bash
-picoclaw onboard
+picoclaw-launcher
 ```
 
-This creates your workspace at `~/.picoclaw/` and generates a default config file.
+Or double-click `picoclaw-launcher` (`picoclaw-launcher.exe` on Windows).
 
-## Step 2: Configure
+<div style={{textAlign: 'center'}}>
+  <img src="/img/launcher.png" alt="picoclaw-launcher icon" width="120" />
+</div>
 
-Edit `~/.picoclaw/config.json`:
+> `picoclaw-launcher-tui` is no longer maintained and is being phased out. Prefer `picoclaw-launcher`.
 
-```json
-{
-  "agents": {
-    "defaults": {
-      "workspace": "~/.picoclaw/workspace",
-      "model_name": "gpt-5.4",
-      "max_tokens": 32768,
-      "max_tool_iterations": 50
-    }
-  },
-  "model_list": [
-    {
-      "model_name": "ark-code-latest",
-      "model": "volcengine/ark-code-latest",
-      "api_key": "sk-your-api-key"
-    },
-    {
-      "model_name": "gpt-5.4",
-      "model": "openai/gpt-5.4",
-      "api_key": "your-api-key"
-    },
-    {
-      "model_name": "claude-sonnet-4.6",
-      "model": "anthropic/claude-sonnet-4-6",
-      "api_key": "your-anthropic-key"
-    }
-  ]
-}
-```
+2. Open `http://localhost:18800` and complete the following in the UI:
+- Add at least one LLM model and set it as default
+- Configure web search (currently via config files; see [Web Search Setup](./configuration/web-search-setup.md))
+- Start Gateway in Launcher
 
-See [Model Configuration](./configuration/model-list.md) for all supported providers.
+![WebUI](/img/picoclaw-launcher.png)
 
-## Step 3: Chat
+For more model fields and full config file examples, see [Model Configuration](./configuration/model-list.md).
 
-```bash
-# One-shot chat
-picoclaw agent -m "What is 2+2?"
+After configuration is complete, you can start using PicoClaw.
+![WebUI](/img/Hello.png)
 
-# Interactive mode
-picoclaw agent
-```
+## Enable Web Search
 
-That's it! You have a working AI assistant.
+Without web search enabled, many real-world scenarios (checking the latest information, finding links, fact verification) are significantly limited.
+We recommend enabling at least one search engine during initial setup.
 
-## CLI Reference
+In the current version, web search must be configured via config files (`config.json` + `.security.yml`), and WebUI does not yet provide a dedicated entry. See [Web Search Setup](./configuration/web-search-setup.md) for details.
 
-| Command | Description |
-| --- | --- |
-| `picoclaw onboard` | Initialize config and workspace |
-| `picoclaw agent -m "..."` | One-shot chat |
-| `picoclaw agent` | Interactive chat mode |
-| `picoclaw gateway` | Start the gateway (for chat apps) |
-| `picoclaw status` | Show status |
-| `picoclaw cron list` | List all scheduled jobs |
-| `picoclaw cron add ...` | Add a scheduled job |
+## CLI Command Reference
 
-## Launcher (Visual Setup)
-
-Don't want to edit JSON by hand? The release package includes two launchers — just double-click to run:
-
-### Web Launcher (`picoclaw-launcher`)
-
-Double-click `picoclaw-launcher` (or `picoclaw-launcher.exe` on Windows), it opens a browser-based setup UI at `http://localhost:18800`.
-
-From the UI you can:
-- **Add models** — card-style model management, set primary model, no API key = grayed out
-- **Configure channels** — form-based setup for Telegram, Discord, Slack, WeCom, etc.
-- **OAuth login** — one-click login for OpenAI, Anthropic, Google Antigravity
-- **Start/stop gateway** — manage the `picoclaw gateway` process directly
-
-To allow access from other devices on the LAN (e.g., configure from your phone):
-
-```bash
-./picoclaw-launcher -public
-```
-
-### TUI Launcher (`picoclaw-launcher-tui`)
-
-For headless environments (SSH, embedded devices), run `picoclaw-launcher-tui` in your terminal. It provides a menu-driven interface for model selection, channel setup, starting agent/gateway, and viewing logs.
+For CLI commands and `picoclaw-launcher` parameters, see [CLI Commands and Parameters](./configuration/cli-parameters.md).
 
 ## Scheduled Tasks
 
@@ -113,49 +62,17 @@ PicoClaw supports reminders and recurring tasks via the `cron` tool:
 
 Jobs are stored in `~/.picoclaw/workspace/cron/` and processed automatically.
 
-## Run on Android (Termux)
-
-Give your old phone a second life as an AI assistant:
-
-```bash
-wget https://github.com/sipeed/picoclaw/releases/latest/download/picoclaw_Linux_arm64.tar.gz
-tar xzf picoclaw_Linux_arm64.tar.gz
-pkg install proot
-termux-chroot ./picoclaw onboard
-```
-
-![PicoClaw running in Termux](https://github.com/sipeed/picoclaw/raw/main/assets/termux.jpg)
-
 ## Troubleshooting
 
-### Web search says "API key configuration issue"
+### Web Search Shows "API key configuration issue"
 
-This is normal if you haven't configured a search API key yet. PicoClaw will provide helpful links for manual searching.
+If you have not configured a search API key yet, this is expected.
 
 To enable web search:
 
-1. **Option 1 (Recommended)**: Get a free API key at [https://brave.com/search/api](https://brave.com/search/api) (2000 free queries/month) for the best results.
-2. **Option 2 (No Credit Card)**: If you don't have a key, we automatically fall back to **DuckDuckGo** (no key required).
-
-Add the key to `~/.picoclaw/config.json` if using Brave:
-
-```json
-{
-  "tools": {
-    "web": {
-      "brave": {
-        "enabled": false,
-        "api_key": "YOUR_BRAVE_API_KEY",
-        "max_results": 5
-      },
-      "duckduckgo": {
-        "enabled": true,
-        "max_results": 5
-      }
-    }
-  }
-}
-```
+1. **Option 1 (Recommended)**: Get a free API key at [https://brave.com/search/api](https://brave.com/search/api) (2000 free queries/month).
+2. **Option 2 (No Credit Card)**: Use [**DuckDuckGo**](https://duckduckgo.com/) fallback (no key required).
+3. **Option 3 (Mainland China content first)**: Use [**Baidu Search**](https://www.baidu.com/) (1000 free queries/day).
 
 ### Content filtering errors
 
@@ -172,7 +89,8 @@ Only one `picoclaw gateway` instance should run at a time. Stop any other instan
 | **OpenRouter** | 200K tokens/month | Multiple models (Claude, GPT-4, etc.) |
 | **Volcengine CodingPlan** | ¥9.9/first month | Best for Chinese users, multiple SOTA models (Doubao, DeepSeek, etc.) |
 | **Zhipu** | 200K tokens/month | For Chinese users |
-| **Brave Search** | 2000 queries/month | Web search functionality |
-| **Tavily** | 1000 queries/month | AI Agent optimized search |
+| [**Brave Search**](https://brave.com/search/api) | 2000 queries/month | Web search functionality |
+| [**Tavily**](https://tavily.com) | 1000 queries/month | AI Agent optimized search |
+| [**Baidu Search**](https://www.baidu.com/) | 1000 queries/day | Better coverage for Mainland China content |
 | **Groq** | Free tier | Fast inference (Llama, Mixtral) |
 | **Cerebras** | Free tier | Fast inference (Llama, Qwen) |
