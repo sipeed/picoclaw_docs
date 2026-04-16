@@ -80,6 +80,9 @@ const sidebars = {
       items: [
         'providers/antigravity',
         'providers/antigravity-usage',
+        'providers/groq-api',
+        'providers/Anthropic-api',
+        'providers/NVIDIA-api',
         'providers/openai-api',
         'providers/gemini-api',
         'providers/openrouter-api',
