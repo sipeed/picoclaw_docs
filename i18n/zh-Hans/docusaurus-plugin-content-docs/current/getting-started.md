@@ -23,6 +23,10 @@ picoclaw-launcher
 
 或双击 `picoclaw-launcher`（Windows 为 `picoclaw-launcher.exe`）。
 
+<div style={{textAlign: 'center'}}>
+  <img src="/img/launcher.png" alt="picoclaw-launcher 图标" width="120" />
+</div>
+
 >`picoclaw-launcher-tui` 已停止维护，正在逐步淘汰，建议优先使用 `picoclaw-launcher`。
 
 2. 打开 `http://localhost:18800`，在界面内完成：

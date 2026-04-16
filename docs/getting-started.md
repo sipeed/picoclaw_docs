@@ -23,6 +23,10 @@ picoclaw-launcher
 
 Or double-click `picoclaw-launcher` (`picoclaw-launcher.exe` on Windows).
 
+<div style={{textAlign: 'center'}}>
+  <img src="/img/launcher.png" alt="picoclaw-launcher icon" width="120" />
+</div>
+
 > `picoclaw-launcher-tui` is no longer maintained and is being phased out. Prefer `picoclaw-launcher`.
 
 2. Open `http://localhost:18800` and complete the following in the UI:
