@@ -112,7 +112,7 @@ The full list of blocked patterns includes:
 | Bulk deletion | `rm -rf`, `del /f/q`, `rmdir /s` |
 | Disk operations | `format`, `mkfs`, `diskpart`, `dd if=`, writes to block devices (`/dev/sd*`, `/dev/hd*`, `/dev/vd*`, `/dev/xvd*`, `/dev/nvme*`, `/dev/mmcblk*`, `/dev/loop*`, `/dev/dm-*`, `/dev/md*`, `/dev/sr*`, `/dev/nbd*`) |
 | System control | `shutdown`, `reboot`, `poweroff` |
-| Fork bomb | `:(){ :|:& };:` |
+| Fork bomb | `:(){ :\|:& };:` |
 | **Shell substitution** | **`$(...)`, `${...}`, backticks**, `$(cat ...)`, `$(curl ...)`, `$(wget ...)`, `$(which ...)` |
 | Chained deletion | `; rm -rf`, `&& rm -rf`, `\|\| rm -rf` |
 | Pipe to shell | `\| sh`, `\| bash` |
@@ -126,7 +126,7 @@ The full list of blocked patterns includes:
 | Other | `eval`, `source *.sh` |
 
 :::caution Common False Positive: Shell Variable Syntax
-The rule `\$\{[^}]+\}` blocks **any** command containing `${...}`, including legitimate bash default-value syntax like `${VAR:-default}`. This is a known trade-off — the pattern was added to prevent variable injection attacks.
+The rule `\$\{[^\}]+\}` blocks **any** command containing `${...}`, including legitimate bash default-value syntax like `${VAR:-default}`. This is a known trade-off — the pattern was added to prevent variable injection attacks.
 
 Error message you will see:
 ```
