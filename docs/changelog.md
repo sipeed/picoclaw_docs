@@ -9,6 +9,62 @@ All notable changes to PicoClaw are documented here.
 
 ---
 
+## v0.2.7
+
+*Released: 2026-04-22*
+
+### Highlights
+
+- **Launcher auth flow upgrade**: Unified dashboard `/login` / `/setup` / `/logout` flow, added OAuth `--no-browser` login, and migrated launcher auth to password mode (#2339, #2549, #2608)
+- **Agent Loop two-phase refactor**: Split and reorganized the core loop pipeline to reduce maintenance complexity and prepare for parallel execution capabilities (#2564, #2585)
+- **Native Gemini provider**: Added native Gemini provider support and separated thought-message handling from output-message handling (#2475)
+- **Toolchain and session stability improvements**: Added `/context` command and context usage indicator; `/clear` now supports Seahorse DB cleanup; scheduled tasks now run in isolated sessions (#2537, #2495, #2474)
+- **Web UI UX improvements**: Refactored tools page into tabbed Library/Settings views, improved Markdown highlighting, and completed disabled-state reason hints (#2539, #2529, #2523, #2430, #2526)
+- **Search and network robustness improvements**: Added configurable Sogou search backend and improved proxying, error classification, and fallback behavior (#2524, #2542, #2547, #2517)
+
+### Features
+
+#### Core & Agent
+- **Loop refactor**: Completed Phase 1/2 loop file split and execution-pipeline reordering (#2564, #2585)
+- **LLM-as-Judge**: Added new evaluation mode (#2484)
+- **Parallel execution evolution**: Continued enabling parallel-execution scenarios in the agent loop (#2503)
+
+#### Providers & Auth
+- **Native Gemini protocol support**: Native provider plus thought/output separation (#2475)
+- **OAuth login UX**: Added `--no-browser` option for headless/no-GUI environments (#2549)
+- **Auth compatibility improvements**: Disabled token-auth fallback on unsupported platforms; fixed Google Antigravity provider normalization and credential consistency (#2466, #2599)
+
+#### Channels, Tools & Interaction
+- **Multi-instance channel config evolution**: Moved toward a multi-instance configuration model, fixed nested `channel_list` patch persistence, and improved list editing (#2481, #2530, #2595)
+- **Tool call consistency**: Fixed cross-turn tool-call ID reuse; kept tool call summaries and assistant output in sync (#2528, #2449)
+- **Disabled-state messaging**: Expanded composer/tooltip disabled-reason hints and fixed related regressions (#2523, #2430, #2526)
+
+### Bug Fixes
+
+- **Runtime recovery**: Fixed MCP/discovery tool recovery after reload; fixed recovery after `image-input-unsupported` errors (#2489, #2525)
+- **Seahorse search safety**: Fixed FTS5 MATCH input sanitization issue (#2436)
+- **Release/update stability**: Fixed retry behavior for transient release-info fetch failures; improved pre-start error logging (#2511, #2414)
+- **Config and network edge cases**: Fixed `allowFrom` containing empty-string values; improved network error classification and fallback handling (#2507, #2547)
+- **Frontend stability**: Fixed config refresh resetting search drafts; cleaned recovered session transcripts and improved chat UI (#2536, #2605)
+- **Engineering quality fixes**: Fixed `govet` shadow warnings and adjusted isolation tests on unsupported operating systems (#2613, #2434)
+
+### Build & Ops
+
+- **Android release pipeline**: Added Android arm64 cross-compilation and integrated Android bundle publishing into GoReleaser (#2486, #2497)
+- **CI workflow updates**: Switched to `pnpm/action-setup` and updated README installation steps (#2512, #2552)
+- **Dependency maintenance**: Upgraded multiple frontend/backend dependencies (React, TanStack, shadcn, sqlite, MCP SDK, router/lint, and others)
+- **Container behavior parity**: Changed self-built images to run as root to match release image behavior (#2435)
+
+### Documentation
+
+- **Docs structure reorganization**: Reorganized docs by type and added layout guide plus session/routing docs (#2567, #2571)
+- **Protocol docs updates**: Updated native Gemini protocol docs and cross-provider JSON escaping guidance (#2601, #2420)
+- **Localization and misc fixes**: Added Korean README; fixed Conventional Commits link in CONTRIBUTING (#2418, #2494)
+
+### Full changelog
+- [GitHub v0.2.6...v0.2.7](https://github.com/sipeed/picoclaw/compare/v0.2.6...v0.2.7)
+---
+
 ## v0.2.6
 
 *Released: 2026-04-08*

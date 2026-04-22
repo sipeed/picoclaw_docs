@@ -9,6 +9,62 @@ Todas as mudanças notáveis do PicoClaw são documentadas aqui.
 
 ---
 
+## v0.2.7
+
+*Lançado: 2026-04-22*
+
+### Destaques
+
+- **Upgrade no fluxo de autenticação do Launcher**: Fluxo unificado de `/login` / `/setup` / `/logout` no dashboard, novo login OAuth com `--no-browser`, e migração da autenticação do launcher para modo senha (#2339, #2549, #2608)
+- **Refatoração em duas fases do Agent Loop**: Divisão e reorganização do pipeline central de loop para reduzir complexidade de manutenção e preparar suporte a execução paralela (#2564, #2585)
+- **Provider Gemini nativo**: Novo provider Gemini nativo com separação entre mensagens de thought e mensagens de output (#2475)
+- **Melhorias de estabilidade em ferramentas e sessões**: Novo comando `/context` com indicador de uso de contexto; `/clear` agora limpa Seahorse DB; tarefas agendadas passam a rodar em sessões isoladas (#2537, #2495, #2474)
+- **Melhorias de UX na Web UI**: Página de ferramentas refeita em abas Biblioteca/Configurações, melhorias no highlight de Markdown e mensagens de motivo para estados desabilitados (#2539, #2529, #2523, #2430, #2526)
+- **Mais robustez em busca e rede**: Backend de busca Sogou configurável, com melhorias em proxy, classificação de erros e tratamento de fallback (#2524, #2542, #2547, #2517)
+
+### Funcionalidades
+
+#### Core & Agent
+- **Refatoração de Loop**: Conclusão das fases 1/2 com divisão de arquivos e reorganização do pipeline de execução (#2564, #2585)
+- **LLM-as-Judge**: Novo modo de avaliação (#2484)
+- **Evolução de execução paralela**: Avanço no suporte a cenários paralelos dentro do agent loop (#2503)
+
+#### Providers e Autenticação
+- **Suporte ao protocolo Gemini nativo**: Provider nativo com separação thought/output (#2475)
+- **UX de login OAuth**: Nova opção `--no-browser` para ambientes sem GUI (#2549)
+- **Melhorias de compatibilidade de autenticação**: Sem fallback para token em plataformas sem suporte; correção de normalização e consistência de credenciais no provider Google Antigravity (#2466, #2599)
+
+#### Canais, Ferramentas e Interação
+- **Evolução para configuração multi-instância de canais**: Ajustes no modelo de configuração multi-instância, correção de persistência de patch aninhado em `channel_list` e melhorias na edição de listas (#2481, #2530, #2595)
+- **Consistência nas chamadas de ferramenta**: Correção de reutilização de tool-call ID entre turnos e sincronização entre resumo de chamadas e saída do assistant (#2528, #2449)
+- **Mensagens de estado desabilitado**: Mais explicações de bloqueio no composer/tooltip e correção de regressão relacionada (#2523, #2430, #2526)
+
+### Correções de Bugs
+
+- **Recuperação em runtime**: Correção da recuperação de MCP/discovery tools após reload e após erro `image-input-unsupported` (#2489, #2525)
+- **Segurança na busca Seahorse**: Correção da sanitização de entrada em consultas FTS5 MATCH (#2436)
+- **Estabilidade no fluxo de release/update**: Correção de retentativas em falhas transitórias na leitura de informações de release; melhorias de log antes da inicialização (#2511, #2414)
+- **Bordas de configuração e rede**: Correção de `allowFrom` contendo string vazia; melhoria da classificação de erros de rede e fallback (#2507, #2547)
+- **Estabilidade de frontend**: Correção de reset de rascunho de busca após refresh de config; limpeza de transcrições de sessão recuperadas e melhorias no chat UI (#2536, #2605)
+- **Qualidade de engenharia**: Correção de alertas de shadow no `govet` e ajuste de testes de isolamento em OS sem suporte (#2613, #2434)
+
+### Build e Ops
+
+- **Pipeline de release Android**: Novo cross-compile Android arm64 e publicação de bundle Android no GoReleaser (#2486, #2497)
+- **Atualização do fluxo de CI**: Migração para `pnpm/action-setup` e alinhamento dos passos de instalação no README (#2512, #2552)
+- **Manutenção de dependências**: Upgrade de várias dependências de frontend e backend (React, TanStack, shadcn, sqlite, MCP SDK, router/lint e outras)
+- **Paridade de comportamento em container**: Imagens self-built passam a rodar como root para alinhar com imagens de release (#2435)
+
+### Documentação
+
+- **Reorganização da estrutura de docs**: Reorganização por tipo com novos docs de layout e session/routing (#2567, #2571)
+- **Atualização de docs de protocolo**: Atualização dos docs de protocolo Gemini nativo e de escaping JSON cross-provider (#2601, #2420)
+- **Localização e ajustes diversos**: Novo README em coreano e correção do link de Conventional Commits no CONTRIBUTING (#2418, #2494)
+
+### Changelog completo
+- [GitHub v0.2.6...v0.2.7](https://github.com/sipeed/picoclaw/compare/v0.2.6...v0.2.7)
+---
+
 ## v0.2.6
 
 *Lançado: 2026-04-08*

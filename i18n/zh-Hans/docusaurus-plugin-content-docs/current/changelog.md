@@ -8,6 +8,59 @@ title: 更新日志
 PicoClaw 的所有重要更新记录。
 
 ---
+## v0.2.7
+
+*发布日期：2026-04-22*
+
+### 核心亮点
+- **Launcher 认证流程升级**：统一 dashboard 的 `/login` / `/setup` / `/logout` 流程，新增 OAuth 无浏览器登录，并将 launcher 认证迁移到密码模式（#2339、#2549、#2608）
+- **Agent Loop 两阶段重构**：拆分并重组核心 loop 管线，降低维护复杂度，为并行执行能力铺路（#2564、#2585）
+- **原生 Gemini Provider**：新增 Gemini 原生 provider，并分离 thought 消息与输出消息处理（#2475）
+- **工具链与会话稳定性提升**：新增 `/context` 指令与上下文用量指示；`/clear` 支持清理 Seahorse DB；定时任务改为独立会话执行（#2537、#2495、#2474）
+- **Web UI 体验改进**：工具页重构为标签化库/设置视图，补齐 Markdown 高亮，完善禁用态原因提示（#2539、#2529、#2523、#2430、#2526）
+- **搜索与网络鲁棒性增强**：新增可配置 Sogou 搜索后端，改进代理、错误分类与 fallback 处理（#2524、#2542、#2547、#2517）
+
+### 功能
+Core & Agent
+- **Loop 重构**：完成 Phase 1/2 的 loop 文件拆分与执行管线重排（#2564、#2585）
+- **LLM-as-Judge**：新增评测模式（#2484）
+- **并行执行能力演进**：推进 agent loop 对并行执行场景的支持（#2503）
+
+### Provider 与认证
+- **Gemini 原生协议支持**：原生 provider + thought/output 分离（#2475）
+- **OAuth 登录体验**：新增 `--no-browser` 选项，适配无 GUI 环境（#2549）
+- **认证兼容性改进**：不支持平台回退 token 认证；修复 Google Antigravity provider 规范化与凭据一致性（#2466、#2599）
+
+### Channel、工具与交互
+- **多实例 Channel 配置方向重构**：向多实例配置模型演进，修复嵌套 `channel_list` patch 保存并增强列表编辑（#2481、#2530、#2595）
+- **工具调用一致性**：修复跨轮复用 tool-call ID；保持工具调用摘要与 assistant 输出同步（#2528、#2449）
+- **禁用态提示完善**：补充 composer/tooltip 禁用原因提示并修复回归（#2523、#2430、#2526）
+
+### Bug 修复
+- **运行时恢复能力**：修复 reload 后 MCP/discovery 工具恢复；修复 image-input-unsupported 后恢复能力（#2489、#2525）
+- **Seahorse 搜索安全性**：修复 FTS5 MATCH 查询输入清洗问题（#2436）
+- **更新链路稳定性**：修复发布信息拉取瞬时失败重试；启动前错误日志补齐（#2511、#2414）
+- **配置与网络边界问题**：修复 `allowFrom` 包含空字符串问题；增强网络错误分类与 fallback（#2507、#2547）
+- **前端稳定性**：修复配置刷新重置搜索草稿；清理恢复会话转录并优化聊天 UI（#2536、#2605）
+- **工程质量修复**：修复 govet shadow 告警并调整不支持 OS 的隔离测试（#2613、#2434）
+
+### 构建与运维
+- **Android 发布链路**：新增 Android arm64 交叉编译，并将 Android bundle 发布纳入 GoReleaser（#2486、#2497）
+- **CI 流程更新**：切换到 `pnpm/action-setup` 并同步 README 安装步骤（#2512、#2552）
+- **依赖维护**：完成多项前后端依赖升级（React、TanStack、shadcn、sqlite、MCP SDK、router/lint 等）
+- **容器行为一致性**：自建镜像改为 root 运行，对齐发布镜像行为（#2435）
+
+### 文档
+- **文档结构重组**：按类型重组文档，补充 layout 指南与 session/routing 文档（#2567、#2571）
+- **协议文档更新**：更新 Gemini 原生协议文档与跨 provider JSON 转义说明（#2601、#2420）
+- **本地化与杂项修复**：新增韩文 README，修复 CONTRIBUTING 中 Conventional Commits 链接（#2418、#2494）
+
+### 完整变更
+- [GitHub v0.2.6...v0.2.7](https://github.com/sipeed/picoclaw/compare/v0.2.6...v0.2.7)
+
+---
+
+
 
 ## v0.2.6
 
@@ -73,7 +126,7 @@ PicoClaw 的所有重要更新记录。
 
 ### 完整更新日志
 - [GitHub v0.2.5...v0.2.6](https://github.com/sipeed/picoclaw/compare/v0.2.5...v0.2.6)
----
+
 
 ## v0.2.5
 
