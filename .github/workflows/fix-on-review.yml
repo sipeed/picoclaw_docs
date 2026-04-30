@@ -1,0 +1,213 @@
+name: Fix PR on review request changes
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  fix:
+    if: >
+      github.event.review.state == 'changes_requested' &&
+      contains(github.event.pull_request.labels.*.name, 'automated')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    concurrency:
+      group: fix-pr-${{ github.event.pull_request.number }}
+      cancel-in-progress: false
+
+    steps:
+      - name: Collect review comments
+        id: review
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REVIEW_ID: ${{ github.event.review.id }}
+        run: |
+          REVIEW_BODY=$(gh api "repos/$REPO/pulls/$PR_NUMBER/reviews/$REVIEW_ID" --jq '.body')
+
+          INLINE_COMMENTS=$(gh api "repos/$REPO/pulls/$PR_NUMBER/reviews/$REVIEW_ID/comments" \
+            --jq '.[] | "- `\(.path)`\(if .line then " L\(.line)" else "" end): \(.body)"')
+
+          {
+            echo "comments<<ENDCOMMENTS"
+            if [ -n "$REVIEW_BODY" ]; then
+              echo "## Review Summary"
+              echo "$REVIEW_BODY"
+              echo ""
+            fi
+            if [ -n "$INLINE_COMMENTS" ]; then
+              echo "## Inline Comments"
+              echo "$INLINE_COMMENTS"
+            fi
+            echo "ENDCOMMENTS"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: React to review
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          gh pr comment "$PR_NUMBER" --repo "$REPO" \
+            --body "Received review feedback. Running Codex to apply fixes..."
+
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout picoclaw source repo
+        uses: actions/checkout@v4
+        with:
+          repository: sipeed/picoclaw
+          path: picoclaw-upstream
+          fetch-depth: 0
+
+      - name: Detach picoclaw-upstream from git
+        run: rm -rf picoclaw-upstream/.git
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Capture current build errors
+        id: build
+        run: |
+          npm ci
+          BUILD_OUTPUT=$(npm run build 2>&1) || true
+          {
+            echo "errors<<ENDBUILD"
+            echo "$BUILD_OUTPUT" | grep -i -A2 "error\|warning\|fail" | tail -50
+            echo "ENDBUILD"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Run Codex to fix
+        uses: openai/codex-action@v1
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          responses-api-endpoint: ${{ secrets.OPENAI_BASE_URL }}
+          model: gpt-5.5
+          sandbox: danger-full-access
+          safety-strategy: drop-sudo
+          prompt: |
+            You are fixing an existing documentation PR for the PicoClaw project based on reviewer feedback.
+
+            ## Context
+
+            - **Docs repo**: the current working directory (Docusaurus 3.x)
+            - **Source repo**: `picoclaw-upstream/` directory (sipeed/picoclaw latest main)
+            - Locales: en (`docs/`), zh-Hans (`i18n/zh-Hans/...`), pt-BR (`i18n/pt-BR/...`)
+
+            ## Reviewer Feedback
+
+            ${{ steps.review.outputs.comments }}
+
+            ## Current Build Errors (if any)
+
+            ```
+            ${{ steps.build.outputs.errors }}
+            ```
+
+            ## Rules
+
+            - Address ALL reviewer comments. For inline comments, fix the specific file and line mentioned.
+            - Only modify files related to the review feedback. Do not touch unrelated files.
+            - Do NOT modify or create files in `picoclaw-upstream/`, `.codex`, or `docusaurus.config.js` unless explicitly asked.
+            - If fixing build errors, run `npm run build` after changes to verify.
+            - Keep all three locales in sync (en, zh-Hans, pt-BR).
+            - Preserve existing file structure — do not create files that duplicate existing ones.
+            - If the PR title or description should be updated, write a file `.pr-update.md` with format:
+              ```
+              title: <new PR title>
+              ---
+              <new PR body in markdown>
+              ```
+              The title line is required. The body after `---` is optional (omit to keep existing body).
+
+      - name: Clean up artifacts
+        run: rm -rf picoclaw-upstream .codex
+
+      - name: Verify build
+        run: npm run build
+
+      - name: Update PR metadata
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          if [ ! -f .pr-update.md ]; then exit 0; fi
+          PR_TITLE=$(head -1 .pr-update.md | sed 's/^title: *//')
+          if [ -n "$PR_TITLE" ]; then
+            gh pr edit "$PR_NUMBER" --title "$PR_TITLE"
+          fi
+          if grep -q '^---$' .pr-update.md; then
+            PR_BODY=$(sed '1,/^---$/d' .pr-update.md)
+            if [ -n "$PR_BODY" ]; then
+              gh pr edit "$PR_NUMBER" --body "$PR_BODY"
+            fi
+          fi
+          rm -f .pr-update.md
+
+      - name: Commit and push
+        id: push
+        env:
+          BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Stage any uncommitted changes Codex left in the working tree
+          git add -A
+          git reset -- picoclaw-upstream .codex .pr-update.md 2>/dev/null || true
+          if ! git diff --cached --quiet; then
+            git commit -m "fix: address review feedback
+
+          Co-Authored-By: Codex <noreply@openai.com>"
+          fi
+
+          # Push if there are any commits ahead of remote (Codex may have committed directly)
+          if [ -n "$(git log "origin/$BRANCH..HEAD" --oneline 2>/dev/null)" ]; then
+            git push origin HEAD:"$BRANCH" --force-with-lease
+            echo "pushed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "pushed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Re-request review
+        if: success() && steps.push.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REVIEWER: ${{ github.event.review.user.login }}
+        run: |
+          gh api "repos/$REPO/pulls/$PR_NUMBER/requested_reviewers" \
+            -f "reviewers[]=$REVIEWER" --silent || true
+
+      - name: Comment result
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REVIEWER: ${{ github.event.review.user.login }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          JOB_STATUS: ${{ job.status }}
+          PUSHED: ${{ steps.push.outputs.pushed }}
+        run: |
+          if [ "$JOB_STATUS" != "success" ]; then
+            BODY="Failed to address review feedback. Check the [workflow run]($RUN_URL) for details."
+          elif [ "$PUSHED" = "true" ]; then
+            BODY="Review feedback addressed. Re-requested review from @$REVIEWER."
+          else
+            BODY="Codex ran but produced no changes. Check the [workflow run]($RUN_URL) for details."
+          fi
+          gh pr comment "$PR_NUMBER" --body "$BODY"

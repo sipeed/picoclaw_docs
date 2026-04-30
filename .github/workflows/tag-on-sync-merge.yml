@@ -1,0 +1,46 @@
+name: Tag docs on sync PR merge
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  tag:
+    if: >
+      github.event.pull_request.merged == true &&
+      contains(github.event.pull_request.labels.*.name, 'sync') &&
+      startsWith(github.event.pull_request.head.ref, 'ai/sync-upstream-v')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Extract tag from branch name
+        id: extract
+        env:
+          BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: |
+          # ai/sync-upstream-v0.3.0 -> v0.3.0
+          TAG="${BRANCH#ai/sync-upstream-}"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "Extracted tag: $TAG"
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Create and push tag
+        env:
+          TAG: ${{ steps.extract.outputs.tag }}
+        run: |
+          if git ls-remote --tags origin "refs/tags/$TAG" | grep -q .; then
+            echo "::warning::Tag '$TAG' already exists on docs repo, skipping."
+          else
+            git tag -a "$TAG" -m "docs: sync with upstream picoclaw $TAG"
+            git push origin "$TAG"
+            echo "Tagged docs repo with $TAG"
+          fi

@@ -1,0 +1,235 @@
+name: ChatOps
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  # /fix <instructions> — Run Codex to fix issues on a PR branch
+  fix:
+    if: >
+      github.event.issue.pull_request &&
+      startsWith(github.event.comment.body, '/fix') &&
+      contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    concurrency:
+      group: fix-pr-${{ github.event.issue.number }}
+      cancel-in-progress: false
+
+    steps:
+      - name: Get PR details
+        id: pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ github.event.issue.pull_request.url }}
+        run: |
+          PR_JSON=$(gh api "$PR_URL")
+          echo "branch=$(echo "$PR_JSON" | jq -r '.head.ref')" >> "$GITHUB_OUTPUT"
+          echo "number=$(echo "$PR_JSON" | jq -r '.number')" >> "$GITHUB_OUTPUT"
+
+      - name: React to comment
+        id: react
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          COMMENT_ID: ${{ github.event.comment.id }}
+        run: |
+          REACTION_ID=$(gh api "repos/$REPO/issues/comments/$COMMENT_ID/reactions" \
+            -f content='rocket' --jq '.id')
+          echo "reaction_id=$REACTION_ID" >> "$GITHUB_OUTPUT"
+
+      - name: Extract fix instructions
+        id: parse
+        env:
+          COMMENT_BODY: ${{ github.event.comment.body }}
+        run: |
+          INSTRUCTIONS="${COMMENT_BODY#/fix}"
+          INSTRUCTIONS="${INSTRUCTIONS#"${INSTRUCTIONS%%[![:space:]]*}"}"
+          if [ -z "$INSTRUCTIONS" ]; then
+            echo "::error::Usage: /fix <instructions>"
+            exit 1
+          fi
+          {
+            echo "instructions<<ENDINST"
+            echo "$INSTRUCTIONS"
+            echo "ENDINST"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.pr.outputs.branch }}
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout picoclaw source repo
+        uses: actions/checkout@v4
+        with:
+          repository: sipeed/picoclaw
+          path: picoclaw-upstream
+          fetch-depth: 0
+
+      - name: Detach picoclaw-upstream from git
+        run: rm -rf picoclaw-upstream/.git
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Capture current build errors
+        id: build
+        run: |
+          npm ci
+          BUILD_OUTPUT=$(npm run build 2>&1) || true
+          {
+            echo "errors<<ENDBUILD"
+            echo "$BUILD_OUTPUT" | grep -i -A2 "error\|warning\|fail" | tail -50
+            echo "ENDBUILD"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Run Codex to fix
+        uses: openai/codex-action@v1
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          responses-api-endpoint: ${{ secrets.OPENAI_BASE_URL }}
+          model: gpt-5.5
+          sandbox: danger-full-access
+          safety-strategy: drop-sudo
+          prompt: |
+            You are fixing an existing documentation PR for the PicoClaw project.
+
+            ## Context
+
+            - **Docs repo**: the current working directory (Docusaurus 3.x)
+            - **Source repo**: `picoclaw-upstream/` directory (sipeed/picoclaw latest main)
+            - Locales: en (`docs/`), zh-Hans (`i18n/zh-Hans/...`), pt-BR (`i18n/pt-BR/...`)
+
+            ## Fix Instructions
+
+            ${{ steps.parse.outputs.instructions }}
+
+            ## Current Build Errors (if any)
+
+            ```
+            ${{ steps.build.outputs.errors }}
+            ```
+
+            ## Rules
+
+            - Only modify files related to the fix. Do not touch unrelated files.
+            - Do NOT modify or create files in `picoclaw-upstream/`, `.codex`, or `docusaurus.config.js` unless explicitly asked.
+            - If fixing build errors, run `npm run build` after changes to verify.
+            - Keep all three locales in sync (en, zh-Hans, pt-BR).
+            - Preserve existing file structure — do not create files that duplicate existing ones.
+            - If the PR title or description should be updated, write a file `.pr-update.md` with format:
+              ```
+              title: <new PR title>
+              ---
+              <new PR body in markdown>
+              ```
+              The title line is required. The body after `---` is optional (omit to keep existing body).
+
+      - name: Clean up artifacts
+        run: rm -rf picoclaw-upstream .codex
+
+      - name: Verify build
+        run: npm run build
+
+      - name: Update PR metadata
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+        run: |
+          if [ ! -f .pr-update.md ]; then exit 0; fi
+          PR_TITLE=$(head -1 .pr-update.md | sed 's/^title: *//')
+          if [ -n "$PR_TITLE" ]; then
+            gh pr edit "$PR_NUMBER" --title "$PR_TITLE"
+          fi
+          if grep -q '^---$' .pr-update.md; then
+            PR_BODY=$(sed '1,/^---$/d' .pr-update.md)
+            if [ -n "$PR_BODY" ]; then
+              gh pr edit "$PR_NUMBER" --body "$PR_BODY"
+            fi
+          fi
+          rm -f .pr-update.md
+
+      - name: Commit and push
+        id: push
+        env:
+          BRANCH: ${{ steps.pr.outputs.branch }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Stage any uncommitted changes Codex left in the working tree
+          git add -A
+          git reset -- picoclaw-upstream .codex .pr-update.md 2>/dev/null || true
+          if ! git diff --cached --quiet; then
+            git commit -m "fix: apply requested changes via /fix command
+
+          Co-Authored-By: Codex <noreply@openai.com>"
+          fi
+
+          # Push if there are any commits ahead of remote (Codex may have committed directly)
+          if [ -n "$(git log "origin/$BRANCH..HEAD" --oneline 2>/dev/null)" ]; then
+            git push origin HEAD:"$BRANCH" --force-with-lease
+            echo "pushed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "pushed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Update reaction and comment result
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+          COMMENT_ID: ${{ github.event.comment.id }}
+          REACTION_ID: ${{ steps.react.outputs.reaction_id }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          JOB_STATUS: ${{ job.status }}
+          PUSHED: ${{ steps.push.outputs.pushed }}
+        run: |
+          # Remove rocket reaction
+          if [ -n "$REACTION_ID" ]; then
+            gh api "repos/$REPO/issues/comments/$COMMENT_ID/reactions/$REACTION_ID" \
+              -X DELETE --silent 2>/dev/null || true
+          fi
+          # Add result reaction
+          if [ "$JOB_STATUS" = "success" ] && [ "$PUSHED" = "true" ]; then
+            EMOJI="+1"
+            BODY="Fix applied successfully. Please review the new changes."
+          elif [ "$JOB_STATUS" = "success" ]; then
+            EMOJI="confused"
+            BODY="Codex ran but produced no changes. Check the [workflow run]($RUN_URL) for details."
+          else
+            EMOJI="-1"
+            BODY="Fix attempt failed. Check the [workflow run]($RUN_URL) for details."
+          fi
+          gh api "repos/$REPO/issues/comments/$COMMENT_ID/reactions" \
+            -f content="$EMOJI" --silent 2>/dev/null || true
+          gh pr comment "$PR_NUMBER" --body "$BODY"
+
+  # Add more commands below as new jobs, e.g.:
+  #
+  # retry:
+  #   if: >
+  #     github.event.issue.pull_request &&
+  #     github.event.comment.body == '/retry' &&
+  #     contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)
+  #   ...
+  #
+  # review:
+  #   if: >
+  #     github.event.issue.pull_request &&
+  #     startsWith(github.event.comment.body, '/review') &&
+  #     contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)
+  #   ...
