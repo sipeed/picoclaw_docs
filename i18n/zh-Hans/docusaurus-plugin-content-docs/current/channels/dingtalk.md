@@ -35,19 +35,40 @@ title: 钉钉
 
 ### 5. 配置 PicoClaw
 
+#### 1. WebUI 配置
+
+优先推荐使用 WebUI 配置，方便快捷。
+
+![WebUI DingTalk Connection Interface](/img/channels/webui_dingtalk.png)
+
+依次填入 Client ID（`YOUR_CLIENT_ID`）和 Client Secret（`YOUR_CLIENT_SECRET`），然后点击 **保存** 即可。
+
+#### 2. 配置文件
+
+修改 `~/.picoclaw/.security.yml`：
+
+```yaml
+dingtalk:
+  settings:
+    client_secret: YOUR_CLIENT_SECRET
+```
+
+修改 `~/.picoclaw/config.json`：
+
 ```json
 {
   "channels": {
-    "dingtalk": {
       "enabled": true,
-      "client_id": "YOUR_CLIENT_ID",
-      "client_secret": "YOUR_CLIENT_SECRET",
-      "allow_from": [],
-      "group_trigger": {
-        "mention_only": true
+      "type": "dingtalk",
+      "reasoning_channel_id": "",
+      "group_trigger": {},
+      "typing": {},
+      "placeholder": {
+        "enabled": false
       },
-      "reasoning_channel_id": ""
-    }
+      "settings": {
+        "client_id": "YOUR_CLIENT_ID"
+      }
   }
 }
 ```

@@ -22,13 +22,36 @@ Telegram is the **recommended** channel. It's easy to set up and supports voice 
 
 ### 3. Configure
 
+#### 1. WebUI Configuration
+
+We recommend using the WebUI first because it is faster and more convenient.
+
+![WebUI Telegram Connection Interface](/img/channels/webui_telegram.png)
+
+Fill in the Bot Token (`YOUR_BOT_TOKEN`) and Allowed Sources (`YOUR_USER_ID`) in order, then click **Save**.
+
+#### 2. Configuration Files
+
+Edit `~/.picoclaw/.security.yml`:
+
+```yaml
+telegram:
+  settings:
+    token: YOUR_BOT_TOKEN
+```
+
+Edit `~/.picoclaw/config.json`:
+
 ```json
 {
   "channels": {
     "telegram": {
       "enabled": true,
-      "token": "YOUR_BOT_TOKEN",
-      "allow_from": ["YOUR_USER_ID"]
+      "allow_from": [
+        "YOUR_USER_ID"
+      ],
+      "reasoning_channel_id": "",
+      "group_trigger": {}
     }
   }
 }

@@ -35,19 +35,40 @@ Em **Permissions & Scopes**, garanta que as seguintes permissões estejam conced
 
 ### 5. Configurar o PicoClaw
 
+#### 1. Configuracao pelo WebUI
+
+Recomendamos priorizar a configuracao pelo WebUI, pois e mais rapida e conveniente.
+
+![WebUI DingTalk Connection Interface](/img/channels/webui_dingtalk.png)
+
+Preencha, nesta ordem, o Client ID (`YOUR_CLIENT_ID`) e o Client Secret (`YOUR_CLIENT_SECRET`), depois clique em **Salvar**.
+
+#### 2. Arquivos de Configuracao
+
+Edite `~/.picoclaw/.security.yml`:
+
+```yaml
+dingtalk:
+  settings:
+    client_secret: YOUR_CLIENT_SECRET
+```
+
+Edite `~/.picoclaw/config.json`:
+
 ```json
 {
   "channels": {
-    "dingtalk": {
       "enabled": true,
-      "client_id": "YOUR_CLIENT_ID",
-      "client_secret": "YOUR_CLIENT_SECRET",
-      "allow_from": [],
-      "group_trigger": {
-        "mention_only": true
+      "type": "dingtalk",
+      "reasoning_channel_id": "",
+      "group_trigger": {},
+      "typing": {},
+      "placeholder": {
+        "enabled": false
       },
-      "reasoning_channel_id": ""
-    }
+      "settings": {
+        "client_id": "YOUR_CLIENT_ID"
+      }
   }
 }
 ```

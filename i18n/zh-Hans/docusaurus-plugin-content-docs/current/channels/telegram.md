@@ -22,13 +22,36 @@ Telegram 是**推荐**的通道。设置简单，支持语音转写。
 
 ### 3. 配置
 
+#### 1. WebUI 配置
+
+优先推荐 WebUI 配置，方便快捷。
+
+![WebUI Telegram Connection Interface](/img/channels/webui_telegram.png)
+
+依次填入 Bot Token（`YOUR_BOT_TOKEN`）和允许来源（`YOUR_USER_ID`），然后点击 **保存** 即可。
+
+#### 2. 配置文件
+
+修改 `~/.picoclaw/.security.yml`
+
+```yaml
+telegram:
+  settings:
+    token: YOUR_BOT_TOKEN
+```
+
+修改 `~/.picoclaw/config.json`
+
 ```json
 {
   "channels": {
     "telegram": {
       "enabled": true,
-      "token": "YOUR_BOT_TOKEN",
-      "allow_from": ["YOUR_USER_ID"]
+      "allow_from": [
+        "YOUR_USER_ID"
+      ],
+      "reasoning_channel_id": "",
+      "group_trigger": {}
     }
   }
 }
@@ -72,7 +95,7 @@ Telegram 语音消息可通过 Groq 的 Whisper 自动转写：
 
 **"Conflict: terminated by other getUpdates"**：同一时间只能运行一个 `picoclaw gateway`，请停止其他实例。
 
-**代理**：如果你所在地区无法直接访问 Telegram，使用 `proxy` 字段：
+**代理**：如果你所在地区无法直接访问 Telegram，可使用 `proxy` 字段：
 
 ```json
 {
