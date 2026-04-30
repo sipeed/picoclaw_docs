@@ -38,8 +38,6 @@ Groq 是主打**超低延迟、极速推理**的 AI 推理平台，依托自研 
 
 #### 支持的模型
 
-、
-
 |          模型          |             说明             |
 | :---------------------: | :--------------------------: |
 | llama-3.3-70b-versatile | 推荐，综合性能均衡，速度极快 |
@@ -64,7 +62,7 @@ Groq 是主打**超低延迟、极速推理**的 AI 推理平台，依托自研 
 
 `config.json`：
 
-```
+```json
 {
   "version": 2,
   "model_list": [
@@ -72,7 +70,7 @@ Groq 是主打**超低延迟、极速推理**的 AI 推理平台，依托自研 
       "model_name": "llama-3.3-70b",
       "model": "groq/llama-3.3-70b-versatile",
       "api_base": "https://api.groq.com/openai/v1"
-    },
+    }
   ],
   "agents": {
     "defaults": {
@@ -84,7 +82,7 @@ Groq 是主打**超低延迟、极速推理**的 AI 推理平台，依托自研 
 
 `~/.picoclaw/.security.yml`：
 
-```
+```yaml
 model_list:
   llama-3.3-70b:0:
     api_keys:

@@ -60,9 +60,9 @@ Abra a WebUI do PicoClaw, acesse a página **Modelos** no menu lateral esquerdo 
 
 #### Método 2: Edição do arquivo de configuração
 
-`config.json`：
+`config.json`:
 
-```
+```json
 {
   "version": 2,
   "model_list": [
@@ -70,7 +70,7 @@ Abra a WebUI do PicoClaw, acesse a página **Modelos** no menu lateral esquerdo 
       "model_name": "llama-3.3-70b",
       "model": "groq/llama-3.3-70b-versatile",
       "api_base": "https://api.groq.com/openai/v1"
-    },
+    }
   ],
   "agents": {
     "defaults": {
@@ -80,9 +80,9 @@ Abra a WebUI do PicoClaw, acesse a página **Modelos** no menu lateral esquerdo 
 }
 ```
 
-`~/.picoclaw/.security.yml`：
+`~/.picoclaw/.security.yml`:
 
-```
+```yaml
 model_list:
   llama-3.3-70b:0:
     api_keys:

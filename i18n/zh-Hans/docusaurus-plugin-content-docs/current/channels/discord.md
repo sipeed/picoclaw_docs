@@ -51,7 +51,7 @@ discord:
       "enabled": true,
       "type": "discord",
       "allow_from": [
-        "23123123123"
+        "YOUR_USER_ID"
       ],
       "reasoning_channel_id": "",
       "group_trigger": {},

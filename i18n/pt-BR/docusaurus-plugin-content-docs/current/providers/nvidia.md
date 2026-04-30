@@ -1,5 +1,5 @@
 ---
-id: NVIDIA-api
+id: nvidia-api
 title: Nim(NVIDIA) API
 ---
 # Guia de Configuração da API do NVIDIA NIM
@@ -18,11 +18,11 @@ Documentação oficial da API: https://docs.nvidia.com/nim/
 
 ### Passo 1: Acesse a plataforma
 
-Acesse a plataforma [Try NVIDIA NIM APIs](https://build.nvidia.com/)NVIDIA Build, registre-se e faça login.
+Acesse a plataforma [Try NVIDIA NIM APIs](https://build.nvidia.com/) da NVIDIA Build, registre-se e faça login.
 
 ### Passo 2: Crie a chave API
 
-1. Clique no avatar no canto superior direito → selecione **API Keys** (acesso direto: https://build.nvidia.com/settings/api-keys)
+1. Clique no avatar no canto superior direito e selecione **API Keys** (acesso direto: [API Keys](https://build.nvidia.com/settings/api-keys))
 2. Clique em **Generate API Key**, preencha o nome e selecione a validade
 3. Após gerar, copie e salve a chave API (começa com `nvapi-`)
 
@@ -62,7 +62,7 @@ Abra a WebUI do PicoClaw, acesse a página **Modelos** no menu lateral esquerdo 
 
 #### Método 2: Edição do arquivo de configuração
 
-```
+```json
 {
   "version": 2,
   "model_list": [
@@ -80,9 +80,9 @@ Abra a WebUI do PicoClaw, acesse a página **Modelos** no menu lateral esquerdo 
 }
 ```
 
-`~/.picoclaw/.security.yml`：
+`~/.picoclaw/.security.yml`:
 
-```
+```yaml
 model_list:
   nemotron-4-340b:0:
     api_keys:

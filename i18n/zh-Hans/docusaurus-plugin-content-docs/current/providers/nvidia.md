@@ -1,5 +1,5 @@
 ---
-id: NVIDIA-api
+id: nvidia-api
 title: Nim(NVIDIA) API
 ---
 # NVIDIA NIM 配置指南
@@ -18,13 +18,11 @@ title: Nim(NVIDIA) API
 
 ### 第一步：访问平台
 
-前往 [Try NVIDIA NIM APIs](https://build.nvidia.com/)NVIDIA Build 平台
-
-注册并登录账号。
+前往 [Try NVIDIA NIM APIs](https://build.nvidia.com/) NVIDIA Build 平台，注册并登录账号。
 
 ### 第二步：创建 API Key
 
-1. 点击右上角头像 → 选择 **API Keys**（直达：https://build.nvidia.com/settings/api-keys）
+1. 点击右上角头像，选择 **API Keys**（直达：[API Keys](https://build.nvidia.com/settings/api-keys)）
 2. 点击 **Generate API Key**，填写名称，选择有效期
 3. 生成后复制保存 API Key（以 `nvapi-` 开头）
 
@@ -64,7 +62,7 @@ title: Nim(NVIDIA) API
 
 #### 方式二：编辑配置文件
 
-```
+```json
 {
   "version": 2,
   "model_list": [
@@ -84,7 +82,7 @@ title: Nim(NVIDIA) API
 
 `~/.picoclaw/.security.yml`：
 
-```
+```yaml
 model_list:
   nemotron-4-340b:0:
     api_keys:

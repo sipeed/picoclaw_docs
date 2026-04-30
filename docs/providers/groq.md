@@ -26,7 +26,7 @@ register and log in.
 2. Click **Create API Key**
 3. Copy and save your API Key
 
-> ⚠️ **Note**: API Key is shown only once — save it immediately and keep it secure.。
+> ⚠️ **Note**: The API key is shown only once. Save it immediately and keep it secure.
 
 ---
 
@@ -47,7 +47,7 @@ register and log in.
 
 #### Method 1: Web UI (Recommended)
 
-Open PicoClaw WebUI → go to **Models** → click **Add Model** in the top-right corner.
+Open PicoClaw WebUI, go to **Models**, and click **Add Model** in the top-right corner.
 
 ![image-20260410163514016](/img/providers/groq2.png)
 
@@ -62,7 +62,7 @@ Open PicoClaw WebUI → go to **Models** → click **Add Model** in the top-righ
 
 `config.json`：
 
-```
+```json
 {
   "version": 2,
   "model_list": [
@@ -70,7 +70,7 @@ Open PicoClaw WebUI → go to **Models** → click **Add Model** in the top-righ
       "model_name": "llama-3.3-70b",
       "model": "groq/llama-3.3-70b-versatile",
       "api_base": "https://api.groq.com/openai/v1"
-    },
+    }
   ],
   "agents": {
     "defaults": {
@@ -82,7 +82,7 @@ Open PicoClaw WebUI → go to **Models** → click **Add Model** in the top-righ
 
 `~/.picoclaw/.security.yml`：
 
-```
+```yaml
 model_list:
   llama-3.3-70b:0:
     api_keys:
@@ -93,7 +93,7 @@ model_list:
 
 ## Notes
 
-- Groq has **no subscription plans** — only pay-as-you-go, with real-time token-based billing.
+- Groq has **no subscription plans** and supports only pay-as-you-go billing.
 - Fixed default endpoint: `https://api.groq.com/openai/v1` (cannot be omitted).
 - For production, store API Key in `.security.yml` — avoid plaintext in `config.json`.
 - Inference is extremely fast; monitor usage to prevent unexpected overconsumption.

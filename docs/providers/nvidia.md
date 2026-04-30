@@ -1,12 +1,12 @@
 ---
-id: NVIDIA-api
+id: nvidia-api
 title: Nim(NVIDIA) API
 ---
 # NVIDIA NIM API Configuration Guide
 
 ## Overview
 
-**NVIDIA NIM (NVIDIA Inference Microservice)** is NVIDIA’s GPU‑accelerated inference microservice. It provides industry-standard OpenAI-compatible APIs, supporting mainstream models from multiple providers with fast, stable inference. Free quotas are available for individual developers, making it great for coding, long context, and multi-model switching.
+**NVIDIA NIM (NVIDIA Inference Microservice)** is NVIDIA's GPU-accelerated inference microservice. It provides industry-standard OpenAI-compatible APIs, supports mainstream models from multiple providers, and offers fast, stable inference. Free quotas are available for individual developers, making it a good fit for coding, long-context tasks, and multi-model switching.
 
 Official Site: https://build.nvidia.com/
 
@@ -18,17 +18,15 @@ Official API Docs: https://docs.nvidia.com/nim/
 
 ### Step 1: Access Platform
 
-Go to[Try NVIDIA NIM APIs](https://build.nvidia.com/)
-
-(NVIDIA Build platform), register and log in.
+Go to [Try NVIDIA NIM APIs](https://build.nvidia.com/) on the NVIDIA Build platform, then register and log in.
 
 ### Step 2: Create API Key
 
-1. Click your profile in the top-right → select **API Keys** (direct link: https://build.nvidia.com/settings/api-keys)
+1. Click your profile in the top-right, then select **API Keys** (direct link: [API Keys](https://build.nvidia.com/settings/api-keys))
 2. Click **Generate API Key**, name it, set expiration
 3. Copy and save your API Key (starts with `nvapi-`)
 
-> ⚠️ **Note**: API Key is displayed only once — save immediately and do not share.
+> ⚠️ **Note**: The API key is displayed only once. Save it immediately and do not share it.
 
 ---
 
@@ -51,7 +49,7 @@ Go to[Try NVIDIA NIM APIs](https://build.nvidia.com/)
 
 #### Method 1: Web UI (Recommended)
 
-Open PicoClaw WebUI → go to **Models** → click **Add Model** in the top-right corner.
+Open PicoClaw WebUI, go to **Models**, and click **Add Model** in the top-right corner.
 
 ![image-20260410164756785](/img/providers/nim2.png)
 
@@ -64,7 +62,7 @@ Open PicoClaw WebUI → go to **Models** → click **Add Model** in the top-righ
 
 #### Method 2: Edit Config Files
 
-```
+```json
 {
   "version": 2,
   "model_list": [
@@ -84,7 +82,7 @@ Open PicoClaw WebUI → go to **Models** → click **Add Model** in the top-righ
 
 `~/.picoclaw/.security.yml`：
 
-```
+```yaml
 model_list:
   nemotron-4-340b:0:
     api_keys:
@@ -95,7 +93,7 @@ model_list:
 
 ## Notes
 
-- NVIDIA NIM has **no subscription plans** — only free quota + pay-as-you-go (token-based real-time billing).
+- NVIDIA NIM has **no subscription plans** and supports only free quota plus pay-as-you-go billing.
 - Fixed API endpoint: `https://integrate.api.nvidia.com/v1` (do not omit or misconfigure).
 - API Key starts with `nvapi-` — must be generated on the official API Keys page.
 - For production, store API Key in `.security.yml` — avoid plaintext in `config.json`.

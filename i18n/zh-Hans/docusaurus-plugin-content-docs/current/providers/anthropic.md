@@ -1,6 +1,6 @@
 ---
-id: Anthropic-api
-title: Claude(Anthropic)  API
+id: anthropic-api
+title: Claude(Anthropic) API
 ---
 # Claude (Anthropic) 配置指南
 
@@ -22,7 +22,7 @@ title: Claude(Anthropic)  API
 
 ## 获取 API Key
 
-1. 访问 Anthropic 控制台[ Anthropic Console](https://console.anthropic.com/),注册并登录
+1. 访问 Anthropic 控制台 [Anthropic Console](https://console.anthropic.com/)，注册并登录
 2. 在左侧导航进入 API Keys 页面，点击「Create Key」生成 API Key
 3. Billing 页面添加付款方式并充值，API 调用将按实际 Token 用量从余额中扣除
 
@@ -35,18 +35,18 @@ title: Claude(Anthropic)  API
 |       模型       | 输入（每百万 Token） | 输出（每百万 Token） |
 | :---------------: | :------------------: | :------------------: |
 | claude-sonnet-4.6 |         \$3         |         \$15         |
-|  claude-opus-4.6  |         \$15         |         \$75         |
-| claude-haiku-4.6 |        \$0.8        |         \$4         |
+|  claude-opus-4.7  |         \$15        |         \$75         |
+| claude-haiku-4.5  |        \$0.8        |          \$4         |
 
-> 最新价格以 Anthropic 官方定价页 为准
+> 最新价格以 Anthropic 官方定价页为准
 
 ### 支持的模型
 
 |            模型            |                说明                |
 | :------------------------: | :--------------------------------: |
-|     claude-sonnet-4.6     | 推荐，均衡性能与成本，长上下文优秀 |
-|      claude-opus-4.6      |   高阶模型，复杂推理、超大上下文   |
-|      claude-haiku-4.6      |     轻量模型，快速响应、低成本     |
+|     claude-sonnet-4.6      | 推荐，均衡性能与成本，长上下文优秀 |
+|      claude-opus-4.7       |   高阶模型，复杂推理、超大上下文   |
+|      claude-haiku-4.5      |     轻量模型，快速响应、低成本     |
 | claude-3-5-sonnet-20241022 |        经典稳定版，兼容广泛        |
 
 > 日常编码优先使用 **claude-sonnet-4.6**，复杂任务再切换 Opus，避免额度消耗过快
@@ -70,19 +70,29 @@ title: Claude(Anthropic)  API
 
 config.json 配置
 
-```
+```json
+{
+  "version": 2,
+  "model_list": [
     {
       "model_name": "claude-sonnet-4.6",
       "model": "anthropic/claude-sonnet-4.6",
       "api_base": "https://api.anthropic.com/v1"
-    },
+    }
+  ],
+  "agents": {
+    "defaults": {
+      "model_name": "claude-sonnet-4.6"
+    }
+  }
+}
 ```
 
 ---
 
 `~/.picoclaw/.security.yml`：
 
-```YAML
+```yaml
 model_list:
   claude-sonnet-4.6:0:
     api_keys:

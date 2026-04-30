@@ -1,5 +1,5 @@
 ---
-id: Anthropic-api
+id: anthropic-api
 title: Claude(Anthropic) API
 ---
 
@@ -7,15 +7,13 @@ title: Claude(Anthropic) API
 
 ## Overview
 
-**Claude (Anthropic)** offers a **Pay‑as‑you‑go** pricing model. Access is via official Anthropic API Key, with charges based on actual Token consumption.
+**Claude (Anthropic)** uses a **pay-as-you-go** pricing model. Access is provided through an official Anthropic API key, and charges are based on actual token usage.
 
-> ⚠️ **Important Notes**
+> ⚠️ **Important notes**
 >
-> 
->
-> - Claude **subscription plans** (Pro / Max / Team / Enterprise) and the **API** are **completely separate** products. Subscriptions work only on the claude.ai web, desktop, and mobile apps; they **do NOT include API access** and cannot be used in dev tools like PicoClaw.
-> - The native Anthropic API uses the `/v1/messages` interface format, **not** the OpenAI‑compatible interface (`/v1/chat/completions`). Using OpenAI compatibility mode disables core features such as Prompt Caching, Extended Thinking, and PDF processing.
-> - Using a subscription account’s OAuth Token to call Claude in third‑party tools **violates Anthropic ToS**; this method was officially blocked in April 2026 — do not attempt.
+> - Claude **subscription plans** (Pro / Max / Team / Enterprise) and the **API** are **completely separate** products. Subscriptions work only on claude.ai web, desktop, and mobile apps. They **do not include API access** and cannot be used in developer tools like PicoClaw.
+> - The native Anthropic API uses the `/v1/messages` format, **not** the OpenAI-compatible `/v1/chat/completions` format. Using OpenAI compatibility mode disables key features such as Prompt Caching, Extended Thinking, and PDF processing.
+> - Using an OAuth token from a subscription account to call Claude in third-party tools **violates Anthropic's Terms of Service**. Anthropic officially blocked this path in April 2026, so do not attempt it.
 
 Official docs: https://docs.anthropic.com/en/api/getting-started
 
@@ -25,58 +23,71 @@ Official docs: https://docs.anthropic.com/en/api/getting-started
 
 ## Get API Key
 
-1. Visit the Anthropic Console [Anthropic Console](https://console.anthropic.com/), register and log in
-* Go to the API Keys page in the left navigation, click "Create Key" to generate an API Key
-* On the Billing page, add a payment method and top up, API calls will be deducted from the balance based on actual token usage
+1. Visit the [Anthropic Console](https://console.anthropic.com/), sign up, and log in.
+2. Open the **API Keys** page in the left navigation and click **Create Key** to generate an API key.
+3. On the **Billing** page, add a payment method and top up your balance. API usage is deducted from that balance based on actual token consumption.
 
 ![image-20260409215733096](/img/providers/Claude(Anthropic)2.png)
 
-### Plan Usage
+### Pricing
 
-Pay‑as‑you‑go, charged by actual input/output Tokens consumed. No monthly fee; no charge when idle. Reference rates (prices subject to official changes):
+Anthropic API billing is usage-based. There is no monthly fee, and you are charged only for the tokens you consume. Reference rates below may change over time:
 
-|       Model       | Input (per million Tokens) | Output (per million Tokens) |
+|       Model       | Input (per million tokens) | Output (per million tokens) |
 | :---------------: | :------------------------: | :-------------------------: |
 | claude-sonnet-4.6 |             $3             |             $15             |
-|  claude-opus-4.6  |            $15             |             $75             |
-| claude-haiku-4.6  |            $0.8            |             $4              |
-Latest prices follow Anthropic’s official pricing page.
+|  claude-opus-4.7  |            $15             |             $75             |
+| claude-haiku-4.5  |            $0.8            |             $4              |
+
+Latest pricing always follows Anthropic's official pricing page.
 
 ### Supported Models
 
 |           Model            |                         Description                          |
 | :------------------------: | :----------------------------------------------------------: |
 |     claude-sonnet-4.6      | Recommended; balanced performance and cost, excellent long context |
-|      claude-opus-4.6       |    High‑end model, complex reasoning, ultra‑long context     |
-|      claude-haiku-4.6      |             Lightweight, fast response, low cost             |
-| claude-3-5-sonnet-20241022 |          Classic stable version, wide compatibility          |
-> For daily coding, prefer **claude-sonnet-4.6**; switch to Opus only for complex tasks to avoid excessive usage.
+|      claude-opus-4.7       |      High-end model for complex reasoning and large context      |
+|      claude-haiku-4.5      |             Lightweight, fast response, lower cost             |
+| claude-3-5-sonnet-20241022 |          Classic stable version with broad compatibility          |
+> For daily coding, prefer **claude-sonnet-4.6** and switch to Opus only for more complex tasks.
 ## Configure PicoClaw
 
 ### Web UI Configuration
 
-Open PicoClaw WebUI, go to the **Models** page in the left sidebar, and click **Add Model** in the top right corner.
+Open PicoClaw WebUI, go to **Models** in the left sidebar, and click **Add Model** in the top-right corner.
 
 ![image-20260409221239555](/img/providers/Claude(Anthropic)3.png)
 |    Field     |                     Value to enter                     |
 | :----------: | :----------------------------------------------------: |
-| Model Alias  |              Custom name, e.g. anthropic               |
-|   Model ID   | anthropic/claude-sonnet-4.6 (or other supported model) |
-|   API Key    |         API Key generated in Anthropic Console         |
+| Model Alias  |              Custom name, for example `anthropic`              |
+|   Model ID   | anthropic/claude-sonnet-4.6 (or another supported model) |
+|   API Key    |         API key generated in Anthropic Console         |
 | API Base URL |              https://api.anthropic.com/v1              |
 ### Edit Config Files
-config.json 
-```
+
+`config.json`:
+
+```json
+{
+  "version": 2,
+  "model_list": [
     {
       "model_name": "claude-sonnet-4.6",
       "model": "anthropic/claude-sonnet-4.6",
       "api_base": "https://api.anthropic.com/v1"
-    },
+    }
+  ],
+  "agents": {
+    "defaults": {
+      "model_name": "claude-sonnet-4.6"
+    }
+  }
+}
 ```
-***
-`~/.picoclaw/.security.yml`：
 
-```YAML
+`~/.picoclaw/.security.yml`:
+
+```yaml
 model_list:
   claude-sonnet-4.6:0:
     api_keys:
@@ -84,7 +95,7 @@ model_list:
 ```
 ## Notes
 
-- Pay‑as‑you‑go: costs scale with usage. Frequent or long‑context tasks can increase costs quickly — set usage alerts on the Console Billing page.
-- The Claude Opus series is significantly more expensive than Sonnet; avoid prolonged use unless necessary.
-- Subscription plans and API balances are separate and non‑transferable: balance added to the Console is for API calls only and unrelated to claude.ai subscriptions.
+- Pay-as-you-go costs scale directly with usage. For frequent or long-context tasks, set usage alerts on the Console billing page.
+- Claude Opus is significantly more expensive than Sonnet, so avoid long-running Opus usage unless needed.
+- Subscription plans and API balances are separate and non-transferable. Balance added in Console is for API calls only and is unrelated to claude.ai subscriptions.
 

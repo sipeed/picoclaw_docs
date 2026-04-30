@@ -1,5 +1,5 @@
 ---
-id: Anthropic-api
+id: anthropic-api
 title: Claude(Anthropic) API
 ---
 # Guia de Configuração da API do Claude (Anthropic)
@@ -26,9 +26,9 @@ Documentação oficial: https://docs.anthropic.com/en/api/getting-started
 
 ## Obtenção da chave API
 
-1. Acesse o console da Anthropic [Anthropic Console](https://console.anthropic.com/), registe-se e inicie sessão
-* No menu de navegação à esquerda, vá para a página API Keys e clique em "Create Key" para gerar a API Key
-* Na página Billing, adicione um método de pagamento e faça um depósito; as chamadas à API serão debitadas do saldo conforme o uso real de Tokens
+1. Acesse o [Anthropic Console](https://console.anthropic.com/), registre-se e faça login.
+2. No menu à esquerda, abra a página **API Keys** e clique em **Create Key** para gerar a chave de API.
+3. Na página **Billing**, adicione um método de pagamento e faça um depósito. As chamadas da API serão descontadas do saldo conforme o uso real de tokens.
 
 ![image-20260409215733096](/img/providers/Claude(Anthropic)2.png)
 
@@ -37,8 +37,8 @@ Documentação oficial: https://docs.anthropic.com/en/api/getting-started
 |      Modelo       | Entrada (por milhão de tokens) | Saída (por milhão de tokens) |
 | :------: | :-----------: | :---------------------------------------------------------------------------------------: |
 | claude-sonnet-4.6 |             US$ 3              |            US$ 15            |
-|  claude-opus-4.6  |             US$ 15             |            US$ 75            |
-| claude-haiku-4.6  |            US$ 0,8             |            US$ 4             |
+|  claude-opus-4.7  |             US$ 15             |            US$ 75            |
+| claude-haiku-4.5  |            US$ 0,8             |            US$ 4             |
 
 > Os preços mais recentes seguem a página oficial de preços da Anthropic.
 
@@ -47,8 +47,8 @@ Documentação oficial: https://docs.anthropic.com/en/api/getting-started
 |           Modelo           |                          Descrição                           |
 | :------------------------: | :-------------------------------------------------------------------------: |
 |     claude-sonnet-4.6      | Recomendado, equilíbrio entre desempenho e custo, excelente contexto longo |
-|      claude-opus-4.6       | Modelo avançado, raciocínio complexo, contexto muito extenso |
-|      claude-haiku-4.6      |          Modelo leve, resposta rápida, baixo custo           |
+|      claude-opus-4.7       | Modelo avançado, raciocínio complexo, contexto muito extenso |
+|      claude-haiku-4.5      |          Modelo leve, resposta rápida, baixo custo           |
 | claude-3-5-sonnet-20241022 |        Versão estável clássica, ampla compatibilidade        |
 
 > Para codificação diária, priorize o **claude-sonnet-4.6**; mude para o Opus apenas em tarefas complexas para evitar consumo excessivo de créditos.
@@ -74,19 +74,29 @@ Abra a WebUI do PicoClaw, acesse a página **Modelos** no menu lateral esquerdo 
 
 Configuração no config.json
 
-```
+```json
+{
+  "version": 2,
+  "model_list": [
     {
       "model_name": "claude-sonnet-4.6",
       "model": "anthropic/claude-sonnet-4.6",
       "api_base": "https://api.anthropic.com/v1"
-    },
+    }
+  ],
+  "agents": {
+    "defaults": {
+      "model_name": "claude-sonnet-4.6"
+    }
+  }
+}
 ```
 
 ---
 
 `~/.picoclaw/.security.yml`：
 
-```YAML
+```yaml
 model_list:
   claude-sonnet-4.6:0:
     api_keys:

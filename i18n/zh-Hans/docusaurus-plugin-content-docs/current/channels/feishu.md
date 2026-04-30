@@ -57,7 +57,7 @@ title: 飞书
 
 ![WebUI 飞书连接界面](/img/channels/webui_feishu.png)
 
-依次填入 App ID（`cli_xxx`）、App Secret（`YOUR_APP_SECRET`）、Encrypt Key（`YOUR_ENCRYPT_KEY`）和 Verification Token（`YOUR_VERIFICATION_TOKEN`），然后点击 **保存** 即可。
+依次填入 App ID（`YOUR_APP_ID`）、App Secret（`YOUR_APP_SECRET`）、Encrypt Key（`YOUR_ENCRYPT_KEY`）和 Verification Token（`YOUR_VERIFICATION_TOKEN`），然后点击 **保存** 即可。
 
 #### 2. 配置文件
 
@@ -83,7 +83,7 @@ title: 飞书
         "random_reaction_emoji": null,
         "is_lark": false
       }
-    },
+    }
   }
 }
 ```
