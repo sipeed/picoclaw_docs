@@ -198,7 +198,7 @@ jobs:
         if: steps.detect.outputs.has_changes == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
-          title: ${{ steps.pr_meta.outputs.title || format('docs: sync with upstream picoclaw {0}', steps.ref.outputs.label) }}
+          title: "${{ steps.pr_meta.outputs.title || format('docs: sync with upstream picoclaw {0}', steps.ref.outputs.label) }}"
           commit-message: |
             docs: sync with upstream picoclaw ${{ steps.ref.outputs.label }}
 
