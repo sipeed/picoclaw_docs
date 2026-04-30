@@ -34,22 +34,22 @@ title: Claude(Anthropic) API
 
 |       模型       | 输入（每百万 Token） | 输出（每百万 Token） |
 | :---------------: | :------------------: | :------------------: |
-| claude-sonnet-4.6 |         \$3         |         \$15         |
-|  claude-opus-4.7  |         \$15        |         \$75         |
-| claude-haiku-4.5  |        \$0.8        |          \$4         |
+| claude-sonnet-4.7 |         \$3         |         \$15         |
+|  claude-opus-4.7  |         \$15         |         \$75         |
+| claude-haiku-4.7 |        \$0.25        |        \$1.25        |
 
 > 最新价格以 Anthropic 官方定价页为准
 
 ### 支持的模型
 
-|            模型            |                说明                |
-| :------------------------: | :--------------------------------: |
-|     claude-sonnet-4.6      | 推荐，均衡性能与成本，长上下文优秀 |
-|      claude-opus-4.7       |   高阶模型，复杂推理、超大上下文   |
-|      claude-haiku-4.5      |     轻量模型，快速响应、低成本     |
-| claude-3-5-sonnet-20241022 |        经典稳定版，兼容广泛        |
+|            模型            |                    说明                    |
+| :------------------------: | :----------------------------------------: |
+|     claude-sonnet-4.7     | 性价比之王，日常任务与中等复杂度场景的首选 |
+|      claude-opus-4.7      |       高阶模型，复杂推理、超大上下文       |
+|      claude-haiku-4.7      |         轻量模型，快速响应、低成本         |
+| claude-3-5-sonnet-20241022 |            经典稳定版，兼容广泛            |
 
-> 日常编码优先使用 **claude-sonnet-4.6**，复杂任务再切换 Opus，避免额度消耗过快
+> 日常编码优先使用 **claude-sonnet-4.7**，复杂任务再切换 Opus，避免额度消耗过快
 
 ## 配置 PicoClaw
 
@@ -62,7 +62,7 @@ title: Claude(Anthropic) API
 |     字段     |                   填写内容                   |
 | :----------: | :-------------------------------------------: |
 |   模型别名   |           自定义名称，如 anthropic           |
-|  模型标识符  | anthropic/claude-sonnet-4.6（或其他支持模型） |
+|  模型标识符  | anthropic/claude-sonnet-4.7（或其他支持模型） |
 |   API Key   |       Anthropic Console 生成的 API Key       |
 | API Base URL |         https://api.anthropic.com/v1         |
 
@@ -75,14 +75,14 @@ config.json 配置
   "version": 2,
   "model_list": [
     {
-      "model_name": "claude-sonnet-4.6",
-      "model": "anthropic/claude-sonnet-4.6",
+      "model_name": "claude-sonnet-4.7",
+      "model": "anthropic/claude-sonnet-4.7",
       "api_base": "https://api.anthropic.com/v1"
     }
   ],
   "agents": {
     "defaults": {
-      "model_name": "claude-sonnet-4.6"
+      "model_name": "claude-sonnet-4.7"
     }
   }
 }
@@ -94,7 +94,7 @@ config.json 配置
 
 ```yaml
 model_list:
-  claude-sonnet-4.6:0:
+  claude-sonnet-4.7:0:
     api_keys:
       - "your-anthropic-api-key"
 ```

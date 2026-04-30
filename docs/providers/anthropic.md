@@ -35,9 +35,9 @@ Anthropic API billing is usage-based. There is no monthly fee, and you are charg
 
 |       Model       | Input (per million tokens) | Output (per million tokens) |
 | :---------------: | :------------------------: | :-------------------------: |
-| claude-sonnet-4.6 |             $3             |             $15             |
-|  claude-opus-4.7  |            $15             |             $75             |
-| claude-haiku-4.5  |            $0.8            |             $4              |
+| claude-sonnet-4.7 |         \$3         |         \$15         |
+|  claude-opus-4.7  |         \$15        |         \$75         |
+| claude-haiku-4.7  |        \$0.25        |          \$1.25         |
 
 Latest pricing always follows Anthropic's official pricing page.
 
@@ -45,11 +45,11 @@ Latest pricing always follows Anthropic's official pricing page.
 
 |           Model            |                         Description                          |
 | :------------------------: | :----------------------------------------------------------: |
-|     claude-sonnet-4.6      | Recommended; balanced performance and cost, excellent long context |
+|     claude-sonnet-4.7      | Recommended; balanced performance and cost, excellent long context |
 |      claude-opus-4.7       |      High-end model for complex reasoning and large context      |
-|      claude-haiku-4.5      |             Lightweight, fast response, lower cost             |
+|      claude-haiku-4.7      |             Lightweight, fast response, lower cost             |
 | claude-3-5-sonnet-20241022 |          Classic stable version with broad compatibility          |
-> For daily coding, prefer **claude-sonnet-4.6** and switch to Opus only for more complex tasks.
+> For daily coding, prefer **claude-sonnet-4.7** and switch to Opus only for more complex tasks.
 ## Configure PicoClaw
 
 ### Web UI Configuration
@@ -60,7 +60,7 @@ Open PicoClaw WebUI, go to **Models** in the left sidebar, and click **Add Model
 |    Field     |                     Value to enter                     |
 | :----------: | :----------------------------------------------------: |
 | Model Alias  |              Custom name, for example `anthropic`              |
-|   Model ID   | anthropic/claude-sonnet-4.6 (or another supported model) |
+|   Model ID   | anthropic/claude-sonnet-4.7 (or another supported model) |
 |   API Key    |         API key generated in Anthropic Console         |
 | API Base URL |              https://api.anthropic.com/v1              |
 ### Edit Config Files
@@ -72,14 +72,14 @@ Open PicoClaw WebUI, go to **Models** in the left sidebar, and click **Add Model
   "version": 2,
   "model_list": [
     {
-      "model_name": "claude-sonnet-4.6",
-      "model": "anthropic/claude-sonnet-4.6",
+      "model_name": "claude-sonnet-4.7",
+      "model": "anthropic/claude-sonnet-4.7",
       "api_base": "https://api.anthropic.com/v1"
     }
   ],
   "agents": {
     "defaults": {
-      "model_name": "claude-sonnet-4.6"
+      "model_name": "claude-sonnet-4.7"
     }
   }
 }
@@ -89,7 +89,7 @@ Open PicoClaw WebUI, go to **Models** in the left sidebar, and click **Add Model
 
 ```yaml
 model_list:
-  claude-sonnet-4.6:0:
+  claude-sonnet-4.7:0:
     api_keys:
       - "your-anthropic-api-key"
 ```
