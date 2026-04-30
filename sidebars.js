@@ -12,6 +12,11 @@ const sidebars = {
       label: 'Getting Started',
     },
     {
+      type: 'doc',
+      id: 'chat-commands',
+      label: 'Chat Commands',
+    },
+    {
       type: 'category',
       label: 'Installation',
       collapsible: true,
