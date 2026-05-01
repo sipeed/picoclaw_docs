@@ -110,6 +110,11 @@ jobs:
             echo "ENDOFPROMPT"
           } >> "$GITHUB_OUTPUT"
 
+      - name: Save pre-Codex HEAD
+        if: steps.detect.outputs.has_changes == 'true'
+        id: pre_codex
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
       - name: Run Codex to sync docs
         if: steps.detect.outputs.has_changes == 'true'
         uses: openai/codex-action@v1
@@ -121,12 +126,33 @@ jobs:
           safety-strategy: drop-sudo
           prompt: ${{ steps.prompt.outputs.value }}
 
+      - name: Read PR summary from Codex
+        if: steps.detect.outputs.has_changes == 'true'
+        id: pr_meta
+        run: |
+          if [ -f .pr-summary.md ]; then
+            PR_TITLE=$(head -1 .pr-summary.md | sed 's/^title: *//')
+            PR_BODY=$(sed '1d; /^---$/,$ { /^---$/d; b }; d' .pr-summary.md)
+            rm -f .pr-summary.md
+          else
+            PR_TITLE=""
+            PR_BODY=""
+          fi
+          echo "title=${PR_TITLE}" >> "$GITHUB_OUTPUT"
+          {
+            echo "body<<ENDPRBODY"
+            echo "$PR_BODY"
+            echo "ENDPRBODY"
+          } >> "$GITHUB_OUTPUT"
+
       - name: Capture sync diff for review
         if: steps.detect.outputs.has_changes == 'true'
         id: sync_diff
+        env:
+          PRE_CODEX_SHA: ${{ steps.pre_codex.outputs.sha }}
         run: |
-          DIFF_STAT=$(git diff --stat HEAD)
-          DIFF_CONTENT=$(git diff HEAD -- ':!picoclaw-upstream' ':!.codex' | head -3000)
+          DIFF_STAT=$(git diff --stat "$PRE_CODEX_SHA")
+          DIFF_CONTENT=$(git diff "$PRE_CODEX_SHA" -- ':!picoclaw-upstream' ':!.codex' | head -3000)
           {
             echo "diff_stat<<ENDSYNCSTAT"
             echo "$DIFF_STAT"
@@ -154,6 +180,10 @@ jobs:
             echo "ENDREVIEW"
           } >> "$GITHUB_OUTPUT"
 
+      - name: Reset Codex config for second pass
+        if: steps.detect.outputs.has_changes == 'true'
+        run: rm -f /home/runner/.codex/config.toml
+
       - name: Run Codex to review sync
         if: steps.detect.outputs.has_changes == 'true'
         uses: openai/codex-action@v1
@@ -162,7 +192,7 @@ jobs:
           responses-api-endpoint: ${{ secrets.OPENAI_BASE_URL }}
           model: ${{ github.event.inputs.model || 'gpt-5.5' }}
           sandbox: danger-full-access
-          safety-strategy: drop-sudo
+          safety-strategy: unsafe
           prompt: ${{ steps.review_prompt.outputs.value }}
 
       - name: Clean up artifacts
@@ -174,25 +204,6 @@ jobs:
         run: |
           npm ci
           npm run build
-
-      - name: Read PR summary from Codex
-        if: steps.detect.outputs.has_changes == 'true'
-        id: pr_meta
-        run: |
-          if [ -f .pr-summary.md ]; then
-            PR_TITLE=$(head -1 .pr-summary.md | sed 's/^title: *//')
-            PR_BODY=$(sed '1d; /^---$/,$ { /^---$/d; b }; d' .pr-summary.md)
-            rm -f .pr-summary.md
-          else
-            PR_TITLE=""
-            PR_BODY=""
-          fi
-          echo "title=${PR_TITLE}" >> "$GITHUB_OUTPUT"
-          {
-            echo "body<<ENDPRBODY"
-            echo "$PR_BODY"
-            echo "ENDPRBODY"
-          } >> "$GITHUB_OUTPUT"
 
       - name: Create pull request
         if: steps.detect.outputs.has_changes == 'true'

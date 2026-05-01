@@ -18,7 +18,7 @@ ${DIFF_CONTENT}
 Go through each item carefully:
 
 ### 1. No unwanted files
-- `picoclaw-upstream/`, `.codex`, `node_modules/`, `.pr-summary.md` must NOT appear in `git diff --stat HEAD`.
+- `picoclaw-upstream/`, `.codex`, `node_modules/` must NOT appear in `git diff --stat HEAD`.
 - If found, revert with `git checkout -- <path>` or `rm -rf <path>`.
 
 ### 2. No regressions

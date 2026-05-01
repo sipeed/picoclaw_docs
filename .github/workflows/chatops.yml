@@ -141,7 +141,9 @@ jobs:
         run: rm -rf picoclaw-upstream .codex
 
       - name: Verify build
-        run: npm run build
+        run: |
+          npm ci
+          npm run build
 
       - name: Update PR metadata
         env:
