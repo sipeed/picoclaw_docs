@@ -60,10 +60,19 @@ Get a free API key at [brave.com/search/api](https://brave.com/search/api) (2000
 
 | Config | Type | Default | Description |
 |--------|------|---------|-------------|
-| `enabled` | bool | true | Enable DuckDuckGo search |
+| `enabled` | bool | false | Enable DuckDuckGo search |
 | `max_results` | int | 5 | Maximum number of results |
 
-DuckDuckGo is enabled by default and requires no API key.
+DuckDuckGo requires no API key.
+
+### Sogou Search
+
+| Config | Type | Default | Description |
+|--------|------|---------|-------------|
+| `enabled` | bool | true | Enable Sogou search |
+| `max_results` | int | 5 | Maximum number of results |
+
+Sogou is enabled in the current example config and is useful for Chinese-language search.
 
 ### Baidu Search
 
@@ -138,6 +147,7 @@ All web tools (search and fetch) can use a shared proxy:
 
 | Config | Type | Default | Description |
 |--------|------|---------|-------------|
+| `provider` | string | `"auto"` | Search provider selection. `auto` lets PicoClaw choose an available provider. |
 | `prefer_native` | bool | true | Prefer provider's native search over configured search engines |
 | `private_host_whitelist` | string[] | `[]` | Private/internal hosts allowed for web fetching |
 
@@ -203,6 +213,18 @@ The exec tool executes shell commands on behalf of the agent.
 | `enable_deny_patterns` | bool | true | Enable default dangerous command blocking |
 | `custom_deny_patterns` | array | [] | Custom deny patterns (regular expressions) |
 | `custom_allow_patterns` | array | [] | Custom allow patterns -- matching commands bypass deny checks |
+
+## Hardware Tools
+
+Hardware tools are off by default. Enable only the interfaces that the agent should be allowed to use.
+
+| Tool | Config | Default | Description |
+| --- | --- | --- | --- |
+| I2C | `tools.i2c.enabled` | `false` | Enable I2C hardware access on supported Linux systems |
+| SPI | `tools.spi.enabled` | `false` | Enable SPI hardware access on supported Linux systems |
+| Serial | `tools.serial.enabled` | `false` | Enable cross-platform serial port read/write access |
+
+The serial tool was added in v0.2.8 and includes platform-specific implementations for Linux, macOS, and Windows. It validates port names and serial settings before opening a device.
 
 ### Disabling the Exec Tool
 
