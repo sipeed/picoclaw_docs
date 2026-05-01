@@ -22,28 +22,39 @@ Para o gerenciamento diário de modelos, recomenda-se a Web UI. Use edição man
       "workspace": "~/.picoclaw/workspace",
       "restrict_to_workspace": true,
       "model_name": "gpt-5.4",
-      "max_tokens": 32768,
-      "max_tool_iterations": 50
+      "max_tokens": 8192,
+      "context_window": 131072,
+      "max_tool_iterations": 20,
+      "summarize_message_threshold": 20,
+      "summarize_token_percent": 75,
+      "split_on_marker": false,
+      "tool_feedback": {
+        "enabled": false,
+        "max_args_length": 300,
+        "separate_messages": false
+      }
     }
   },
 
   "model_list": [
     {
-      "model_name": "ark-code-latest",
-      "model": "volcengine/ark-code-latest",
-      "api_keys": ["sk-your-volcengine-key"]
-    },
-    {
       "model_name": "gpt-5.4",
       "model": "openai/gpt-5.4",
-      "api_keys": ["sk-your-openai-key"],
+      "api_key": "sk-your-openai-key",
       "api_base": "https://api.openai.com/v1"
     },
     {
       "model_name": "claude-sonnet-4.6",
       "model": "anthropic/claude-sonnet-4.6",
-      "api_keys": ["sk-ant-your-key"],
-      "api_base": "https://api.anthropic.com/v1"
+      "api_key": "sk-ant-your-key",
+      "api_base": "https://api.anthropic.com/v1",
+      "thinking_level": "high"
+    },
+    {
+      "model_name": "azure-gpt5",
+      "model": "azure/my-gpt5-deployment",
+      "api_key": "your-azure-api-key",
+      "api_base": "https://your-resource.openai.azure.com"
     },
     {
       "model_name": "gemini",
@@ -53,18 +64,18 @@ Para o gerenciamento diário de modelos, recomenda-se a Web UI. Use edição man
     {
       "model_name": "deepseek",
       "model": "deepseek/deepseek-chat",
-      "api_keys": ["sk-your-deepseek-key"]
+      "api_key": "sk-your-deepseek-key"
     },
     {
       "model_name": "loadbalanced-gpt-5.4",
       "model": "openai/gpt-5.4",
-      "api_keys": ["sk-key1"],
+      "api_key": "sk-key1",
       "api_base": "https://api1.example.com/v1"
     },
     {
       "model_name": "loadbalanced-gpt-5.4",
       "model": "openai/gpt-5.4",
-      "api_keys": ["sk-key2"],
+      "api_key": "sk-key2",
       "api_base": "https://api2.example.com/v1"
     }
   ],
@@ -76,6 +87,7 @@ Para o gerenciamento diário de modelos, recomenda-se a Web UI. Use edição man
       "base_url": "",
       "proxy": "",
       "allow_from": ["YOUR_USER_ID"],
+      "use_markdown_v2": false,
       "reasoning_channel_id": ""
     },
     "discord": {
@@ -93,6 +105,10 @@ Para o gerenciamento diário de modelos, recomenda-se a Web UI. Use edição man
       "app_id": "YOUR_QQ_APP_ID",
       "app_secret": "YOUR_QQ_APP_SECRET",
       "allow_from": [],
+      "placeholder": {
+        "enabled": true,
+        "text": ["Thinking...", "Processing...", "Typing..."]
+      },
       "reasoning_channel_id": ""
     },
     "maixcam": {
@@ -108,10 +124,6 @@ Para o gerenciamento diário de modelos, recomenda-se a Web UI. Use edição man
       "use_native": false,
       "session_store_path": "",
       "allow_from": [],
-      "group_trigger": {
-        "mention_only": false,
-        "prefixes": []
-      },
       "reasoning_channel_id": ""
     },
     "feishu": {
@@ -176,21 +188,55 @@ Para o gerenciamento diário de modelos, recomenda-se a Web UI. Use edição man
       },
       "placeholder": {
         "enabled": true,
-        "text": "Thinking..."
+        "text": ["Thinking...", "Processing...", "Typing..."]
       },
       "reasoning_channel_id": ""
+    },
+    "pico": {
+      "enabled": false,
+      "token": "YOUR_PICO_TOKEN",
+      "allow_token_query": false,
+      "allow_origins": [],
+      "ping_interval": 30,
+      "read_timeout": 60,
+      "max_connections": 100,
+      "allow_from": []
+    },
+    "irc": {
+      "enabled": false,
+      "server": "irc.libera.chat:6697",
+      "tls": true,
+      "nick": "mybot",
+      "channels": ["#mychannel"],
+      "request_caps": ["server-time", "message-tags"],
+      "allow_from": [],
+      "group_trigger": {
+        "mention_only": true
+      }
     }
   },
 
   "tools": {
+    "allow_read_paths": null,
+    "allow_write_paths": null,
     "web": {
+      "enabled": true,
+      "prefer_native": true,
+      "fetch_limit_bytes": 10485760,
+      "format": "plaintext",
       "brave": {
         "enabled": false,
+        "api_key": "YOUR_BRAVE_API_KEY",
         "api_keys": ["YOUR_BRAVE_API_KEY"],
         "max_results": 5
       },
-      "duckduckgo": {
+      "provider": "auto",
+      "sogou": {
         "enabled": true,
+        "max_results": 5
+      },
+      "duckduckgo": {
+        "enabled": false,
         "max_results": 5
       },
       "perplexity": {
@@ -198,7 +244,7 @@ Para o gerenciamento diário de modelos, recomenda-se a Web UI. Use edição man
         "api_keys": ["pplx-xxx"],
         "max_results": 5
       },
-      "proxy": ""
+      "private_host_whitelist": []
     },
     "mcp": {
       "enabled": false,
@@ -225,9 +271,10 @@ Para o gerenciamento diário de modelos, recomenda-se a Web UI. Use edição man
       "exec_timeout_minutes": 5
     },
     "exec": {
+      "enabled": true,
       "enable_deny_patterns": true,
-      "custom_deny_patterns": [],
-      "custom_allow_patterns": []
+      "custom_deny_patterns": null,
+      "custom_allow_patterns": null
     },
     "skills": {
       "registries": {
@@ -239,6 +286,9 @@ Para o gerenciamento diário de modelos, recomenda-se a Web UI. Use edição man
           "download_path": "/api/v1/download"
         }
       }
+    },
+    "serial": {
+      "enabled": false
     }
   },
 
@@ -279,11 +329,18 @@ Para o gerenciamento diário de modelos, recomenda-se a Web UI. Use edição man
 | `model` | string | — | **Descontinuado**: use `model_name` no lugar |
 | `model_fallbacks` | array | [] | Nomes de modelos de fallback testados em ordem se o primário falhar |
 | `max_tokens` | int | 32768 | Máximo de tokens por resposta |
+| `context_window` | int | 0 | Sobrescrita opcional da janela de contexto. `0` usa o padrão do provider/modelo. |
 | `temperature` | float | — | Temperatura do LLM (omita para usar o padrão do provedor) |
 | `max_tool_iterations` | int | 50 | Máximo de iterações de chamadas de ferramentas por requisição |
+| `summarize_message_threshold` | int | 20 | Limite de quantidade de mensagens que pode acionar resumo |
+| `summarize_token_percent` | int | 75 | Percentual de uso de contexto que pode acionar resumo |
 | `max_media_size` | int | 20971520 | Tamanho máximo de arquivo de mídia em bytes (padrão 20MB) |
 | `image_model` | string | — | Nome do modelo para geração de imagens |
 | `image_model_fallbacks` | array | [] | Modelos de fallback para imagens |
+| `tool_feedback.enabled` | bool | `false` | Mostra progresso/argumentos de ferramentas nos canais de chat |
+| `tool_feedback.max_args_length` | int | 300 | Tamanho máximo da prévia de argumentos no feedback de ferramentas |
+| `tool_feedback.separate_messages` | bool | `false` | Envia cada atualização como mensagem separada em vez de editar uma mensagem de progresso |
+| `split_on_marker` | bool | `false` | Divide mensagens de saída no marcador `&lt;|[SPLIT]|&gt;` |
 | `routing` | object | — | Configurações de roteamento inteligente de modelos (veja abaixo) |
 
 #### `routing`
@@ -303,6 +360,7 @@ Quando habilitado, o PicoClaw pontua cada mensagem recebida com base em caracter
 | `model_name` | string | Sim | Alias usado em `agents.defaults.model_name` |
 | `model` | string | Sim | Formato `vendor/model-id`. O prefixo `vendor/` é usado apenas para resolução de protocolo/API base e não é enviado ao upstream como está. |
 | `api_keys` | array | Depende | Chaves de autenticação da API (array; suporta múltiplas chaves para load balancing). Obrigatório para provedores baseados em HTTP, a menos que `api_base` aponte para um servidor local. |
+| `api_key` | string | Legado | Campo de chave única ainda aceito por migrações e exemplos; prefira `api_keys` ou `.security.yml` para credenciais persistidas. |
 | `api_base` | string | Não | Sobrescreve a URL base da API padrão |
 | `enabled` | bool | Não | Indica se esta entrada de modelo está ativa. Durante a migração, o padrão é `true` para modelos com chaves de API ou nomeados `local-model`. Defina como `false` para desabilitar um modelo sem remover sua configuração. |
 | `auth_method` | string | Não | Método de autenticação (ex.: `oauth`) |
@@ -316,6 +374,7 @@ Quando habilitado, o PicoClaw pontua cada mensagem recebida com base em caracter
 | `fallbacks` | array | Não | Nomes de modelos de fallback para failover |
 | `extra_body` | object | Não | Campos adicionais a injetar no corpo da requisição da API |
 | `custom_headers` | object | Não | Cabeçalhos HTTP adicionais a injetar em toda requisição a este provider (apenas providers baseados em HTTP) |
+| `user_agent` | string | Não | Sobrescrever o HTTP User-Agent usado nas requisições ao provider |
 
 :::note Comportamento de API Key no Schema V2
 Na versão V2 do schema de configuração, `model_list[].api_key` em `config.json` é ignorado. Use `api_keys` e prefira armazenar credenciais reais em `.security.yml`. Durante a migração de V0/V1, os campos legados `api_key` e `api_keys` são mesclados automaticamente em `api_keys`. As chaves de API podem usar formatos `SecureString`: texto puro, `enc://<base64>`, ou `file://<path>`. Consulte [Credential Encryption](../credential-encryption.md).
@@ -344,6 +403,16 @@ Todos os canais suportam estes campos:
 | `group_trigger` | object | Configurações de gatilho para chats em grupo (veja abaixo) |
 | `placeholder` | object | Configurações de mensagem de placeholder (veja abaixo) |
 | `typing` | object | Configurações do indicador de digitação (veja abaixo) |
+
+### Canais Pico e IRC
+
+O PicoClaw v0.2.8 adiciona configuração de primeira classe para o canal WebSocket Pico nativo e para IRC:
+
+| Canal | Campos principais | Observações |
+| --- | --- | --- |
+| `pico` | `token`, `allow_token_query`, `allow_origins`, `ping_interval`, `read_timeout`, `write_timeout`, `max_connections` | Servidor WebSocket nativo para clientes personalizados e Web UI. |
+| `pico_client` | `url`, `token`, `session_id`, `ping_interval`, `read_timeout` | Modo cliente outbound para conectar a um servidor Pico remoto. |
+| `irc` | `server`, `tls`, `nick`, `user`, `real_name`, `password`, `nickserv_password`, `sasl_user`, `sasl_password`, `channels`, `request_caps` | Conexão de cliente IRC com TLS/SASL e tags de digitação opcionais. |
 
 #### `group_trigger`
 

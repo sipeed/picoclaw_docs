@@ -30,6 +30,7 @@ picoclaw gateway
 | **MaixCam** | Easy | Hardware-integrated AI camera. |
 | **VK** | Easy | VKontakte community bot via Long Poll API. |
 | **Pico** | Easy | Native WebSocket channel for custom clients. |
+| **IRC** | Medium | IRC client connection with TLS, SASL, joins, and optional IRCv3 typing tags. |
 
 ## How It Works
 
@@ -64,6 +65,7 @@ All channels support these optional fields:
 | --- | --- |
 | `reasoning_channel_id` | Route reasoning/thinking output to a separate channel |
 | `group_trigger` | Control bot behavior in group chats (mention-only, prefixes) |
+| `typing` | Enable typing indicators on channels that support them |
 
 ## Shared Gateway
 
