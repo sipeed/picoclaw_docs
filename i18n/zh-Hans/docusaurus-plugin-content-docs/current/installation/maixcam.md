@@ -85,7 +85,7 @@ picoclaw-launcher -no-browser -public
 1. 使用 MaixVision 连接上 MaixCam 或 MaixCam2 设备。
 2. 在 MaixVision 中创建一个新的 Python 文件，并写入以下脚本内容：
 
-   脚本地址：[`install_picoclaw.py`](/scripts/maixcam/install_picoclaw.py)
+   脚本地址：[`install_picoclaw.py`](pathname:///scripts/maixcam/install_picoclaw.py)
 
 3. 点击运行，PicoClaw 将会被下载并安装到设备上，并启动 PicoClaw 的 Web UI 界面。
 4. 在同一个局域网的浏览器中访问 `http://<设备IP>:18800` 即可进入 PicoClaw 的 Web UI。

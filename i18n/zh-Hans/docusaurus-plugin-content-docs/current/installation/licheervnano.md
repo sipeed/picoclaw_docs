@@ -23,7 +23,7 @@ LicheeRV Nano 的更多详细信息，请参考 [Sipeed 官方文档](https://wi
 
 ### 方式一：一键安装脚本（推荐）
 
-您可以使用 `curl` 命令一键下载并执行 [`install_picoclaw.py`](/scripts/maixcam/install_picoclaw.py) 安装脚本，免去手动分步操作的繁琐：
+您可以使用 `curl` 命令一键下载并执行 [`install_picoclaw.py`](pathname:///scripts/maixcam/install_picoclaw.py) 安装脚本，免去手动分步操作的繁琐：
 
 ```bash
 curl -o install_picoclaw.py https://raw.githubusercontent.com/sipeed/picoclaw_docs/main/static/scripts/maixcam/install_picoclaw.py && python3 install_picoclaw.py

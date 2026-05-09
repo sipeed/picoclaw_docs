@@ -85,7 +85,7 @@ Em seguida, abra `http://<device-ip>:18800` em um navegador na mesma LAN.
 1. Conecte-se ao seu dispositivo MaixCam ou MaixCam2 no MaixVision.
 2. No MaixVision, crie um novo arquivo Python e cole o conteúdo do script abaixo:
 
-	Script: [`install_picoclaw.py`](/scripts/maixcam/install_picoclaw.py)
+	Script: [`install_picoclaw.py`](pathname:///scripts/maixcam/install_picoclaw.py)
 
 3. Clique em **Run**. O PicoClaw será baixado e instalado no dispositivo, e a Web UI do PicoClaw será iniciada.
 4. Abra `http://<device-ip>:18800` em um navegador na mesma LAN para acessar a Web UI do PicoClaw.

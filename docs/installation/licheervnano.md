@@ -21,7 +21,7 @@ Make sure your host machine and the LicheeRV Nano are on the same LAN, then conn
 
 ### Method 1: One-click install script (recommended)
 
-Use `curl` to download and run the [`install_picoclaw.py`](/scripts/maixcam/install_picoclaw.py) script in one step:
+Use `curl` to download and run the [`install_picoclaw.py`](pathname:///scripts/maixcam/install_picoclaw.py) script in one step:
 
 ```bash
 curl -o install_picoclaw.py https://raw.githubusercontent.com/sipeed/picoclaw_docs/main/static/scripts/maixcam/install_picoclaw.py && python3 install_picoclaw.py
