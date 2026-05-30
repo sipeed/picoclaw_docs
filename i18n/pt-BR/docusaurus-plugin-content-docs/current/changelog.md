@@ -9,6 +9,88 @@ Todas as mudanças notáveis do PicoClaw são documentadas aqui.
 
 ---
 
+## v0.2.9
+
+*Lançado: 2026-05-24*
+
+### Destaques
+
+- **Colaboração Multi-Agent**: Prompts de descoberta de Agent, delegação entre Agents e dispatch de tarefas via TargetAgentID (#2158, #2531)
+- **Expansão do ecossistema de Providers**: Novos providers gpt4free, SiliconFlow e Gemini Web Search; metadados e catálogo backend unificados (#2909, #2885, #2763, #2701, #2896)
+- **Console Web aprimorado**: Navegação em catálogo de modelos, verificação de conectividade de provider, seletor de visibilidade de detalhes do chat, controles de colapso/cópia de blocos de código e UI de configuração MCP (#2831, #2832, #2833, #2886, #2882, #2770)
+- **MCP Streamable HTTP**: Novo transporte Streamable HTTP para o protocolo MCP (#2811)
+- **Auto-evolução do Agent**: Configuração de auto-evolução em runtime para otimização automática de comportamento (#2847)
+- **Migração do LINE SDK**: Migração de código HTTP manual para o SDK oficial LINE Bot v8 (#2413)
+
+### Funcionalidades
+
+#### Core & Agent
+- Prompt de descoberta multi-agent com configuração independente por agent (#2158)
+- Ferramenta de delegação entre agents (delegate-tool) com roteamento por TargetAgentID (#2531)
+- Mecanismo de auto-evolução do Agent para otimização de estratégias em runtime (#2847)
+- Políticas de contexto por requisição para ajuste dinâmico do comportamento do Agent (#2914)
+- Declarações de capacidades via frontmatter do AGENT.md para descoberta de identidade (#2158)
+- Mecanismo de allowlist para MCP — apenas servidores MCP permitidos são carregados (#2158)
+
+#### Providers e Modelos
+- Provider gpt4free compatível com OpenAI (#2909)
+- Suporte ao provider SiliconFlow (#2885)
+- Provider Gemini Web Search (#2763)
+- Gerenciamento explícito de metadados de provider com catálogo backend unificado (#2701, #2896)
+- Inferência streaming Bedrock (#2645)
+- Suporte a transporte streaming (#2892)
+- Persistência de `model_name` no histórico de chat para rastreamento de modelo entre sessões (#2897)
+
+#### Console Web
+- Navegação em catálogo de modelos e formulário de seleção de provider (#2831, #2832)
+- Verificação real de conectividade para providers (#2833)
+- Seletor de visibilidade de detalhes do chat (#2886)
+- Controles independentes de cópia e colapso de blocos de código (#2882)
+- UI de gerenciamento de configuração MCP (#2770)
+- Busca de modelos usando API key armazenada para providers salvos (#2910)
+- Pré-visualização de diff de arquivos (#2857)
+
+#### Canais
+- Canal LINE migrado para o SDK oficial LINE Bot v8 (#2413)
+- Suporte ao canal Slack Webhook (#2719)
+- Suporte a grupo de mídia no Telegram (#2758)
+- Funcionalidade de reset de fábrica (#2891)
+
+#### Protocolo MCP
+- Suporte a transporte Streamable HTTP (#2811)
+- Suporte ao comando stop (#2762)
+
+### Correções de Bugs
+
+- Correção do thinking-off explícito não sendo respeitado (#2898)
+- Correção do replay de histórico de raciocínio MiMo (#2862)
+- Correção da perda de reasoning_content em streaming DeepSeek (#2741)
+- Correção da validação de alvo em resumo de nó folha (#2767)
+- Correção de vulnerabilidade de injeção via bypass de codificação PowerShell no Windows (#2836)
+- Correção de compatibilidade do botão de cópia em ambiente HTTP (#2712)
+- Correção do `load_image` não ser configurável (#2879)
+- Correção da perda de mídia de imagem de anexo Pico entre clientes (#2874)
+- Correção do tratamento de mídia SVG no Telegram (#2773)
+- Correção de reload de media store de mensagens de voz (#2783)
+- Correção da limpeza de feedback de ferramenta em sessão pai (#2823)
+- Correção do processamento de followups de voz em fila (#2828)
+- Correção da lógica de retentativa em erros de rede (#2669)
+- Correção da sincronização de strings de locale i18n para UI de provider de modelo (#2911)
+- Correção da sanitização de schema MCP Gemini (#2681)
+- Correção da mensagem de erro quando DeepSeek vision não é suportado (#2717)
+- Correção da documentação do tier gratuito Baidu Search (1000/dia → 1500/mês) (#2825)
+
+### Build e Ops
+
+- Go atualizado para 1.25.10 para correção de vulnerabilidades stdlib (#2818)
+- Adicionada localização completa em Português (Brasil) (#2037)
+- Múltiplos upgrades de módulos Go: slack-go, gronx, x/net, telego, Lark SDK, sqlite, systray, jsonschema-go, AWS SDK
+- Múltiplos upgrades de dependências frontend: tailwindcss 4.3.0, shadcn 4.7.0, vite, i18next, react-i18next, jotai, typescript-eslint
+
+### Changelog completo
+- [GitHub v0.2.8...v0.2.9](https://github.com/sipeed/picoclaw/compare/v0.2.8...v0.2.9)
+---
+
 ## v0.2.8
 
 *Lançado: 2026-04-30*

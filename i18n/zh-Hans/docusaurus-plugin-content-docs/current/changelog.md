@@ -9,6 +9,89 @@ PicoClaw 的所有重要更新记录。
 
 ---
 
+## v0.2.9
+
+*发布日期：2026-05-24*
+
+### 核心亮点
+
+- **多 Agent 协作体系**：实现 Agent 发现提示词、跨 Agent 委托、任务分发等多 Agent 协作核心能力（#2158、#2531）
+- **Provider 生态扩展**：新增 gpt4free、SiliconFlow、Gemini Web Search 等 Provider，模型管理能力全面升级（#2909、#2885、#2763、#2701、#2896）
+- **Web 控制台大幅增强**：新增模型目录浏览、Provider 连通性验证、聊天详情可见性选择器、代码块折叠/复制等功能（#2831、#2832、#2833、#2886、#2882、#2770）
+- **MCP Streamable HTTP 支持**：MCP 协议新增 Streamable HTTP 传输支持（#2811）
+- **Agent 自进化能力**：支持 Agent 运行时自我进化配置，自动优化行为策略（#2847）
+- **LINE SDK 官方化**：从手写 HTTP 代码迁移至官方 LINE Bot SDK v8（#2413）
+
+### 功能
+
+#### 核心架构与 Agent
+- 新增多 Agent 发现提示词和按 Agent 独立配置能力（#2158）
+- 新增跨 Agent 委托工具（delegate-tool），支持 TargetAgentID 定向分发（#2531）
+- 新增 Agent 自进化机制，支持运行时策略自动优化（#2847）
+- 新增请求级上下文策略，支持按请求动态调整 Agent 行为（#2914）
+- Agent AGENT.md frontmatter 能力声明支持，自动发现身份和能力（#2158）
+- 新增 MCP 白名单机制，仅加载允许的 MCP 服务器（#2158）
+
+#### Provider 与模型
+- 新增 gpt4free OpenAI 兼容 Provider（#2909）
+- 新增 SiliconFlow Provider 支持（#2885）
+- 新增 Gemini Web Search Provider（#2763）
+- 新增 Provider 显式元数据管理，统一模型目录后端（#2701、#2896）
+- 新增 Bedrock 流式推理支持（#2645）
+- 新增流式传输支持（#2892）
+- 聊天历史持久化 model_name 字段，支持跨会话模型追踪（#2897）
+
+#### Web 控制台
+- 新增模型目录浏览和 Provider 选择表单（#2831、#2832）
+- 新增 Provider 真实连通性验证（#2833）
+- 新增聊天详情可见性选择器（#2886）
+- 新增独立代码块复制和折叠控件（#2882）
+- 新增 MCP 配置管理 UI（#2770）
+- 新增 Web 端 Provider 保存后模型拉取能力（#2910）
+- 新增文件差异预览能力（#2857）
+
+#### 渠道适配
+- LINE 渠道迁移至官方 LINE Bot SDK v8（#2413）
+- 新增 Slack Webhook Channel 支持（#2719）
+- 新增 Telegram 媒体组支持（#2758）
+- 新增恢复出厂设置功能（#2891）
+
+#### MCP 协议
+- 新增 MCP Streamable HTTP 传输支持（#2811）
+- 新增 stop 命令支持（#2762）
+
+### Bug 修复
+
+- 修复显式关闭 thinking 模式时未生效的问题（#2898）
+- 修复 MiMo 推理历史重放问题（#2862）
+- 修复 DeepSeek 流式推理内容（reasoning_content）丢失问题（#2741）
+- 修复叶子节点摘要目标验证问题（#2767）
+- 修复 Windows PowerShell 编码绕过注入安全漏洞（#2836）
+- 修复 HTTP 环境下复制按钮兼容性问题（#2712）
+- 修复 load_image 配置项不可配置的问题（#2879）
+- 修复 Pico 附件图片媒体在客户端间传递丢失的问题（#2874）
+- 修复 Telegram SVG 媒体处理问题（#2773）
+- 修复语音消息重载媒体存储问题（#2783）
+- 修复父会话工具反馈清理问题（#2823）
+- 修复排队语音后续处理问题（#2828）
+- 修复网络错误重试逻辑（#2669）
+- 修复模型 Provider UI 的 i18n 本地化字符串同步问题（#2911）
+- 修复 Gemini MCP Schema 清理问题（#2681）
+- 修复 DeepSeek vision 不支持时的错误提示（#2717）
+- 修复 Baidu Search 免费额度文档错误（1000/天 → 1500/月）（#2825）
+
+### 构建与运维
+
+- Go 升级至 1.25.10，修复 stdlib 安全漏洞（#2818）
+- 新增葡萄牙语（巴西）完整本地化支持（#2037）
+- 多项 Go 模块升级：slack-go、gronx、x/net、telego、飞书 SDK、sqlite、systray、jsonschema-go、AWS SDK
+- 多项前端依赖升级：tailwindcss 4.3.0、shadcn 4.7.0、vite、i18next、react-i18next、jotai、typescript-eslint
+
+### 完整变更
+- [GitHub v0.2.8...v0.2.9](https://github.com/sipeed/picoclaw/compare/v0.2.8...v0.2.9)
+
+---
+
 ## v0.2.8
 
 *发布日期：2026-04-30*
