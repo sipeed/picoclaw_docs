@@ -22,13 +22,36 @@ O Telegram é o canal **recomendado**. É fácil de configurar e suporta transcr
 
 ### 3. Configurar
 
+#### 1. Configuracao pelo WebUI
+
+Recomendamos priorizar a configuracao pelo WebUI, pois e mais rapida e conveniente.
+
+![WebUI Telegram Connection Interface](/img/channels/webui_telegram.png)
+
+Preencha, nesta ordem, o Bot Token (`YOUR_BOT_TOKEN`) e as Origens Permitidas (`YOUR_USER_ID`), depois clique em **Salvar**.
+
+#### 2. Arquivos de Configuracao
+
+Edite `~/.picoclaw/.security.yml`:
+
+```yaml
+telegram:
+  settings:
+    token: YOUR_BOT_TOKEN
+```
+
+Edite `~/.picoclaw/config.json`:
+
 ```json
 {
   "channels": {
     "telegram": {
       "enabled": true,
-      "token": "YOUR_BOT_TOKEN",
-      "allow_from": ["YOUR_USER_ID"]
+      "allow_from": [
+        "YOUR_USER_ID"
+      ],
+      "reasoning_channel_id": "",
+      "group_trigger": {}
     }
   }
 }

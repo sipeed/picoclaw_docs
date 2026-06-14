@@ -24,14 +24,43 @@ title: Discord
 
 ### 4. Configure
 
+#### 1. WebUI Configuration
+
+We recommend using the WebUI first because it is faster and more convenient.
+
+![WebUI Discord Connection Interface](/img/channels/webui_discord.png)
+
+Fill in the Bot Token (`YOUR_BOT_TOKEN`) and Allowed Sources (`YOUR_USER_ID`) in order, then click **Save**.
+
+#### 2. Configuration Files
+
+Edit `~/.picoclaw/.security.yml`:
+
+```yaml
+discord:
+  settings:
+    token: YOUR_BOT_TOKEN
+```
+
+Edit `~/.picoclaw/config.json`:
+
 ```json
 {
   "channels": {
     "discord": {
       "enabled": true,
-      "token": "YOUR_BOT_TOKEN",
-      "allow_from": ["YOUR_USER_ID"],
-      "group_trigger": {
+      "type": "discord",
+      "allow_from": [
+        "YOUR_USER_ID"
+      ],
+      "reasoning_channel_id": "",
+      "group_trigger": {},
+      "typing": {},
+      "placeholder": {
+        "enabled": false
+      },
+      "settings": {
+        "proxy": "",
         "mention_only": false
       }
     }

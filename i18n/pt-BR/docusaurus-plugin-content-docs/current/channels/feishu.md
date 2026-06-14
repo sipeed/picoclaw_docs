@@ -51,28 +51,51 @@ Para desenvolvimento/testes, você pode deixar `encrypt_key` e `verification_tok
 
 ### 5. Configurar o PicoClaw
 
+#### 1. Configuracao pelo WebUI
+
+Recomendamos priorizar a configuracao pelo WebUI, pois e mais rapida e conveniente.
+
+![WebUI Feishu Connection Interface](/img/channels/webui_feishu.png)
+
+Preencha, nesta ordem, o App ID (`YOUR_APP_ID`), App Secret (`YOUR_APP_SECRET`), Encrypt Key (`YOUR_ENCRYPT_KEY`) e Verification Token (`YOUR_VERIFICATION_TOKEN`), depois clique em **Salvar**.
+
+#### 2. Arquivos de Configuracao
+
+Edite `~/.picoclaw/config.json`:
+
 ```json
 {
   "channels": {
     "feishu": {
       "enabled": true,
-      "app_id": "cli_xxx",
-      "app_secret": "YOUR_APP_SECRET",
-      "encrypt_key": "YOUR_ENCRYPT_KEY",
-      "verification_token": "YOUR_VERIFICATION_TOKEN",
-      "allow_from": [],
-      "group_trigger": {
-        "mention_only": true
-      },
+      "type": "feishu",
+      "allow_from": [
+        "YOUR_USER_ID"
+      ],
+      "reasoning_channel_id": "",
+      "group_trigger": {},
+      "typing": {},
       "placeholder": {
-        "enabled": true,
-        "text": "Thinking..."
+        "enabled": false
       },
-      "random_reaction_emoji": [],
-      "reasoning_channel_id": ""
+      "settings": {
+        "app_id": "YOUR_APP_ID",
+        "random_reaction_emoji": null,
+        "is_lark": false
+      }
     }
   }
 }
+```
+
+Edite `~/.picoclaw/.security.yml`:
+
+```yaml
+feishu:
+  settings:
+    app_secret: "YOUR_APP_SECRET"
+    encrypt_key: "YOUR_ENCRYPT_KEY"
+    verification_token: "YOUR_VERIFICATION_TOKEN"
 ```
 
 ### 6. Publicar o App

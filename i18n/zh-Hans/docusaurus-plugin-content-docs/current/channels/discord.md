@@ -24,14 +24,43 @@ title: Discord
 
 ### 4. 配置
 
+#### 1. WebUI 配置
+
+优先推荐使用 WebUI 配置，方便快捷。
+
+![WebUI Discord Connection Interface](/img/channels/webui_discord.png)
+
+依次填入 Bot Token（`YOUR_BOT_TOKEN`）和允许来源（`YOUR_USER_ID`），然后点击 **保存** 即可。
+
+#### 2. 配置文件
+
+修改 `~/.picoclaw/.security.yml`：
+
+```yaml
+discord:
+  settings:
+    token: YOUR_BOT_TOKEN
+```
+
+修改 `~/.picoclaw/config.json`：
+
 ```json
 {
   "channels": {
     "discord": {
       "enabled": true,
-      "token": "YOUR_BOT_TOKEN",
-      "allow_from": ["YOUR_USER_ID"],
-      "group_trigger": {
+      "type": "discord",
+      "allow_from": [
+        "YOUR_USER_ID"
+      ],
+      "reasoning_channel_id": "",
+      "group_trigger": {},
+      "typing": {},
+      "placeholder": {
+        "enabled": false
+      },
+      "settings": {
+        "proxy": "",
         "mention_only": false
       }
     }
