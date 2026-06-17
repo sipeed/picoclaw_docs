@@ -9,6 +9,154 @@ Todas as mudanças notáveis do PicoClaw são documentadas aqui.
 
 ---
 
+## v0.3.0
+
+*Lançado: 2026-06-15*
+
+### Destaques
+
+- **Confiabilidade e Robustez**: Ampla revisão de robustez em agent, tools, channels e context — guards seguros de type assertion, tratamento explícito de erros de `Close()`, proteção contra panic e retry de erros transitórios de LLM (#2991)
+- **Expansão de Providers**: Provider nativo de busca web Kagi e autenticação por managed identity (Entra ID) do Azure OpenAI (#3037, #2971)
+- **Console Web**: Colar e arrastar-e-soltar imagens no chat, números de linha em blocos de código com alternância de quebra e dica de shift-enter no compositor (#2933)
+- **Ferramenta Cron**: Adicionadas ações `get` e `update` com controle de acesso por channel
+- **Segurança**: Reforço do controle de acesso do launcher, guard de SSRF estendido para 198.18.0.0/15 e guard de workspace para URLs sem scheme (#3085)
+
+### Recursos
+
+#### Providers e Modelos
+- Provider nativo de busca web Kagi (#3037)
+- Autenticação por managed identity (Entra ID) do Azure OpenAI (#2971)
+- Mapeamento de campos de thinking do DeepSeek para streaming compatível com OpenAI (#2928)
+- Catálogo CommonModels para o provider MiMo (#2915)
+- ID canônico do modelo Claude Sonnet (#3036)
+
+#### Console Web
+- Colar e arrastar-e-soltar imagens no chat (#2939)
+- Números de linha e alternância de quebra em blocos de código (#2933)
+- Dica de shift-enter abaixo do compositor de chat
+
+#### Núcleo e Agent
+- Ações `get`/`update` da ferramenta cron com restrição de acesso por channel
+- Ferramenta de mensagem de saída suporta anexos de mídia
+- Timestamps `created_at` por mensagem preservados no bootstrap do histórico (#2946)
+- Orçamento de descarte por backpressure apenas para streams de áudio no message bus
+- Retry de erros transitórios de LLM (#2991)
+- Expansão de skills do agent PicoClaw (#2994)
+
+#### Channels
+- Larksuite (Feishu) adaptado para oapi-sdk-go v3.9.4 (#3008)
+
+#### Internacionalização
+- Locale tcheco (cs) (#2932)
+- Locale bengali (bn-IN) (#2974)
+
+### Correções de Bugs
+
+- Corrigida estabilidade do loop do agent substituindo WaitGroup por contador baseado em Cond (#2904)
+- Corrigido health check sempre retornando not-ready
+- Corrigida perda de chamadas de ferramenta em streaming do Codex (#3007)
+- Corrigido roteamento de resposta em grupo do OneBot via chatID prefixado (#3009)
+- Corrigido download de mídia de entrada privada do OneBot
+- Corrigido download de imagens do Discord
+- Corrigido tratamento de mensagens de localização do Telegram (#3052)
+- Corrigida ferramenta exec rejeitando caminhos relativos ao workspace (#3087)
+- Corrigido comportamento da API `os.Root` no Windows (#3089)
+- Corrigida persistência de `dm_scope` e isolamento de sessão em runtime (#3067)
+- Corrigido bypass de allowlist do launcher e parsing de IP de cliente via trusted-proxy
+- Corrigido regex de busca sogou para a nova estrutura HTML (#3139)
+- Reforçadas type assertions e tratamento de erros de `Close()` em agent, tools, channels, context, config, seahorse e updater
+
+### Build e Operações
+
+- Go atualizado para 1.25.11 (#2997)
+- modelcontextprotocol/go-sdk atualizado para 1.6.1
+
+### Changelog completo
+- [GitHub v0.2.9...v0.3.0](https://github.com/sipeed/picoclaw/compare/v0.2.9...v0.3.0)
+---
+
+## v0.2.9
+
+*Lançado: 2026-05-24*
+
+### Destaques
+
+- **Colaboração Multi-Agent**: Prompts de descoberta de Agent, delegação entre Agents e dispatch de tarefas via TargetAgentID (#2158, #2531)
+- **Expansão do ecossistema de Providers**: Novos providers gpt4free, SiliconFlow e Gemini Web Search; metadados e catálogo backend unificados (#2909, #2885, #2763, #2701, #2896)
+- **Console Web aprimorado**: Navegação em catálogo de modelos, verificação de conectividade de provider, seletor de visibilidade de detalhes do chat, controles de colapso/cópia de blocos de código e UI de configuração MCP (#2831, #2832, #2833, #2886, #2882, #2770)
+- **MCP Streamable HTTP**: Novo transporte Streamable HTTP para o protocolo MCP (#2811)
+- **Auto-evolução do Agent**: Configuração de auto-evolução em runtime para otimização automática de comportamento (#2847)
+- **Migração do LINE SDK**: Migração de código HTTP manual para o SDK oficial LINE Bot v8 (#2413)
+
+### Funcionalidades
+
+#### Core & Agent
+- Prompt de descoberta multi-agent com configuração independente por agent (#2158)
+- Ferramenta de delegação entre agents (delegate-tool) com roteamento por TargetAgentID (#2531)
+- Mecanismo de auto-evolução do Agent para otimização de estratégias em runtime (#2847)
+- Políticas de contexto por requisição para ajuste dinâmico do comportamento do Agent (#2914)
+- Declarações de capacidades via frontmatter do AGENT.md para descoberta de identidade (#2158)
+- Mecanismo de allowlist para MCP — apenas servidores MCP permitidos são carregados (#2158)
+
+#### Providers e Modelos
+- Provider gpt4free compatível com OpenAI (#2909)
+- Suporte ao provider SiliconFlow (#2885)
+- Provider Gemini Web Search (#2763)
+- Gerenciamento explícito de metadados de provider com catálogo backend unificado (#2701, #2896)
+- Inferência streaming Bedrock (#2645)
+- Suporte a transporte streaming (#2892)
+- Persistência de `model_name` no histórico de chat para rastreamento de modelo entre sessões (#2897)
+
+#### Console Web
+- Navegação em catálogo de modelos e formulário de seleção de provider (#2831, #2832)
+- Verificação real de conectividade para providers (#2833)
+- Seletor de visibilidade de detalhes do chat (#2886)
+- Controles independentes de cópia e colapso de blocos de código (#2882)
+- UI de gerenciamento de configuração MCP (#2770)
+- Busca de modelos usando API key armazenada para providers salvos (#2910)
+- Pré-visualização de diff de arquivos (#2857)
+
+#### Canais
+- Canal LINE migrado para o SDK oficial LINE Bot v8 (#2413)
+- Suporte ao canal Slack Webhook (#2719)
+- Suporte a grupo de mídia no Telegram (#2758)
+- Funcionalidade de reset de fábrica (#2891)
+
+#### Protocolo MCP
+- Suporte a transporte Streamable HTTP (#2811)
+- Suporte ao comando stop (#2762)
+
+### Correções de Bugs
+
+- Correção do thinking-off explícito não sendo respeitado (#2898)
+- Correção do replay de histórico de raciocínio MiMo (#2862)
+- Correção da perda de reasoning_content em streaming DeepSeek (#2741)
+- Correção da validação de alvo em resumo de nó folha (#2767)
+- Correção de vulnerabilidade de injeção via bypass de codificação PowerShell no Windows (#2836)
+- Correção de compatibilidade do botão de cópia em ambiente HTTP (#2712)
+- Correção do `load_image` não ser configurável (#2879)
+- Correção da perda de mídia de imagem de anexo Pico entre clientes (#2874)
+- Correção do tratamento de mídia SVG no Telegram (#2773)
+- Correção de reload de media store de mensagens de voz (#2783)
+- Correção da limpeza de feedback de ferramenta em sessão pai (#2823)
+- Correção do processamento de followups de voz em fila (#2828)
+- Correção da lógica de retentativa em erros de rede (#2669)
+- Correção da sincronização de strings de locale i18n para UI de provider de modelo (#2911)
+- Correção da sanitização de schema MCP Gemini (#2681)
+- Correção da mensagem de erro quando DeepSeek vision não é suportado (#2717)
+- Correção da documentação do tier gratuito Baidu Search (1000/dia → 1500/mês) (#2825)
+
+### Build e Ops
+
+- Go atualizado para 1.25.10 para correção de vulnerabilidades stdlib (#2818)
+- Adicionada localização completa em Português (Brasil) (#2037)
+- Múltiplos upgrades de módulos Go: slack-go, gronx, x/net, telego, Lark SDK, sqlite, systray, jsonschema-go, AWS SDK
+- Múltiplos upgrades de dependências frontend: tailwindcss 4.3.0, shadcn 4.7.0, vite, i18next, react-i18next, jotai, typescript-eslint
+
+### Changelog completo
+- [GitHub v0.2.8...v0.2.9](https://github.com/sipeed/picoclaw/compare/v0.2.8...v0.2.9)
+---
+
 ## v0.2.8
 
 *Lançado: 2026-04-30*
