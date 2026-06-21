@@ -60,10 +60,19 @@ title: 工具配置
 
 | 配置项 | 类型 | 默认值 | 说明 |
 |--------|------|--------|------|
-| `enabled` | bool | true | 启用 DuckDuckGo 搜索 |
+| `enabled` | bool | false | 启用 DuckDuckGo 搜索 |
 | `max_results` | int | 5 | 最大返回结果数 |
 
-DuckDuckGo 默认启用，无需 API Key。
+DuckDuckGo 无需 API Key。
+
+### 搜狗搜索
+
+| 配置项 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| `enabled` | bool | true | 启用搜狗搜索 |
+| `max_results` | int | 5 | 最大返回结果数 |
+
+当前示例配置默认启用搜狗搜索，适合中文搜索场景。
 
 ### 百度搜索
 
@@ -138,6 +147,7 @@ DuckDuckGo 默认启用，无需 API Key。
 
 | 配置项 | 类型 | 默认值 | 说明 |
 |--------|------|--------|------|
+| `provider` | string | `"auto"` | 搜索提供方选择。`auto` 表示由 PicoClaw 选择可用 provider。 |
 | `prefer_native` | bool | true | 优先使用提供商的原生搜索而非配置的搜索引擎 |
 | `private_host_whitelist` | string[] | `[]` | 允许网页抓取的私有/内部主机列表 |
 
@@ -203,6 +213,18 @@ Exec 工具代替 Agent 在系统上执行 Shell 命令。
 | `enable_deny_patterns` | bool | true | 启用默认危险命令拦截 |
 | `custom_deny_patterns` | array | [] | 自定义拦截正则表达式 |
 | `custom_allow_patterns` | array | [] | 自定义允许规则 -- 匹配的命令可绕过拦截检查 |
+
+## 硬件工具
+
+硬件工具默认关闭。只启用确实希望 Agent 使用的接口。
+
+| 工具 | 配置项 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| I2C | `tools.i2c.enabled` | `false` | 在支持的 Linux 系统上启用 I2C 硬件访问 |
+| SPI | `tools.spi.enabled` | `false` | 在支持的 Linux 系统上启用 SPI 硬件访问 |
+| Serial | `tools.serial.enabled` | `false` | 启用跨平台串口读写访问 |
+
+Serial 工具在 v0.2.8 中加入，包含 Linux、macOS 和 Windows 的平台实现。打开设备前会校验端口名称和串口参数。
 
 ### 禁用 Exec 工具
 

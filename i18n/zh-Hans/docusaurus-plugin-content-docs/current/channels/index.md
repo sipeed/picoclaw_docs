@@ -30,6 +30,7 @@ picoclaw gateway
 | **MaixCam** | 简单 | 硬件集成 AI 摄像头。 |
 | **VK** | 简单 | 通过 Long Poll API 连接 VKontakte 社区机器人。 |
 | **Pico** | 简单 | 原生 WebSocket 通道，适用于自定义客户端。 |
+| **IRC** | 中等 | IRC 客户端连接，支持 TLS、SASL、加入频道和可选 IRCv3 输入状态标签。 |
 
 ## 工作原理
 
@@ -64,6 +65,7 @@ picoclaw gateway
 | --- | --- |
 | `reasoning_channel_id` | 将推理/思考过程输出到单独的频道 |
 | `group_trigger` | 控制机器人在群聊中的触发行为（仅@、关键词前缀） |
+| `typing` | 在支持的通道上启用输入状态提示 |
 
 ## 共享网关
 

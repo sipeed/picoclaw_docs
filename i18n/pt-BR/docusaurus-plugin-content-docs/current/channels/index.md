@@ -30,6 +30,7 @@ picoclaw gateway
 | **MaixCam** | Fácil | Câmera de IA com integração de hardware. |
 | **VK** | Fácil | Bot de comunidade do VKontakte via Long Poll API. |
 | **Pico** | Fácil | Canal WebSocket nativo para clientes personalizados. |
+| **IRC** | Médio | Conexão de cliente IRC com TLS, SASL, entrada em canais e typing IRCv3 opcional. |
 
 ## Como Funciona
 
@@ -64,6 +65,7 @@ Todos os canais suportam estes campos opcionais:
 | --- | --- |
 | `reasoning_channel_id` | Direcionar a saída de raciocínio/pensamento para um canal separado |
 | `group_trigger` | Controlar o comportamento do bot em chats de grupo (somente menção, prefixos) |
+| `typing` | Habilitar indicadores de digitação em canais compatíveis |
 
 ## Gateway Compartilhado
 

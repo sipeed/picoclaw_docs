@@ -60,10 +60,19 @@ Obtenha uma chave de API gratuita em [brave.com/search/api](https://brave.com/se
 
 | Config | Tipo | Padrão | Descrição |
 |--------|------|---------|-------------|
-| `enabled` | bool | true | Habilitar busca DuckDuckGo |
+| `enabled` | bool | false | Habilitar busca DuckDuckGo |
 | `max_results` | int | 5 | Número máximo de resultados |
 
-O DuckDuckGo é habilitado por padrão e não requer chave de API.
+O DuckDuckGo não requer chave de API.
+
+### Sogou Search
+
+| Config | Tipo | Padrão | Descrição |
+|--------|------|---------|-------------|
+| `enabled` | bool | true | Habilitar busca Sogou |
+| `max_results` | int | 5 | Número máximo de resultados |
+
+Sogou vem habilitado no exemplo de configuração atual e é útil para buscas em chinês.
 
 ### Baidu Search
 
@@ -138,6 +147,7 @@ Todas as ferramentas web (busca e fetch) podem usar um proxy compartilhado:
 
 | Config | Tipo | Padrão | Descrição |
 |--------|------|---------|-------------|
+| `provider` | string | `"auto"` | Seleção do provedor de busca. `auto` deixa o PicoClaw escolher um provedor disponível. |
 | `prefer_native` | bool | true | Preferir a busca nativa do provedor sobre os search engines configurados |
 | `private_host_whitelist` | string[] | `[]` | Hosts privados/internos autorizados para web fetching |
 
@@ -203,6 +213,18 @@ A ferramenta exec executa comandos shell em nome do agente.
 | `enable_deny_patterns` | bool | true | Habilitar bloqueio padrão de comandos perigosos |
 | `custom_deny_patterns` | array | [] | Padrões de negação customizados (expressões regulares) |
 | `custom_allow_patterns` | array | [] | Padrões de permissão customizados — comandos correspondentes ignoram as verificações de negação |
+
+## Ferramentas de Hardware
+
+Ferramentas de hardware ficam desabilitadas por padrão. Habilite apenas as interfaces que o agente deve poder usar.
+
+| Ferramenta | Config | Padrão | Descrição |
+| --- | --- | --- | --- |
+| I2C | `tools.i2c.enabled` | `false` | Habilita acesso a hardware I2C em sistemas Linux compatíveis |
+| SPI | `tools.spi.enabled` | `false` | Habilita acesso a hardware SPI em sistemas Linux compatíveis |
+| Serial | `tools.serial.enabled` | `false` | Habilita leitura/escrita serial multiplataforma |
+
+A ferramenta serial foi adicionada no v0.2.8 e inclui implementações para Linux, macOS e Windows. Ela valida nomes de porta e parâmetros seriais antes de abrir o dispositivo.
 
 ### Desabilitando a Ferramenta Exec
 

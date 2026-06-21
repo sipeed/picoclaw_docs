@@ -74,6 +74,8 @@ const sidebars = {
         'channels/vk',
         'channels/weixin',
         'channels/teams-webhook',
+        'channels/pico',
+        'channels/irc',
       ],
     },
     {
