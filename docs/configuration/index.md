@@ -64,7 +64,7 @@ export PICOCLAW_AGENTS_DEFAULTS_RESTRICT_TO_WORKSPACE=false
 
 | Variable | Description |
 | --- | --- |
-| `PICOCLAW_HOME` | Override PicoClaw home directory (default: `~/.picoclaw`). Changes the default location of the `workspace` and other data directories. |
+| `PICOCLAW_HOME` | Override PicoClaw home directory (default: `~/.picoclaw`). Changes the default location of the `workspace` and other data directories. The gateway writes a PID file to $PICOCLAW_HOME/.picoclaw.pid and refuses to start if that file indicates another instance is running. |
 | `PICOCLAW_CONFIG` | Override the path to the configuration file. Directly tells PicoClaw which `config.json` to load, ignoring all other locations. |
 | `PICOCLAW_LOG_LEVEL` | Override gateway log level (see below) |
 
